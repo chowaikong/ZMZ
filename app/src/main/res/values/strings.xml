@@ -1,0 +1,5 @@
+<resources>
+  <string name="app_name">ZMZ</string>
+  <string name="network_error">网络出问题了~</string>
+  <string name="something_wrong_happened">出错了</string>
+</resources>

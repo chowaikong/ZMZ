@@ -1,0 +1,84 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+  defaultConfig {
+    applicationId "me.knox.zmz"
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
+    versionCode 1
+    versionName "1.0"
+  }
+
+  dataBinding {
+    enabled true
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  def keystorePropertiesFile = rootProject.file("private.properties")
+  def keystoreProperties = new Properties()
+  keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+  signingConfigs {
+    release {
+      storeFile file(keystoreProperties['storeFile'])
+      storePassword keystoreProperties['storePassword']
+      keyAlias keystoreProperties['keyAlias']
+      keyPassword keystoreProperties['keyPassword']
+    }
+  }
+
+  buildTypes {
+    debug {
+      buildConfigField "String", "HOST", keystoreProperties.getProperty("host")
+      buildConfigField "String", "CID", keystoreProperties.getProperty("cid")
+      buildConfigField "String", "ACCESS_KEY", keystoreProperties.getProperty("accessKey")
+      debuggable true
+    }
+    release {
+      buildConfigField "String", "HOST", keystoreProperties.getProperty("host")
+      buildConfigField "String", "CID", keystoreProperties.getProperty("cid")
+      buildConfigField "String", "ACCESS_KEY", keystoreProperties.getProperty("accessKey")
+      debuggable false
+      minifyEnabled true
+      zipAlignEnabled true
+      shrinkResources true
+      signingConfig signingConfigs.release
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  lintOptions {
+    abortOnError false
+    disable 'InvalidPackage'
+    checkReleaseBuilds false
+  }
+}
+
+dependencies {
+  def dependencies = rootProject.ext.dependencies
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  testCompile 'junit:junit:4.12'
+  compile dependencies.supportAppCompat
+  compile dependencies.supportRecyclerView
+  compile dependencies.supportDesign
+  compile dependencies.rxAndroid
+  compile dependencies.rxJava
+  compile dependencies.retrofit
+  compile dependencies.retrofitGsonConverter
+  compile dependencies.retrofitRxJavaAdapter
+  compile dependencies.okhttp
+  compile dependencies.okhttpLoggingInterceptor
+  compile dependencies.gson
+  compile dependencies.glide
+  compile dependencies.dagger
+  apt dependencies.daggerCompiler
+  compile dependencies.timber
+}
