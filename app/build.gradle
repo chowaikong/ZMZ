@@ -55,6 +55,16 @@ android {
     }
   }
 
+  productFlavors {
+    dev {
+      minSdkVersion 21
+    }
+
+    production {
+      minSdkVersion rootProject.ext.minSdkVersion
+    }
+  }
+
   lintOptions {
     abortOnError false
     disable 'InvalidPackage'
@@ -68,6 +78,7 @@ dependencies {
   testCompile 'junit:junit:4.12'
   compile dependencies.supportAppCompat
   compile dependencies.supportRecyclerView
+  compile dependencies.supportCardView
   compile dependencies.supportDesign
   compile dependencies.rxAndroid
   compile dependencies.rxJava

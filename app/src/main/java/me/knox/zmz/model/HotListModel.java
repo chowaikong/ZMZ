@@ -10,7 +10,7 @@ import me.knox.zmz.entity.Hot;
 import me.knox.zmz.network.JsonResponse;
 
 /**
- * Created by KNOX on 2016-11-27.
+ * Created by KNOX.
  */
 
 public class HotListModel implements HotListContract.Model {

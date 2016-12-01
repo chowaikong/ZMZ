@@ -3,7 +3,7 @@ package me.knox.zmz.entity;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by KNOX on 2016-11-27.
+ * Created by KNOX.
  */
 
 public class Hot {

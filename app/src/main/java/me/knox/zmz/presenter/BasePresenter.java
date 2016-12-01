@@ -4,7 +4,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
- * Created by KNOX on 2016-11-27.
+ * Created by KNOX.
  */
 
 public class BasePresenter {
@@ -15,9 +15,7 @@ public class BasePresenter {
   }
 
   /**
-   * 统计订阅
-   *
-   * @param disposable 订阅事件
+   * add disposable to CompositeDisposable
    */
   public void addDisposable(Disposable disposable) {
     if (mCompositeDisposable != null) {
@@ -26,7 +24,7 @@ public class BasePresenter {
   }
 
   /**
-   * 取消订阅
+   * clear all disposables that added to CompositeDisposable
    */
   public void dispose() {
     if (mCompositeDisposable != null && mCompositeDisposable.isDisposed()) {

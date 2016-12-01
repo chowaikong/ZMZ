@@ -8,7 +8,7 @@ import me.knox.zmz.network.Api;
 import timber.log.Timber;
 
 /**
- * Created by KNOX on 2016-11-27.
+ * Created by KNOX.
  */
 
 public class App extends Application {

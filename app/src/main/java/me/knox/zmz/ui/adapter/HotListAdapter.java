@@ -8,7 +8,7 @@ import me.knox.zmz.databinding.ItemHotBinding;
 import me.knox.zmz.entity.Hot;
 
 /**
- * Created by KNOX on 2016-11-27.
+ * Created by KNOX.
  */
 
 public class HotListAdapter extends BaseRVAdapter<ItemHotBinding, Hot> {

@@ -7,7 +7,7 @@ import me.knox.zmz.di.module.AppModule;
 import me.knox.zmz.di.module.NetworkModule;
 
 /**
- * Created by KNOX on 2016-11-27.
+ * Created by KNOX.
  */
 
 @Singleton
