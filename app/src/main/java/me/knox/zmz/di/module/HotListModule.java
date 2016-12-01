@@ -13,7 +13,6 @@ import me.knox.zmz.model.HotListModel;
 @Module(includes = AppModule.class)
 public class HotListModule {
 
-  private HotListContract.Model mModel;
   private HotListContract.View mView;
 
   public HotListModule(HotListContract.View view) {

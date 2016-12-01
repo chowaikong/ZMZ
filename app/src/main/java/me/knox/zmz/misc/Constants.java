@@ -1,7 +1,7 @@
 package me.knox.zmz.misc;
 
 /**
- * Created by KNOX on 2016-11-27.
+ * Created by KNOX.
  */
 
 public class Constants {

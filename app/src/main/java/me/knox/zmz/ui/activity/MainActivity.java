@@ -2,48 +2,90 @@ package me.knox.zmz.ui.activity;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.widget.Toast;
-import java.util.ArrayList;
-import java.util.List;
-import javax.inject.Inject;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import me.knox.zmz.R;
-import me.knox.zmz.contract.HotListContract;
 import me.knox.zmz.databinding.ActivityMainBinding;
-import me.knox.zmz.di.component.DaggerHotListComponent;
-import me.knox.zmz.di.module.HotListModule;
-import me.knox.zmz.entity.Hot;
-import me.knox.zmz.presenter.HotListPresenter;
-import me.knox.zmz.ui.adapter.HotListAdapter;
+import me.knox.zmz.ui.fragment.ResourcesFragment;
+import me.knox.zmz.ui.fragment.TodayFragment;
+import me.knox.zmz.ui.fragment.UpdatesFragment;
 
-import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
+public class MainActivity extends BaseBindingActivity<ActivityMainBinding> {
 
-public class MainActivity extends BaseActivity implements HotListContract.View {
+  private static final String TABS[] = new String[] { "更新", "热门", "资源" };
 
-  @Inject HotListPresenter mHotListPresenter;
-  private ActivityMainBinding mActivityMainBinding;
-  private HotListAdapter mHotListAdapter;
-
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    mActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
-    DaggerHotListComponent.builder().hotListModule(new HotListModule(this)).build().inject(this);
-
-    mHotListAdapter = new HotListAdapter(new ArrayList<>());
-    mActivityMainBinding.hotList.setAdapter(mHotListAdapter);
-    mActivityMainBinding.hotList.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
-
-    mHotListPresenter.getHot();
+  @Override
+  protected ActivityMainBinding setDataBindingContentView(@Nullable Bundle savedInstanceState) {
+    return DataBindingUtil.setContentView(this, R.layout.activity_main);
   }
 
-  @Override public void obtainHotListSuccess(List<Hot> hotList) {
-    if (isFinishing()) return;
-    mHotListAdapter.setData(hotList);
+  @Override protected void initView() {
+    HomePagerAdapter pagerAdapter = new HomePagerAdapter(getSupportFragmentManager());
+    mDataBinding.vp.setAdapter(pagerAdapter);
+    mDataBinding.vp.setOffscreenPageLimit(pagerAdapter.getCount());
+    mDataBinding.vp.addOnPageChangeListener(
+        new TabLayout.TabLayoutOnPageChangeListener(mDataBinding.tab));
+    for (String TAB : TABS) {
+      mDataBinding.tab.addTab(mDataBinding.tab.newTab().setText(TAB));
+    }
   }
 
-  @Override public void obtainHotListFailed(String error) {
-    if (isFinishing()) return;
-    Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+  @Override protected void initData() {
+
+  }
+
+  @Override protected void initListener() {
+    mDataBinding.tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+      @Override public void onTabSelected(TabLayout.Tab tab) {
+        mDataBinding.vp.setCurrentItem(tab.getPosition());
+      }
+
+      @Override public void onTabUnselected(TabLayout.Tab tab) {
+
+      }
+
+      @Override public void onTabReselected(TabLayout.Tab tab) {
+
+      }
+    });
+  }
+
+  class HomePagerAdapter extends FragmentStatePagerAdapter {
+
+    private UpdatesFragment mUpdatesFragment;
+    private TodayFragment mTodayFragment;
+    private ResourcesFragment mResourcesFragment;
+
+    HomePagerAdapter(FragmentManager fm) {
+      super(fm);
+    }
+
+    @Override public Fragment getItem(int position) {
+      switch (position) {
+        case 0:
+          if (mUpdatesFragment == null) {
+            mUpdatesFragment = UpdatesFragment.newInstance();
+          }
+          return mUpdatesFragment;
+        case 1:
+          if (mTodayFragment == null) {
+            mTodayFragment = TodayFragment.newInstance();
+          }
+          return mTodayFragment;
+        case 2:
+          if (mResourcesFragment == null) {
+            mResourcesFragment = ResourcesFragment.newInstance();
+          }
+          return mResourcesFragment;
+      }
+      return mUpdatesFragment;
+    }
+
+    @Override public int getCount() {
+      return TABS.length;
+    }
   }
 }

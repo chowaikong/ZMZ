@@ -9,7 +9,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by KNOX on 2016-11-27.
+ * Created by KNOX.
  */
 
 @Module public class AppModule {

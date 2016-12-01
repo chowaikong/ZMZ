@@ -6,7 +6,7 @@ import me.knox.zmz.di.module.HotListModule;
 import me.knox.zmz.ui.activity.MainActivity;
 
 /**
- * Created by KNOX on 2016-11-27.
+ * Created by KNOX.
  */
 
 @Singleton

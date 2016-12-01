@@ -6,7 +6,7 @@ import me.knox.zmz.model.HotListModel;
 import me.knox.zmz.network.ApiErrorException;
 
 /**
- * Created by KNOX on 2016-11-27.
+ * Created by KNOX.
  */
 
 public class HotListPresenter extends BasePresenter implements HotListContract.Presenter {
@@ -27,6 +27,6 @@ public class HotListPresenter extends BasePresenter implements HotListContract.P
       } else {
         mView.obtainHotListFailed(result.getInfo());
       }
-    }, new ApiErrorException(mView.getContext())));
+    }, new ApiErrorException()));
   }
 }

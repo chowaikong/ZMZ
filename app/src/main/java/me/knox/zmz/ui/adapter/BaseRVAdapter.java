@@ -6,7 +6,7 @@ import java.util.List;
 import me.knox.zmz.binding.DataBindingViewHolder;
 
 /**
- * Created by KNOX on 2016-11-27.
+ * Created by KNOX.
  */
 
 public abstract class BaseRVAdapter<T extends ViewDataBinding, M>
