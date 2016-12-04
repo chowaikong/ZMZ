@@ -25,6 +25,7 @@ public class ScheduleUpdatesModel implements ScheduleUpdatesContract.Model {
     return App.getInstance()
         .getApi()
         .getScheduleUpdates(start, end)
+        .take(10)
         .observeOn(AndroidSchedulers.mainThread(), true);
   }
 }
