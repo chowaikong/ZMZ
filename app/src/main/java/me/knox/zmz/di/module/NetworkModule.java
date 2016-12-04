@@ -11,6 +11,7 @@ import javax.inject.Named;
 import me.knox.zmz.BuildConfig;
 import me.knox.zmz.misc.Constants;
 import me.knox.zmz.network.Api;
+import me.knox.zmz.ui.util.LogPrinter;
 import okhttp3.Cache;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -19,7 +20,6 @@ import okhttp3.internal.Util;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import timber.log.Timber;
 
 /**
  * Created by KNOX.
@@ -72,7 +72,7 @@ import timber.log.Timber;
 
   @Provides HttpLoggingInterceptor provideLoggingInterceptor() {
     HttpLoggingInterceptor loggingInterceptor =
-        new HttpLoggingInterceptor(message -> Timber.d(message));
+        new HttpLoggingInterceptor(LogPrinter::json);
     loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
     return loggingInterceptor;
   }

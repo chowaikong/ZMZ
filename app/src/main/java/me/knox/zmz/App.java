@@ -5,7 +5,8 @@ import javax.inject.Inject;
 import me.knox.zmz.di.component.DaggerAppComponent;
 import me.knox.zmz.di.module.AppModule;
 import me.knox.zmz.network.Api;
-import timber.log.Timber;
+import me.knox.zmz.ui.util.LogPrinter;
+import net.danlew.android.joda.JodaTimeAndroid;
 
 /**
  * Created by KNOX.
@@ -21,9 +22,9 @@ public class App extends Application {
 
     instance = this;
 
-    if (BuildConfig.DEBUG) {
-      Timber.plant(new Timber.DebugTree());
-    }
+    JodaTimeAndroid.init(this);
+
+    LogPrinter.init();
 
     DaggerAppComponent.builder().appModule(new AppModule(this)).build().inject(this);
 

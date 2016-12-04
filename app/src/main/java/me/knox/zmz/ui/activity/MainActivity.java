@@ -13,9 +13,15 @@ import me.knox.zmz.ui.fragment.ResourcesFragment;
 import me.knox.zmz.ui.fragment.TodayFragment;
 import me.knox.zmz.ui.fragment.UpdatesFragment;
 
+import static me.knox.zmz.R.drawable.selector_tab_hot;
+import static me.knox.zmz.R.drawable.selector_tab_rescource;
+import static me.knox.zmz.R.drawable.selector_tab_today;
+
 public class MainActivity extends BaseBindingActivity<ActivityMainBinding> {
 
-  private static final String TABS[] = new String[] { "更新", "热门", "资源" };
+  //private static final String TABS[] = new String[] { "更新", "热门", "资源" };
+  private static final int TAB_ICONS[] =
+      new int[] { selector_tab_today, selector_tab_hot, selector_tab_rescource };
 
   @Override
   protected ActivityMainBinding setDataBindingContentView(@Nullable Bundle savedInstanceState) {
@@ -28,8 +34,8 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding> {
     mDataBinding.vp.setOffscreenPageLimit(pagerAdapter.getCount());
     mDataBinding.vp.addOnPageChangeListener(
         new TabLayout.TabLayoutOnPageChangeListener(mDataBinding.tab));
-    for (String TAB : TABS) {
-      mDataBinding.tab.addTab(mDataBinding.tab.newTab().setText(TAB));
+    for (int TAB : TAB_ICONS) {
+      mDataBinding.tab.addTab(mDataBinding.tab.newTab().setIcon(TAB));
     }
   }
 
@@ -85,7 +91,7 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding> {
     }
 
     @Override public int getCount() {
-      return TABS.length;
+      return TAB_ICONS.length;
     }
   }
 }

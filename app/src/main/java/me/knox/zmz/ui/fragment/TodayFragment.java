@@ -23,6 +23,10 @@ public class TodayFragment extends BaseFragment {
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
+
+
+
+
     return FragmentTodayBinding.inflate(inflater, container, false).getRoot();
   }
 }

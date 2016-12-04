@@ -92,4 +92,6 @@ dependencies {
   compile dependencies.dagger
   apt dependencies.daggerCompiler
   compile dependencies.timber
+  compile dependencies.jodaTime
+//  compile dependencies.xLog
 }
