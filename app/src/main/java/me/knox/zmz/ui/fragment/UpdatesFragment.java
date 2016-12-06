@@ -3,6 +3,7 @@ package me.knox.zmz.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearSnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,8 @@ public class UpdatesFragment extends BaseFragment implements UpdatesContract.Vie
 
     DaggerUpdatesComponent.builder().updatesModule(new UpdatesModule(this)).scheduleUpdatesModule(new ScheduleUpdatesModule(this)).build().inject(this);
 
+    LinearSnapHelper linearSnapHelper = new LinearSnapHelper();
+    linearSnapHelper.attachToRecyclerView(fragmentUpdatesBinding.scheduleUpdateList);
     fragmentUpdatesBinding.updateList.addItemDecoration(
         new DividerItemDecoration(getContext(), VERTICAL));
     fragmentUpdatesBinding.updateList.setAdapter(mUpdatesAdapter);
