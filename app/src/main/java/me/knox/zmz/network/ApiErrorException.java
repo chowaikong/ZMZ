@@ -1,11 +1,11 @@
 package me.knox.zmz.network;
 
-import android.util.Log;
 import io.reactivex.functions.Consumer;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import me.knox.zmz.R;
+import me.knox.zmz.ui.util.LogPrinter;
 import me.knox.zmz.ui.util.Toaster;
 
 /**
@@ -15,7 +15,7 @@ import me.knox.zmz.ui.util.Toaster;
 public class ApiErrorException implements Consumer<Throwable>{
 
   @Override public void accept(Throwable throwable) throws Exception {
-    Log.e("ApiErrorException", throwable.toString());
+    LogPrinter.e("ApiErrorException", throwable.toString());
 
     if (throwable instanceof UnknownHostException
         || throwable instanceof ConnectException

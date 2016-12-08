@@ -4,6 +4,7 @@ import io.reactivex.Flowable;
 import java.util.List;
 import java.util.Map;
 import me.knox.zmz.entity.Hot;
+import me.knox.zmz.entity.Resource;
 import me.knox.zmz.entity.ScheduleUpdate;
 import me.knox.zmz.entity.Update;
 import retrofit2.http.GET;
@@ -21,4 +22,7 @@ public interface Api {
 
   @GET("tv/schedule") Flowable<JsonResponse<Map<String, List<ScheduleUpdate>>>> getScheduleUpdates(
       @Query("start") String start, @Query("end") String end);
+
+  @GET("resource/fetchlist")
+  Flowable<JsonResponse<Resource>> getResources(@Query("page") int page);
 }
