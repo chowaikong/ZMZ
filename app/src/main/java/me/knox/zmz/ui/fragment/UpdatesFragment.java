@@ -1,11 +1,9 @@
 package me.knox.zmz.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearSnapHelper;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +30,7 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
  * Created by KNOX.
  */
 
-public class UpdatesFragment extends BaseFragment implements UpdatesContract.View,
+public class UpdatesFragment extends BindingLazyFragment<FragmentUpdatesBinding> implements UpdatesContract.View,
     ScheduleUpdatesContract.View {
 
   private final List<Update> mUpdates = new ArrayList<>();
@@ -50,26 +48,25 @@ public class UpdatesFragment extends BaseFragment implements UpdatesContract.Vie
     return fragment;
   }
 
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
-    FragmentUpdatesBinding fragmentUpdatesBinding =
-        FragmentUpdatesBinding.inflate(inflater, container, false);
+  @Override
+  protected FragmentUpdatesBinding getDataBinding(LayoutInflater inflater, ViewGroup container) {
+    return FragmentUpdatesBinding.inflate(inflater, container, false);
+  }
 
-    DaggerUpdatesComponent.builder().updatesModule(new UpdatesModule(this)).scheduleUpdatesModule(new ScheduleUpdatesModule(this)).build().inject(this);
-
+  @Override protected void initView() {
     LinearSnapHelper linearSnapHelper = new LinearSnapHelper();
-    linearSnapHelper.attachToRecyclerView(fragmentUpdatesBinding.scheduleUpdateList);
-    fragmentUpdatesBinding.updateList.addItemDecoration(
+    linearSnapHelper.attachToRecyclerView(mDataBinding.scheduleUpdateList);
+    mDataBinding.updateList.addItemDecoration(
         new DividerItemDecoration(getContext(), VERTICAL));
-    fragmentUpdatesBinding.updateList.setAdapter(mUpdatesAdapter);
-    fragmentUpdatesBinding.scheduleUpdateList.setAdapter(mScheduleUpdateAdapter);
+    mDataBinding.updateList.setAdapter(mUpdatesAdapter);
+    mDataBinding.scheduleUpdateList.setAdapter(mScheduleUpdateAdapter);
+  }
 
+  @Override protected void initData() {
+    DaggerUpdatesComponent.builder().updatesModule(new UpdatesModule(this)).scheduleUpdatesModule(new ScheduleUpdatesModule(this)).build().inject(this);
     mUpdatesPresenter.getUpdates();
     mScheduleUpdatesPresenter.getScheduleUpdates(LocalDate.now().toString(),
         LocalDate.now().toString());
-
-    return fragmentUpdatesBinding.getRoot();
   }
 
   @Override public void obtainUpdatesSucceed(List<Update> updates) {

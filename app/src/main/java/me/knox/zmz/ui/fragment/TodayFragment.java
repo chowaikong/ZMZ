@@ -1,9 +1,7 @@
 package me.knox.zmz.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import me.knox.zmz.databinding.FragmentTodayBinding;
 
@@ -11,7 +9,7 @@ import me.knox.zmz.databinding.FragmentTodayBinding;
  * Created by KNOX.
  */
 
-public class TodayFragment extends BaseFragment {
+public class TodayFragment extends BindingLazyFragment<FragmentTodayBinding> {
 
   public static TodayFragment newInstance() {
     Bundle bundle = new Bundle();
@@ -20,13 +18,16 @@ public class TodayFragment extends BaseFragment {
     return fragment;
   }
 
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
+  @Override
+  protected FragmentTodayBinding getDataBinding(LayoutInflater inflater, ViewGroup container) {
+    return FragmentTodayBinding.inflate(inflater, container, false);
+  }
 
+  @Override protected void initView() {
 
+  }
 
+  @Override protected void initData() {
 
-    return FragmentTodayBinding.inflate(inflater, container, false).getRoot();
   }
 }

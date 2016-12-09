@@ -1,10 +1,8 @@
 package me.knox.zmz.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +23,10 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
  * Created by KNOX.
  */
 
-public class ResourcesFragment extends BaseFragment implements ResourcesContract.View {
+public class ResourcesFragment extends BindingLazyFragment<FragmentResourcesBinding> implements ResourcesContract.View {
 
   @Inject ResourcesPresenter mResourcesPresenter;
 
-  private FragmentResourcesBinding mFragmentResourcesBinding;
   private final List<Resource.Data> mDataList = new ArrayList<>();
   private final ResourcesAdapter mResourcesAdapter = new ResourcesAdapter(mDataList);
   private int mPage = 0;
@@ -41,12 +38,22 @@ public class ResourcesFragment extends BaseFragment implements ResourcesContract
     return fragment;
   }
 
-  @Nullable @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
+  @Override protected FragmentResourcesBinding getDataBinding(LayoutInflater inflater, ViewGroup container) {
+    return FragmentResourcesBinding.inflate(inflater, container, false);
+  }
 
-    mFragmentResourcesBinding = FragmentResourcesBinding.inflate(inflater, container, false);
+  @Override protected void initView() {
+    mDataBinding.resourceList.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
+    mDataBinding.resourceList.setAdapter(mResourcesAdapter);
+    mDataBinding.resourceList.addOnScrollListener(new OnLoadMoreListener() {
+      @Override public void loadMore() {
+        mPage ++;
+        mResourcesPresenter.getResources(mPage);
+      }
+    });
+  }
 
+  @Override protected void initData() {
     DaggerResourcesComponent.builder()
         .resourcesModule(new ResourcesModule(this))
         .build()
@@ -55,17 +62,6 @@ public class ResourcesFragment extends BaseFragment implements ResourcesContract
     if (mResourcesPresenter != null) {
       mResourcesPresenter.getResources(mPage);
     }
-
-    mFragmentResourcesBinding.resourceList.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
-    mFragmentResourcesBinding.resourceList.setAdapter(mResourcesAdapter);
-    mFragmentResourcesBinding.resourceList.addOnScrollListener(new OnLoadMoreListener() {
-      @Override public void loadMore() {
-        mPage ++;
-        mResourcesPresenter.getResources(mPage);
-      }
-    });
-
-    return mFragmentResourcesBinding.getRoot();
   }
 
   @Override public void obtainResourcesSucceed(List<Resource.Data> resources) {
