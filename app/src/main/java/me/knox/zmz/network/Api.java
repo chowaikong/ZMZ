@@ -4,7 +4,9 @@ import io.reactivex.Flowable;
 import java.util.List;
 import java.util.Map;
 import me.knox.zmz.entity.Hot;
+import me.knox.zmz.entity.News;
 import me.knox.zmz.entity.Resource;
+import me.knox.zmz.entity.ResourceInfo;
 import me.knox.zmz.entity.ScheduleUpdate;
 import me.knox.zmz.entity.Update;
 import retrofit2.http.GET;
@@ -25,4 +27,10 @@ public interface Api {
 
   @GET("resource/fetchlist")
   Flowable<JsonResponse<Resource>> getResources(@Query("page") int page);
+
+  @GET("news/fetchlist")
+  Flowable<JsonResponse<List<News>>> getNews(@Query("page") int page);
+
+  @GET("resource/getinfo")
+  Flowable<JsonResponse<ResourceInfo>> getResourceInfo(@Query("id") int id);
 }
