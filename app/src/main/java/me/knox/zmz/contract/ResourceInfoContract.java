@@ -3,6 +3,7 @@ package me.knox.zmz.contract;
 import io.reactivex.Flowable;
 import me.knox.zmz.entity.ResourceInfo;
 import me.knox.zmz.network.JsonResponse;
+import me.knox.zmz.view.BaseView;
 
 /**
  * Created by KNOX.
@@ -14,10 +15,8 @@ public interface ResourceInfoContract {
     Flowable<JsonResponse<ResourceInfo>> getResourceInfo(int id);
   }
 
-  interface View {
+  interface View extends BaseView {
     void obtainResourceInfoSucceed(ResourceInfo resourceInfo);
-
-    void obtainResourceInfoFailed(String error);
   }
   interface Presenter {
     void getResourceInfo(int id);

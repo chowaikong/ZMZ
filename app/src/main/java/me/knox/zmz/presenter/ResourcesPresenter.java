@@ -24,8 +24,8 @@ public class ResourcesPresenter extends BasePresenter implements ResourcesContra
       if (result.isSuccess()) {
         mView.obtainResourcesSucceed(result.getData().getDataList());
       } else {
-        mView.obtainResourcesFailed(result.getInfo());
+        mView.error(result.getInfo());
       }
-    }, new ApiErrorException()));
+    }, new ApiErrorException(mView)));
   }
 }

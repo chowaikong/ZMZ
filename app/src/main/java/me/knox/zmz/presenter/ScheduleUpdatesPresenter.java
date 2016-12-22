@@ -25,8 +25,8 @@ public class ScheduleUpdatesPresenter extends BasePresenter implements ScheduleU
       if (result.isSuccess()) {
         mView.obtainScheduleUpdatesSucceed(result.getData());
       } else {
-        mView.obtainScheduleUpdatesFailed(result.getInfo());
+        mView.error(result.getInfo());
       }
-    }, new ApiErrorException()));
+    }, new ApiErrorException(mView)));
   }
 }

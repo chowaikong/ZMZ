@@ -24,8 +24,8 @@ public class NewsListPresenter extends BasePresenter implements NewsListContract
       if (result.isSuccess()) {
         mView.obtainNewsListSucceed(result.getData());
       } else {
-        mView.obtainNewsListFailed(result.getInfo());
+        mView.error(result.getInfo());
       }
-    }, new ApiErrorException()));
+    }, new ApiErrorException(mView)));
   }
 }

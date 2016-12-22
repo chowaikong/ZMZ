@@ -1,12 +1,11 @@
 package me.knox.zmz.network;
 
 import io.reactivex.functions.Consumer;
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
+import java.io.IOException;
 import me.knox.zmz.R;
 import me.knox.zmz.ui.util.LogPrinter;
 import me.knox.zmz.ui.util.Toaster;
+import me.knox.zmz.view.BaseView;
 
 /**
  * Created by KNOX on 2016-11-27.
@@ -14,14 +13,20 @@ import me.knox.zmz.ui.util.Toaster;
 
 public class ApiErrorException implements Consumer<Throwable>{
 
+  private BaseView mBaseView;
+
+  public ApiErrorException(BaseView baseView) {
+    mBaseView = baseView;
+  }
+
   @Override public void accept(Throwable throwable) throws Exception {
     LogPrinter.e("ApiErrorException", throwable.toString());
 
-    if (throwable instanceof UnknownHostException
-        || throwable instanceof ConnectException
-        || throwable instanceof SocketTimeoutException) {
-      Toaster.showShortToast(R.string.network_error);
-    } else {
+    if (mBaseView != null) {
+      mBaseView.error(throwable.toString());
+    }
+
+    if (throwable instanceof IOException) {
       Toaster.showShortToast(R.string.something_wrong_happened);
     }
   }

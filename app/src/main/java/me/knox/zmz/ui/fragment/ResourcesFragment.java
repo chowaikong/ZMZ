@@ -73,7 +73,7 @@ public class ResourcesFragment extends BindingLazyFragment<FragmentResourcesBind
     }
   }
 
-  @Override public void obtainResourcesFailed(String error) {
+  @Override public void error(String error, Object... objects) {
     if (isFragmentNotAvailable()) return;
     Toaster.showShortToast(error);
   }

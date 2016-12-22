@@ -71,17 +71,12 @@ public class TodayFragment extends BindingLazyFragment<FragmentTodayBinding>
     mHotListAdapter.setData(hotList);
   }
 
-  @Override public void obtainHotListFailed(String error) {
-    if (isFragmentNotAvailable()) return;
-    Toaster.showShortToast(error);
-  }
-
   @Override public void obtainNewsListSucceed(List<News> newsList) {
     if (isFragmentNotAvailable()) return;
     mNewsListAdapter.setData(newsList);
   }
 
-  @Override public void obtainNewsListFailed(String error) {
+  @Override public void error(String error, Object... objects) {
     if (isFragmentNotAvailable()) return;
     Toaster.showShortToast(error);
   }

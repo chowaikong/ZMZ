@@ -4,6 +4,7 @@ import io.reactivex.Flowable;
 import java.util.List;
 import me.knox.zmz.entity.Update;
 import me.knox.zmz.network.JsonResponse;
+import me.knox.zmz.view.BaseView;
 
 /**
  * Created by KNOX.
@@ -15,10 +16,8 @@ public interface UpdatesContract {
     Flowable<JsonResponse<List<Update>>> getUpdates();
   }
 
-  interface View {
+  interface View extends BaseView {
     void obtainUpdatesSucceed(List<Update> updates);
-
-    void obtainUpdatesFailed(String error);
   }
 
   interface Presenter {

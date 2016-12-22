@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import me.knox.zmz.entity.ScheduleUpdate;
 import me.knox.zmz.network.JsonResponse;
+import me.knox.zmz.view.BaseView;
 
 /**
  * Created by KNOX.
@@ -17,10 +18,8 @@ public interface ScheduleUpdatesContract {
         String end);
   }
 
-  interface View {
+  interface View extends BaseView {
     void obtainScheduleUpdatesSucceed(Map<String, List<ScheduleUpdate>> stringListMap);
-
-    void obtainScheduleUpdatesFailed(String error);
   }
 
   interface Presenter {

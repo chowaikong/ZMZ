@@ -74,11 +74,6 @@ public class UpdatesFragment extends BindingLazyFragment<FragmentUpdatesBinding>
     mUpdatesAdapter.setData(updates);
   }
 
-  @Override public void obtainUpdatesFailed(String error) {
-    if (isFragmentNotAvailable()) return;
-    Toaster.showLongToast(error);
-  }
-
   @Override public void onDestroyView() {
     super.onDestroyView();
 
@@ -97,8 +92,8 @@ public class UpdatesFragment extends BindingLazyFragment<FragmentUpdatesBinding>
     mScheduleUpdateAdapter.setData(stringListMap.get(LocalDate.now().toString()));
   }
 
-  @Override public void obtainScheduleUpdatesFailed(String error) {
+  @Override public void error(String error, Object... objects) {
     if (isFragmentNotAvailable()) return;
-    Toaster.showShortToast(error);
+    Toaster.showLongToast(error);
   }
 }

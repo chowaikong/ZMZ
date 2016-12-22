@@ -4,6 +4,7 @@ import io.reactivex.Flowable;
 import java.util.List;
 import me.knox.zmz.entity.Hot;
 import me.knox.zmz.network.JsonResponse;
+import me.knox.zmz.view.BaseView;
 
 /**
  * Created by KNOX.
@@ -16,10 +17,8 @@ public interface HotListContract {
     Flowable<JsonResponse<List<Hot>>> getHot();
   }
 
-  interface View {
+  interface View extends BaseView{
     void obtainHotListSuccess(List<Hot> hotList);
-
-    void obtainHotListFailed(String error);
 
   }
 

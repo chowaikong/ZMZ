@@ -24,8 +24,8 @@ public class ResourceInfoPresenter extends BasePresenter implements ResourceInfo
       if (result.isSuccess()) {
         mView.obtainResourceInfoSucceed(result.getData());
       } else {
-        mView.obtainResourceInfoFailed(result.getInfo());
+        mView.error(result.getInfo());
       }
-    }, new ApiErrorException()));
+    }, new ApiErrorException(mView)));
   }
 }

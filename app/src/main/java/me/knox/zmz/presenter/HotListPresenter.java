@@ -25,8 +25,8 @@ public class HotListPresenter extends BasePresenter implements HotListContract.P
       if (result.isSuccess()) {
         mView.obtainHotListSuccess(result.getData());
       } else {
-        mView.obtainHotListFailed(result.getInfo());
+        mView.error(result.getInfo());
       }
-    }, new ApiErrorException()));
+    }, new ApiErrorException(mView)));
   }
 }

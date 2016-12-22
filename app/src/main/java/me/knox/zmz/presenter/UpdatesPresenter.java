@@ -24,8 +24,8 @@ public class UpdatesPresenter extends BasePresenter implements UpdatesContract.P
       if (result.isSuccess()) {
         mView.obtainUpdatesSucceed(result.getData());
       } else {
-        mView.obtainUpdatesFailed(result.getInfo());
+        mView.error(result.getInfo());
       }
-    }, new ApiErrorException()));
+    }, new ApiErrorException(mView)));
   }
 }

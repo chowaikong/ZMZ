@@ -4,6 +4,7 @@ import io.reactivex.Flowable;
 import java.util.List;
 import me.knox.zmz.entity.Resource;
 import me.knox.zmz.network.JsonResponse;
+import me.knox.zmz.view.BaseView;
 
 /**
  * Created by KNOX.
@@ -15,10 +16,8 @@ public interface ResourcesContract {
     Flowable<JsonResponse<Resource>> getResources(int page);
   }
 
-  interface View {
+  interface View extends BaseView {
     void obtainResourcesSucceed(List<Resource.Data> resources);
-
-    void obtainResourcesFailed(String error);
   }
 
   interface Presenter {

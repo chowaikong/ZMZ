@@ -1,6 +1,5 @@
 <resources>
   <string name="app_name">ZMZ</string>
-  <string name="network_error">网络出问题了~</string>
   <string name="something_wrong_happened">出错了</string>
   <string name="update" formatted="false">第%1d季 第%2d 集</string>
   <string name="size">大小：%s</string>
