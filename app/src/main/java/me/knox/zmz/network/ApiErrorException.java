@@ -27,7 +27,7 @@ public class ApiErrorException implements Consumer<Throwable>{
     }
 
     if (throwable instanceof IOException) {
-      Toaster.showShortToast(R.string.something_wrong_happened);
+      Toaster.show(R.string.something_wrong_happened);
     }
   }
 }

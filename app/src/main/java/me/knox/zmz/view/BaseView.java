@@ -8,8 +8,9 @@ public interface BaseView {
 
   /**
    * deal with error(s)
-   * @param objects info from remote server, throwable etc...
+   * @param error info from remote server
+   * @param objects throwable etc...
    */
-  void error(Object... objects);
+  void error(String error, Object... objects);
 
 }

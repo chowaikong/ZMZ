@@ -94,6 +94,6 @@ public class UpdatesFragment extends BindingLazyFragment<FragmentUpdatesBinding>
 
   @Override public void error(String error, Object... objects) {
     if (isFragmentNotAvailable()) return;
-    Toaster.showLongToast(error);
+    Toaster.show(error);
   }
 }

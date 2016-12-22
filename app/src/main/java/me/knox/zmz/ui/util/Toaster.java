@@ -1,28 +1,39 @@
 package me.knox.zmz.ui.util;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.StringRes;
+import android.text.TextUtils;
 import android.widget.Toast;
 import me.knox.zmz.App;
 
 /**
  * Created by KNOX.
+ *
+ * This is for just showing the last toast in the user interface,
+ * prevent showing too many toasts at a time during application running.
+ *
  */
 
 public class Toaster {
 
-  public static void showShortToast(CharSequence text) {
-    Toast.makeText(App.getInstance(), text, Toast.LENGTH_SHORT).show();
+  private static Toast sToast;
+
+  @SuppressLint("ShowToast")
+  public static void init() {
+    sToast = Toast.makeText(App.getInstance(), null, Toast.LENGTH_SHORT);
   }
 
-  public static void showLongToast(CharSequence text) {
-    Toast.makeText(App.getInstance(), text, Toast.LENGTH_LONG).show();
+  public static void show(CharSequence text) {
+    if (sToast != null && !TextUtils.isEmpty(text)) {
+      sToast.setText(text);
+      sToast.show();
+    }
   }
 
-  public static void showShortToast(@StringRes int stringId) {
-    Toast.makeText(App.getInstance(), stringId, Toast.LENGTH_SHORT).show();
-  }
-
-  public static void showLongToast(@StringRes int stringId) {
-    Toast.makeText(App.getInstance(), stringId, Toast.LENGTH_LONG).show();
+  public static void show(@StringRes int stringId) {
+    if (sToast != null && stringId > 0) {
+      sToast.setText(stringId);
+      sToast.show();
+    }
   }
 }

@@ -78,6 +78,6 @@ public class TodayFragment extends BindingLazyFragment<FragmentTodayBinding>
 
   @Override public void error(String error, Object... objects) {
     if (isFragmentNotAvailable()) return;
-    Toaster.showShortToast(error);
+    Toaster.show(error);
   }
 }
