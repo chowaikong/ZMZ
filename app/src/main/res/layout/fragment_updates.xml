@@ -13,12 +13,28 @@
         android:orientation="vertical"
         >
 
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/today_drama_updates"
+          android:textColor="?attr/colorAccent"
+          android:padding="10dp"
+          />
+
       <android.support.v7.widget.RecyclerView
           android:id="@+id/schedule_update_list"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
           app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+          />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="@string/today_download_updates"
+          android:padding="10dp"
+          android:textColor="?attr/colorAccent"
           />
 
       <android.support.v7.widget.RecyclerView

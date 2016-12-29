@@ -1,7 +1,9 @@
 package me.knox.zmz.di.module;
 
 import android.content.Context;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import dagger.Module;
 import dagger.Provides;
@@ -11,6 +13,7 @@ import javax.inject.Named;
 import me.knox.zmz.BuildConfig;
 import me.knox.zmz.misc.Constants;
 import me.knox.zmz.network.Api;
+import me.knox.zmz.network.ResponseTypeAdapterFactory;
 import me.knox.zmz.ui.util.LogPrinter;
 import okhttp3.Cache;
 import okhttp3.HttpUrl;
@@ -33,6 +36,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
   @Provides HttpUrl provideBaseUrl() {
     return HttpUrl.parse(BuildConfig.HOST);
+  }
+
+  @Provides public Gson provideGson() {
+    return new GsonBuilder()
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .registerTypeAdapterFactory(new ResponseTypeAdapterFactory())
+        .create();
   }
 
   @Provides Retrofit provideRetrofit(HttpUrl baseUrl, @Named("OkHttp") OkHttpClient client,

@@ -6,4 +6,6 @@
   <string name="format">格式：%s</string>
   <string name="file_name">文件名：%s</string>
   <string name="update_to" formatted="false">更新至第%1s季 第%2s 集</string>
+  <string name="today_download_updates">今日下载更新</string>
+  <string name="today_drama_updates">今日美剧更新</string>
 </resources>
