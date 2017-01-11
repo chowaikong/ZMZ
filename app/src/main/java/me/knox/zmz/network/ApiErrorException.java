@@ -3,7 +3,7 @@ package me.knox.zmz.network;
 import io.reactivex.functions.Consumer;
 import java.io.IOException;
 import me.knox.zmz.R;
-import me.knox.zmz.ui.util.LogPrinter;
+import me.knox.zmz.ui.util.ZLog;
 import me.knox.zmz.ui.util.Toaster;
 import me.knox.zmz.view.BaseView;
 
@@ -20,7 +20,7 @@ public class ApiErrorException implements Consumer<Throwable>{
   }
 
   @Override public void accept(Throwable throwable) throws Exception {
-    LogPrinter.e("ApiErrorException", throwable.toString());
+    ZLog.e("ApiErrorException", throwable.toString());
 
     if (mBaseView != null) {
       mBaseView.error(throwable.toString());

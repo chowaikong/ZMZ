@@ -7,9 +7,9 @@ import me.knox.zmz.BuildConfig;
  * Created by KNOX.
  */
 
-public class LogPrinter {
+public class ZLog {
 
-  private static final String TAG = "LogPrinter";
+  private static final String TAG = "ZLog";
 
   public static void init() {
     KLog.init(BuildConfig.DEBUG, TAG);

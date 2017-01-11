@@ -94,4 +94,5 @@ dependencies {
   compile dependencies.timber
   compile dependencies.jodaTime
   compile dependencies.KLog
+  compile 'com.genius:groupie:0.7.0'
 }

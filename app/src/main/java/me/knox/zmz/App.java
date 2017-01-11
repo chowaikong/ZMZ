@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import me.knox.zmz.di.component.DaggerAppComponent;
 import me.knox.zmz.di.module.AppModule;
 import me.knox.zmz.network.Api;
-import me.knox.zmz.ui.util.LogPrinter;
+import me.knox.zmz.ui.util.ZLog;
 import me.knox.zmz.ui.util.Toaster;
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -25,7 +25,7 @@ public class App extends Application {
 
     JodaTimeAndroid.init(this);
 
-    LogPrinter.init();
+    ZLog.init();
 
     Toaster.init();
 

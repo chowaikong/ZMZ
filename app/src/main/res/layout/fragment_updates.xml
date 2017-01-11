@@ -2,48 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-  <me.knox.zmz.ui.widget.ExNestedScrollView
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/rv"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        >
-
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@string/today_drama_updates"
-          android:textColor="?attr/colorAccent"
-          android:padding="10dp"
-          />
-
-      <android.support.v7.widget.RecyclerView
-          android:id="@+id/schedule_update_list"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-          />
-
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@string/today_download_updates"
-          android:padding="10dp"
-          android:textColor="?attr/colorAccent"
-          />
-
-      <android.support.v7.widget.RecyclerView
-          android:id="@+id/update_list"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="vertical"
-          app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-          />
-    </LinearLayout>
-  </me.knox.zmz.ui.widget.ExNestedScrollView>
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+      />
 </layout>

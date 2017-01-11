@@ -1,11 +1,12 @@
 <resources>
   <string name="app_name">ZMZ</string>
   <string name="something_wrong_happened">出错了</string>
-  <string name="update" formatted="false">第%1d季 第%2d 集</string>
+  <string name="season">S%s</string>
+  <string name="episode">E%s</string>
   <string name="size">大小：%s</string>
   <string name="format">格式：%s</string>
   <string name="file_name">文件名：%s</string>
-  <string name="update_to" formatted="false">更新至第%1s季 第%2s 集</string>
+  <string name="update_to" formatted="false">更新至</string>
   <string name="today_download_updates">今日下载更新</string>
   <string name="today_drama_updates">今日美剧更新</string>
 </resources>

@@ -14,7 +14,7 @@ import me.knox.zmz.BuildConfig;
 import me.knox.zmz.misc.Constants;
 import me.knox.zmz.network.Api;
 import me.knox.zmz.network.ResponseTypeAdapterFactory;
-import me.knox.zmz.ui.util.LogPrinter;
+import me.knox.zmz.ui.util.ZLog;
 import okhttp3.Cache;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -81,8 +81,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
   }
 
   @Provides HttpLoggingInterceptor provideLoggingInterceptor() {
-    HttpLoggingInterceptor loggingInterceptor =
-        new HttpLoggingInterceptor(LogPrinter::json);
+    HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(ZLog::json);
     loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
     return loggingInterceptor;
   }

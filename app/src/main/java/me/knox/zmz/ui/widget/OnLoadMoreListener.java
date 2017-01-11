@@ -2,7 +2,7 @@ package me.knox.zmz.ui.widget;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import me.knox.zmz.ui.util.LogPrinter;
+import me.knox.zmz.ui.util.ZLog;
 
 /**
  * Created by KNOX.
@@ -22,7 +22,7 @@ public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
       itemCount = linearLayoutManager.getItemCount();
       lastPosition = linearLayoutManager.findLastCompletelyVisibleItemPosition();
     } else {
-      LogPrinter.e("The OnLoadMoreListener only support LinearLayoutManager");
+      ZLog.e("The OnLoadMoreListener only support LinearLayoutManager");
       return;
     }
 
