@@ -43,9 +43,9 @@ public class ResourcesFragment extends BindingLazyFragment<FragmentResourcesBind
   }
 
   @Override protected void initView() {
-    mDataBinding.resourceList.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
-    mDataBinding.resourceList.setAdapter(mResourcesAdapter);
-    mDataBinding.resourceList.addOnScrollListener(new OnLoadMoreListener() {
+    mDataBinding.rv.rvVertical.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
+    mDataBinding.rv.rvVertical.setAdapter(mResourcesAdapter);
+    mDataBinding.rv.rvVertical.addOnScrollListener(new OnLoadMoreListener() {
       @Override public void loadMore() {
         mPage ++;
         mResourcesPresenter.getResources(mPage);

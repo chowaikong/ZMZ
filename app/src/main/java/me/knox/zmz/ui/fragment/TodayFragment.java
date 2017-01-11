@@ -3,6 +3,7 @@ package me.knox.zmz.ui.fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import com.genius.groupie.GroupAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -13,7 +14,9 @@ import me.knox.zmz.di.component.DaggerTodayComponent;
 import me.knox.zmz.di.module.HotListModule;
 import me.knox.zmz.di.module.NewsListModule;
 import me.knox.zmz.entity.Hot;
+import me.knox.zmz.entity.HotListItem;
 import me.knox.zmz.entity.News;
+import me.knox.zmz.entity.NewsListItem;
 import me.knox.zmz.presenter.HotListPresenter;
 import me.knox.zmz.presenter.NewsListPresenter;
 import me.knox.zmz.ui.adapter.HotListAdapter;
@@ -34,6 +37,10 @@ public class TodayFragment extends BindingLazyFragment<FragmentTodayBinding>
   private final HotListAdapter mHotListAdapter = new HotListAdapter(mHotList);
   private final NewsListAdapter mNewsListAdapter = new NewsListAdapter(mNewsList);
 
+  private final HotListItem mHotListItem = new HotListItem(mHotListAdapter);
+  private final NewsListItem mNewsListItem = new NewsListItem(mNewsListAdapter);
+  private final GroupAdapter mTodayGroupAdapter = new GroupAdapter();
+
   public static TodayFragment newInstance() {
     Bundle bundle = new Bundle();
     TodayFragment fragment = new TodayFragment();
@@ -47,8 +54,7 @@ public class TodayFragment extends BindingLazyFragment<FragmentTodayBinding>
   }
 
   @Override protected void initView() {
-    mDataBinding.todayList.setAdapter(mHotListAdapter);
-    mDataBinding.newsList.setAdapter(mNewsListAdapter);
+    mDataBinding.rv.rvVertical.setAdapter(mTodayGroupAdapter);
   }
 
   @Override protected void initData() {
@@ -74,6 +80,8 @@ public class TodayFragment extends BindingLazyFragment<FragmentTodayBinding>
   @Override public void obtainNewsListSucceed(List<News> newsList) {
     if (isFragmentNotAvailable()) return;
     mNewsListAdapter.setData(newsList);
+    mTodayGroupAdapter.add(mHotListItem);
+    mTodayGroupAdapter.add(mNewsListItem);
   }
 
   @Override public void error(String error, Object... objects) {

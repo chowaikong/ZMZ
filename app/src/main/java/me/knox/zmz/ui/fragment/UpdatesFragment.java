@@ -36,6 +36,10 @@ public class UpdatesFragment extends BindingLazyFragment<FragmentUpdatesBinding>
 
   private static final String TODAY = LocalDate.now().toString();
 
+  private final List<ScheduleUpdate> mScheduleUpdates = new ArrayList<>();
+  private final List<Update> mUpdates = new ArrayList<>();
+  private final ScheduleUpdateAdapter mScheduleUpdateAdapter = new ScheduleUpdateAdapter(mScheduleUpdates);
+  private final UpdatesAdapter mUpdatesAdapter = new UpdatesAdapter(mUpdates);
   private final GroupAdapter mUpdatesGroupAdapter = new GroupAdapter();
 
   private final Section mSectionDrama = new Section(new CategoryHeader("今日美剧更新"));
@@ -43,6 +47,8 @@ public class UpdatesFragment extends BindingLazyFragment<FragmentUpdatesBinding>
 
   @Inject UpdatesPresenter mUpdatesPresenter;
   @Inject ScheduleUpdatesPresenter mScheduleUpdatesPresenter;
+  private CarouselItem mCarouselItem = new CarouselItem(mScheduleUpdateAdapter);
+  private UpdatesItem mUpdatesItem = new UpdatesItem(mUpdatesAdapter);
 
   public static UpdatesFragment newInstance() {
     Bundle bundle = new Bundle();
@@ -57,7 +63,7 @@ public class UpdatesFragment extends BindingLazyFragment<FragmentUpdatesBinding>
   }
 
   @Override protected void initView() {
-    mDataBinding.rv.setAdapter(mUpdatesGroupAdapter);
+    mDataBinding.rv.rvVertical.setAdapter(mUpdatesGroupAdapter);
   }
 
   @Override protected void initData() {
@@ -74,9 +80,8 @@ public class UpdatesFragment extends BindingLazyFragment<FragmentUpdatesBinding>
   @Override public void obtainUpdatesSucceed(List<Update> updates) {
     if (isFragmentNotAvailable()) return;
     if (updates == null || updates.size() <= 0) return;
-    UpdatesItem updatesItem = new UpdatesItem(new UpdatesAdapter(new ArrayList<>()));
-    updatesItem.getUpdatesAdapter().setData(updates);
-    mSectionDownloads.add(updatesItem);
+    mUpdatesAdapter.setData(updates);
+    mSectionDownloads.add(mUpdatesItem);
     mUpdatesGroupAdapter.add(mSectionDownloads);
   }
 
@@ -97,9 +102,8 @@ public class UpdatesFragment extends BindingLazyFragment<FragmentUpdatesBinding>
     if (isFragmentNotAvailable()) return;
     List<ScheduleUpdate> scheduleUpdates = stringListMap.get(TODAY);
     if (scheduleUpdates.size() <= 0) return;
-    CarouselItem carouselItem = new CarouselItem(new ScheduleUpdateAdapter(new ArrayList<>()));
-    carouselItem.getUpdatesAdapter().setData(scheduleUpdates);
-    mSectionDrama.add(carouselItem);
+    mScheduleUpdateAdapter.setData(scheduleUpdates);
+    mSectionDrama.add(mCarouselItem);
     mUpdatesGroupAdapter.add(mSectionDrama);
   }
 

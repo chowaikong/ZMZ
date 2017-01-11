@@ -1,31 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
-  <me.knox.zmz.ui.widget.ExNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+  <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:orientation="vertical"
       >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-
-      <android.support.v7.widget.RecyclerView
-          android:id="@+id/today_list"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-          />
-      <android.support.v7.widget.RecyclerView
-          android:id="@+id/news_list"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="20dp"
-          android:orientation="vertical"
-          app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-          />
-    </LinearLayout>
-  </me.knox.zmz.ui.widget.ExNestedScrollView>
+    <include layout="@layout/layout_vertical_rv"
+        android:id="@+id/rv"/>
+  </LinearLayout>
 </layout>

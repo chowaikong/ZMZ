@@ -10,34 +10,34 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    >
 
   <TextView
-      android:layout_width="0dp"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_weight="1"
       android:text="@{hot.cnname}"
       android:textColor="?attr/colorAccent"
       tools:text="name"
       android:gravity="center"
+      android:padding="5dp"
       />
   <TextView
-      android:layout_width="0dp"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_weight="1"
       android:text="@{hot.area}"
       android:textColor="?attr/colorAccent"
       tools:text="name"
       android:gravity="center"
+      android:padding="5dp"
       />
   <TextView
-      android:layout_width="0dp"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_weight="1"
       android:text="@{hot.channel}"
       android:textColor="?attr/colorAccent"
       tools:text="name"
       android:gravity="center"
+      android:padding="5dp"
       />
 
 </LinearLayout>
