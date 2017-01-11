@@ -44,11 +44,11 @@ public class UpdatesFragment extends BindingLazyFragment<FragmentUpdatesBinding>
 
   private final Section mSectionDrama = new Section(new CategoryHeader("今日美剧更新"));
   private final Section mSectionDownloads = new Section(new CategoryHeader("今日下载更新"));
+  private CarouselItem mCarouselItem = new CarouselItem(mScheduleUpdateAdapter);
+  private UpdatesItem mUpdatesItem = new UpdatesItem(mUpdatesAdapter);
 
   @Inject UpdatesPresenter mUpdatesPresenter;
   @Inject ScheduleUpdatesPresenter mScheduleUpdatesPresenter;
-  private CarouselItem mCarouselItem = new CarouselItem(mScheduleUpdateAdapter);
-  private UpdatesItem mUpdatesItem = new UpdatesItem(mUpdatesAdapter);
 
   public static UpdatesFragment newInstance() {
     Bundle bundle = new Bundle();
@@ -74,7 +74,6 @@ public class UpdatesFragment extends BindingLazyFragment<FragmentUpdatesBinding>
         .inject(this);
 
     mScheduleUpdatesPresenter.getScheduleUpdates(TODAY, TODAY); // 今日美剧更新
-    mUpdatesPresenter.getUpdates();                             // 今日下载更新
   }
 
   @Override public void obtainUpdatesSucceed(List<Update> updates) {
@@ -105,6 +104,9 @@ public class UpdatesFragment extends BindingLazyFragment<FragmentUpdatesBinding>
     mScheduleUpdateAdapter.setData(scheduleUpdates);
     mSectionDrama.add(mCarouselItem);
     mUpdatesGroupAdapter.add(mSectionDrama);
+
+    mUpdatesPresenter.getUpdates(); // 今日下载更新
+
   }
 
   @Override public void error(String error, Object... objects) {

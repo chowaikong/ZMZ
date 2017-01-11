@@ -29,8 +29,4 @@ public class UpdatesItem extends Item<LayoutVerticalRvBinding> {
     viewBinding.rvVertical.setAdapter(mUpdatesAdapter);
     viewBinding.executePendingBindings();
   }
-
-  public UpdatesAdapter getUpdatesAdapter() {
-    return mUpdatesAdapter;
-  }
 }

@@ -1,37 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
   <data>
     <variable
         name="news"
         type="me.knox.zmz.entity.News"
         />
   </data>
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  <android.support.v7.widget.CardView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:paddingBottom="20dp"
+      app:cardCornerRadius="0dp"
       >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@{news.title}"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@{news.type}"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@{String.valueOf(news.date)}"
-        />
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:img="@{news.poster}"
-        />
-  </LinearLayout>
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:img="@{news.poster}"
+          />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:padding="10dp"
+          android:text="@{news.title}"
+          android:textSize="16sp"
+          android:textColor="@android:color/black"
+          tools:text="title"
+          />
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingBottom="5dp"
+          android:paddingRight="15dp"
+          android:text="@{news.type}"
+          tools:text="type"
+          android:gravity="right"
+          />
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingBottom="5dp"
+          android:paddingRight="15dp"
+          android:text="@{String.valueOf(news.date)}"
+          tools:text="date"
+          android:gravity="right"
+          />
+    </LinearLayout>
+  </android.support.v7.widget.CardView>
 </layout>

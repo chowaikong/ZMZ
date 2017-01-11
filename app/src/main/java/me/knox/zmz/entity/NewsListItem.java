@@ -4,6 +4,7 @@ import com.genius.groupie.Item;
 import me.knox.zmz.R;
 import me.knox.zmz.databinding.LayoutVerticalRvBinding;
 import me.knox.zmz.ui.adapter.NewsListAdapter;
+import me.knox.zmz.ui.widget.VerticalSpaceItemDecoration;
 
 /**
  * Created by KNOX.
@@ -12,6 +13,7 @@ import me.knox.zmz.ui.adapter.NewsListAdapter;
 public class NewsListItem extends Item<LayoutVerticalRvBinding> {
 
   private NewsListAdapter mNewsListAdapter;
+  private LayoutVerticalRvBinding mRvBinding;
 
   public NewsListItem(NewsListAdapter newsListAdapter) {
     mNewsListAdapter = newsListAdapter;
@@ -22,7 +24,13 @@ public class NewsListItem extends Item<LayoutVerticalRvBinding> {
   }
 
   @Override public void bind(LayoutVerticalRvBinding viewBinding, int position) {
+    mRvBinding = viewBinding;
+    viewBinding.rvVertical.addItemDecoration(new VerticalSpaceItemDecoration(40));
     viewBinding.rvVertical.setAdapter(mNewsListAdapter);
     viewBinding.executePendingBindings();
+  }
+
+  public LayoutVerticalRvBinding getRvBinding() {
+    return mRvBinding;
   }
 }

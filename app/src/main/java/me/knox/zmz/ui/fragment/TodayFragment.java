@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import com.genius.groupie.GroupAdapter;
+import com.genius.groupie.Section;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import me.knox.zmz.databinding.FragmentTodayBinding;
 import me.knox.zmz.di.component.DaggerTodayComponent;
 import me.knox.zmz.di.module.HotListModule;
 import me.knox.zmz.di.module.NewsListModule;
+import me.knox.zmz.entity.CategoryHeader;
 import me.knox.zmz.entity.Hot;
 import me.knox.zmz.entity.HotListItem;
 import me.knox.zmz.entity.News;
@@ -32,14 +34,19 @@ public class TodayFragment extends BindingLazyFragment<FragmentTodayBinding>
 
   @Inject HotListPresenter mHotListPresenter;
   @Inject NewsListPresenter mNewsListPresenter;
+
   private final List<Hot> mHotList = new ArrayList<>();
   private final List<News> mNewsList = new ArrayList<>();
   private final HotListAdapter mHotListAdapter = new HotListAdapter(mHotList);
   private final NewsListAdapter mNewsListAdapter = new NewsListAdapter(mNewsList);
 
+  private final Section mHotSection = new Section(new CategoryHeader("今日热门"));
+  private final Section mNewsSection = new Section(new CategoryHeader("资讯列表"));
   private final HotListItem mHotListItem = new HotListItem(mHotListAdapter);
   private final NewsListItem mNewsListItem = new NewsListItem(mNewsListAdapter);
   private final GroupAdapter mTodayGroupAdapter = new GroupAdapter();
+
+  private int mPage = 0;
 
   public static TodayFragment newInstance() {
     Bundle bundle = new Bundle();
@@ -64,23 +71,26 @@ public class TodayFragment extends BindingLazyFragment<FragmentTodayBinding>
         .build()
         .inject(this);
 
-    if (mHotListPresenter != null) {
-      mHotListPresenter.getHot();
-    }
-    if (mNewsListPresenter != null) {
-      mNewsListPresenter.getNewsList(0);
-    }
+    mHotListPresenter.getHot();
   }
 
   @Override public void obtainHotListSuccess(List<Hot> hotList) {
     if (isFragmentNotAvailable()) return;
     mHotListAdapter.setData(hotList);
+    mTodayGroupAdapter.add(mHotSection);
+    mTodayGroupAdapter.add(mHotListItem);
+
+    mNewsListPresenter.getNewsList(mPage);
   }
 
   @Override public void obtainNewsListSucceed(List<News> newsList) {
     if (isFragmentNotAvailable()) return;
-    mNewsListAdapter.setData(newsList);
-    mTodayGroupAdapter.add(mHotListItem);
+    mTodayGroupAdapter.add(mNewsSection);
+    if (mPage == 0) {
+      mNewsListAdapter.setData(newsList);
+    } else {
+      mNewsListAdapter.addData(newsList);
+    }
     mTodayGroupAdapter.add(mNewsListItem);
   }
 

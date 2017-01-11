@@ -43,4 +43,8 @@ public class Hot {
   public String getPlay_status() {
     return play_status;
   }
+
+  public String getPoster() {
+    return poster;
+  }
 }

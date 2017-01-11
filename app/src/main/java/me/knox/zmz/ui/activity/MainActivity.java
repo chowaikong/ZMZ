@@ -32,8 +32,7 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding> {
     HomePagerAdapter pagerAdapter = new HomePagerAdapter(getSupportFragmentManager());
     mDataBinding.vp.setAdapter(pagerAdapter);
     mDataBinding.vp.setOffscreenPageLimit(pagerAdapter.getCount());
-    mDataBinding.vp.addOnPageChangeListener(
-        new TabLayout.TabLayoutOnPageChangeListener(mDataBinding.tab));
+    mDataBinding.vp.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mDataBinding.tab));
     for (int TAB : TAB_ICONS) {
       mDataBinding.tab.addTab(mDataBinding.tab.newTab().setIcon(TAB));
     }

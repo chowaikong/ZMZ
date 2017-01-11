@@ -2,14 +2,14 @@ package me.knox.zmz.entity;
 
 import com.genius.groupie.Item;
 import me.knox.zmz.R;
-import me.knox.zmz.databinding.LayoutVerticalRvBinding;
+import me.knox.zmz.databinding.LayoutHorizontalRvBinding;
 import me.knox.zmz.ui.adapter.HotListAdapter;
 
 /**
  * Created by KNOX.
  */
 
-public class HotListItem extends Item<LayoutVerticalRvBinding> {
+public class HotListItem extends Item<LayoutHorizontalRvBinding> {
 
   private HotListAdapter mHotListAdapter;
 
@@ -18,11 +18,11 @@ public class HotListItem extends Item<LayoutVerticalRvBinding> {
   }
 
   @Override public int getLayout() {
-    return R.layout.layout_vertical_rv;
+    return R.layout.layout_horizontal_rv;
   }
 
-  @Override public void bind(LayoutVerticalRvBinding viewBinding, int position) {
-    viewBinding.rvVertical.setAdapter(mHotListAdapter);
+  @Override public void bind(LayoutHorizontalRvBinding viewBinding, int position) {
+    viewBinding.rvHorizontal.setAdapter(mHotListAdapter);
     viewBinding.executePendingBindings();
   }
 }

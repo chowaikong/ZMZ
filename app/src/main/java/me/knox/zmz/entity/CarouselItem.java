@@ -25,8 +25,4 @@ public class CarouselItem extends Item<LayoutHorizontalRvBinding> {
     viewBinding.rvHorizontal.setAdapter(mUpdatesAdapter);
     viewBinding.executePendingBindings();
   }
-
-  public ScheduleUpdateAdapter getUpdatesAdapter() {
-    return mUpdatesAdapter;
-  }
 }
