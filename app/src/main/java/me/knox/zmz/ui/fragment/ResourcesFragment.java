@@ -77,4 +77,12 @@ public class ResourcesFragment extends BindingLazyFragment<FragmentResourcesBind
     if (isFragmentNotAvailable()) return;
     Toaster.show(error);
   }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+
+    if (mResourcesPresenter != null) {
+      mResourcesPresenter.dispose();
+    }
+  }
 }

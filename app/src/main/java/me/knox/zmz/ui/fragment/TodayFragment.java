@@ -98,4 +98,16 @@ public class TodayFragment extends BindingLazyFragment<FragmentTodayBinding>
     if (isFragmentNotAvailable()) return;
     Toaster.show(error);
   }
+
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+
+    if (mHotListPresenter != null) {
+      mHotListPresenter.dispose();
+    }
+
+    if (mNewsListPresenter != null) {
+      mNewsListPresenter.dispose();
+    }
+  }
 }

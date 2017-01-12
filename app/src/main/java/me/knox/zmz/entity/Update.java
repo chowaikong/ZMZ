@@ -12,8 +12,8 @@ public class Update {
   @SerializedName("resourceid") private int resourceId;
   @SerializedName("name") private String name;
   @SerializedName("format") private String format;
-  @SerializedName("season") private int season;
-  @SerializedName("episode") private int episode;
+  @SerializedName("season") private String season;
+  @SerializedName("episode") private String episode;
   @SerializedName("size") private String size;
   @SerializedName("cnname") private String cnname;
   @SerializedName("channel") private String channel;
@@ -35,11 +35,17 @@ public class Update {
     return format;
   }
 
-  public int getSeason() {
+  public String getSeason() {
+    if (Math.log10(Double.valueOf(season)) + 1 < 2) {
+      return "0" + season;
+    }
     return season;
   }
 
-  public int getEpisode() {
+  public String getEpisode() {
+    if (Math.log10(Double.valueOf(episode)) + 1 < 2) {
+      return "0" + episode;
+    }
     return episode;
   }
 

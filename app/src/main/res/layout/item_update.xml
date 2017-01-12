@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     >
   <data>
+    <import type="android.view.View"/>
     <variable
         name="update"
         type="me.knox.zmz.entity.Update"/>
@@ -25,12 +25,13 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@{@string/size(update.size)}"
+      android:visibility='@{update.size.equals("0") ? View.GONE : View.VISIBLE}'
       />
 
   <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="@{@string/update_to(update.season+update.episode)}"
+      android:text="@{@string/update_to + @string/season(update.season) + @string/episode(update.episode)}"
       />
 
   <TextView

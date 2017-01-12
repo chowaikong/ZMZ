@@ -12,6 +12,8 @@ public class News {
   @SerializedName("type") private String type;
   @SerializedName("poster_b") private String poster; // poster_b,poster_m,poster_s
   @SerializedName("dateline") private long date;
+  @SerializedName("intro") private String intro;
+  @SerializedName("views") private String views;
 
   public int getId() {
     return id;
@@ -31,5 +33,13 @@ public class News {
 
   public long getDate() {
     return date;
+  }
+
+  public String getIntro() {
+    return intro;
+  }
+
+  public String getViews() {
+    return views;
   }
 }

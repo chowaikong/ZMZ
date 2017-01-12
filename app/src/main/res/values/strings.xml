@@ -9,4 +9,5 @@
   <string name="update_to" formatted="false">更新至</string>
   <string name="today_download_updates">今日下载更新</string>
   <string name="today_drama_updates">今日美剧更新</string>
+  <string name="read">阅读数:%s</string>
 </resources>

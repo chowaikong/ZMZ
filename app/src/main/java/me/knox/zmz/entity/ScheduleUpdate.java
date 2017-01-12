@@ -32,10 +32,16 @@ public class ScheduleUpdate {
   }
 
   public String getSeason() {
+    if (Math.log10(Double.valueOf(season)) + 1 < 2) {
+      return "0" + season;
+    }
     return season;
   }
 
   public String getEpisode() {
+    if (Math.log10(Double.valueOf(episode)) + 1 < 2) {
+      return "0" + episode;
+    }
     return episode;
   }
 }

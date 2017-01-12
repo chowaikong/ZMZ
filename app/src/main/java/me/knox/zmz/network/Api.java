@@ -28,7 +28,7 @@ public interface Api {
   @GET("resource/fetchlist")
   Flowable<JsonResponse<Resource>> getResources(@Query("page") int page);
 
-  @GET("news/fetchlist")
+  @GET("article/fetchlist")
   Flowable<JsonResponse<List<News>>> getNews(@Query("page") int page);
 
   @GET("resource/getinfo")
