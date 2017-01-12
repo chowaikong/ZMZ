@@ -20,7 +20,7 @@ public class ResourcesAdapter extends BaseRVAdapter<ItemResourceBinding, Resourc
   @Override public DataBindingViewHolder<ItemResourceBinding> onCreateViewHolder(ViewGroup parent,
       int viewType) {
     return new DataBindingViewHolder<>(
-        ItemResourceBinding.inflate(LayoutInflater.from(parent.getContext()), null, false));
+        ItemResourceBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
   }
 
   @Override

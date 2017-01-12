@@ -22,7 +22,7 @@ public class Resource {
     @SerializedName("area") private String area;
     @SerializedName("format") private String format;
     @SerializedName("category") private String category;
-    @SerializedName("poster") private String poster;
+    @SerializedName("poster") private String poster; // poster, poster_a, poster_b, poster_m,poster_s
     @SerializedName("channel") private String channel;
     @SerializedName("lang") private String lang;
     @SerializedName("play_status") private String playStatus;

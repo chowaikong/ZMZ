@@ -20,7 +20,7 @@ public class NewsListAdapter extends BaseRVAdapter<ItemNewsBinding, News> {
   @Override
   public DataBindingViewHolder<ItemNewsBinding> onCreateViewHolder(ViewGroup parent, int viewType) {
     return new DataBindingViewHolder<>(
-        ItemNewsBinding.inflate(LayoutInflater.from(parent.getContext()), null, false));
+        ItemNewsBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
   }
 
   @Override

@@ -1,7 +1,6 @@
 package me.knox.zmz.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import java.util.ArrayList;
@@ -16,8 +15,7 @@ import me.knox.zmz.presenter.ResourcesPresenter;
 import me.knox.zmz.ui.adapter.ResourcesAdapter;
 import me.knox.zmz.ui.util.Toaster;
 import me.knox.zmz.ui.widget.OnLoadMoreListener;
-
-import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
+import me.knox.zmz.ui.widget.VerticalSpaceItemDecoration;
 
 /**
  * Created by KNOX.
@@ -43,7 +41,9 @@ public class ResourcesFragment extends BindingLazyFragment<FragmentResourcesBind
   }
 
   @Override protected void initView() {
-    mDataBinding.rv.rvVertical.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
+    mDataBinding.rv.rvVertical.setClipToPadding(false);
+    mDataBinding.rv.rvVertical.setPadding(0, 40, 0, 0);
+    mDataBinding.rv.rvVertical.addItemDecoration(new VerticalSpaceItemDecoration(40));
     mDataBinding.rv.rvVertical.setAdapter(mResourcesAdapter);
     mDataBinding.rv.rvVertical.addOnScrollListener(new OnLoadMoreListener() {
       @Override public void loadMore() {
