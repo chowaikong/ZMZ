@@ -12,7 +12,9 @@ import me.knox.zmz.di.component.DaggerResourcesComponent;
 import me.knox.zmz.di.module.ResourcesModule;
 import me.knox.zmz.entity.Resource;
 import me.knox.zmz.presenter.ResourcesPresenter;
+import me.knox.zmz.ui.activity.ResourceInfoActivity;
 import me.knox.zmz.ui.adapter.ResourcesAdapter;
+import me.knox.zmz.ui.util.RecyclerItemClickListener;
 import me.knox.zmz.ui.util.Toaster;
 import me.knox.zmz.ui.widget.OnLoadMoreListener;
 import me.knox.zmz.ui.widget.VerticalSpaceItemDecoration;
@@ -51,6 +53,8 @@ public class ResourcesFragment extends BindingLazyFragment<FragmentResourcesBind
         mResourcesPresenter.getResources(mPage);
       }
     });
+    mDataBinding.rv.rvVertical.addOnItemTouchListener(new RecyclerItemClickListener(getContext(),
+        (view, position) -> ResourceInfoActivity.start(getContext(), mDataList.get(position))));
   }
 
   @Override protected void initData() {
@@ -71,6 +75,7 @@ public class ResourcesFragment extends BindingLazyFragment<FragmentResourcesBind
     } else {
       mResourcesAdapter.addData(resources);
     }
+    mDataList.addAll(resources);
   }
 
   @Override public void error(String error, Object... objects) {

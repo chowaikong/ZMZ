@@ -19,7 +19,6 @@ import static me.knox.zmz.R.drawable.selector_tab_today;
 
 public class MainActivity extends BaseBindingActivity<ActivityMainBinding> {
 
-  //private static final String TABS[] = new String[] { "更新", "热门", "资源" };
   private static final int TAB_ICONS[] =
       new int[] { selector_tab_today, selector_tab_hot, selector_tab_rescource };
 

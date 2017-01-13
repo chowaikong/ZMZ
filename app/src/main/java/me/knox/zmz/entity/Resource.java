@@ -1,5 +1,7 @@
 package me.knox.zmz.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
@@ -15,7 +17,8 @@ public class Resource {
     return mDataList;
   }
 
-  public class Data {
+  public static class Data implements Parcelable {
+    @SerializedName("id") private String id;
     @SerializedName("cnname") private String cnname;
     @SerializedName("enname") private String enname;
     @SerializedName("remark") private String remark;
@@ -30,6 +33,10 @@ public class Resource {
     @SerializedName("score") private String score;
     @SerializedName("views") private String views;
     @SerializedName("itemupdate") private long itemUpdate;
+
+    public String getId() {
+      return id;
+    }
 
     public String getCnname() {
       return cnname;
@@ -86,5 +93,58 @@ public class Resource {
     public long getItemUpdate() {
       return itemUpdate;
     }
+
+    @Override public int describeContents() {
+      return 0;
+    }
+
+    @Override public void writeToParcel(Parcel dest, int flags) {
+      dest.writeString(this.id);
+      dest.writeString(this.cnname);
+      dest.writeString(this.enname);
+      dest.writeString(this.remark);
+      dest.writeString(this.area);
+      dest.writeString(this.format);
+      dest.writeString(this.category);
+      dest.writeString(this.poster);
+      dest.writeString(this.channel);
+      dest.writeString(this.lang);
+      dest.writeString(this.playStatus);
+      dest.writeString(this.rank);
+      dest.writeString(this.score);
+      dest.writeString(this.views);
+      dest.writeLong(this.itemUpdate);
+    }
+
+    public Data() {
+    }
+
+    protected Data(Parcel in) {
+      this.id = in.readString();
+      this.cnname = in.readString();
+      this.enname = in.readString();
+      this.remark = in.readString();
+      this.area = in.readString();
+      this.format = in.readString();
+      this.category = in.readString();
+      this.poster = in.readString();
+      this.channel = in.readString();
+      this.lang = in.readString();
+      this.playStatus = in.readString();
+      this.rank = in.readString();
+      this.score = in.readString();
+      this.views = in.readString();
+      this.itemUpdate = in.readLong();
+    }
+
+    public static final Parcelable.Creator<Data> CREATOR = new Parcelable.Creator<Data>() {
+      @Override public Data createFromParcel(Parcel source) {
+        return new Data(source);
+      }
+
+      @Override public Data[] newArray(int size) {
+        return new Data[size];
+      }
+    };
   }
 }
