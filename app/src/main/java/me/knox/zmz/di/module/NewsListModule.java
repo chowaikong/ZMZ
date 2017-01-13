@@ -10,7 +10,7 @@ import me.knox.zmz.model.NewsListModel;
  * Created by KNOX.
  */
 
-@Module(includes = AppModule.class)
+@Module
 public class NewsListModule {
   private NewsListContract.View mView;
 

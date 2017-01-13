@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 /**
  * Created by KNOX.
@@ -22,6 +24,11 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding> extends App
   }
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    Window window = getWindow();
+    if (window != null) {
+      window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+          WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
     super.onCreate(savedInstanceState);
 
     mDataBinding = setDataBindingContentView(savedInstanceState);

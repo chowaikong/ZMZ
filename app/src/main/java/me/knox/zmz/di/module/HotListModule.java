@@ -10,7 +10,7 @@ import me.knox.zmz.model.HotListModel;
  * Created by KNOX on 2016-11-27.
  */
 
-@Module(includes = AppModule.class)
+@Module
 public class HotListModule {
 
   private HotListContract.View mView;

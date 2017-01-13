@@ -14,7 +14,7 @@ public class Hot {
   @SerializedName("category") private String category;
   @SerializedName("publish_year") private String publish_year;
   @SerializedName("play_status") private String play_status;
-  @SerializedName("poster_b") private String poster; // poster,poster_a,poster_b,poster_m,poster_s
+  @SerializedName("poster") private String poster; // poster,poster_a,poster_b,poster_m,poster_s
 
   public String getId() {
     return id;

@@ -10,7 +10,7 @@ import me.knox.zmz.model.ScheduleUpdatesModel;
  * Created by KNOX.
  */
 
-@Module(includes = AppModule.class)
+@Module
 public class ScheduleUpdatesModule {
 
   private ScheduleUpdatesContract.View mView;
