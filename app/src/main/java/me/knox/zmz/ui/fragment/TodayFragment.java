@@ -41,7 +41,7 @@ public class TodayFragment extends BindingLazyFragment<FragmentTodayBinding>
   private final NewsListAdapter mNewsListAdapter = new NewsListAdapter(mNewsList);
 
   private final Section mHotSection = new Section(new CategoryHeader("今日热门"));
-  private final Section mNewsSection = new Section(new CategoryHeader("资讯列表"));
+  private final Section mNewsSection = new Section(new CategoryHeader("新闻资讯"));
   private final HotListItem mHotListItem = new HotListItem(mHotListAdapter);
   private final NewsListItem mNewsListItem = new NewsListItem(mNewsListAdapter);
   private final GroupAdapter mTodayGroupAdapter = new GroupAdapter();

@@ -19,8 +19,8 @@ public class ResourceInfoPresenter extends BasePresenter implements ResourceInfo
     mView = view;
   }
 
-  @Override public void getResourceInfo(int id) {
-    addDisposable(mModel.getResourceInfo(id).subscribe(result -> {
+  @Override public void getResourceInfo(int id, int isSharable) {
+    addDisposable(mModel.getResourceInfo(id, isSharable).subscribe(result -> {
       if (result.isSuccess()) {
         mView.obtainResourceInfoSucceed(result.getData());
       } else {

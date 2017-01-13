@@ -43,7 +43,7 @@ public class ResourcesFragment extends BindingLazyFragment<FragmentResourcesBind
   @Override protected void initView() {
     mDataBinding.rv.rvVertical.setClipToPadding(false);
     mDataBinding.rv.rvVertical.setPadding(0, 40, 0, 0);
-    mDataBinding.rv.rvVertical.addItemDecoration(new VerticalSpaceItemDecoration(40));
+    mDataBinding.rv.rvVertical.addItemDecoration(new VerticalSpaceItemDecoration(30));
     mDataBinding.rv.rvVertical.setAdapter(mResourcesAdapter);
     mDataBinding.rv.rvVertical.addOnScrollListener(new OnLoadMoreListener() {
       @Override public void loadMore() {

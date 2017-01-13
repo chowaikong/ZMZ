@@ -23,8 +23,7 @@ public class UpdatesItem extends Item<LayoutVerticalRvBinding> {
   }
 
   @Override public void bind(LayoutVerticalRvBinding viewBinding, int position) {
-    viewBinding.rvVertical.addItemDecoration(new VerticalSpaceItemDecoration(40));
+    viewBinding.rvVertical.addItemDecoration(new VerticalSpaceItemDecoration(30));
     viewBinding.rvVertical.setAdapter(mUpdatesAdapter);
-    viewBinding.executePendingBindings();
   }
 }

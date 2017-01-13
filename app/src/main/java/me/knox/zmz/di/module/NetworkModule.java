@@ -60,7 +60,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
     File cacheDir = new File(app.getCacheDir(), "http");
     Cache cache = new Cache(cacheDir, 1024 * 1024 * 50);
     return new OkHttpClient.Builder().cache(cache)
-        .connectTimeout(15000, TimeUnit.MILLISECONDS)
+        .connectTimeout(20, TimeUnit.SECONDS)
+        .readTimeout(20, TimeUnit.SECONDS)
         .addInterceptor(interceptor)
         .addInterceptor(httpLoggingInterceptor)
         .build();

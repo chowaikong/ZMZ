@@ -19,6 +19,7 @@ public class Update {
   @SerializedName("cnname") private String cnname;
   @SerializedName("channel") private String channel;
   @SerializedName("ways") private Map<String, String> ways;
+  private String poster;
 
   public int getId() {
     return id;
@@ -64,5 +65,13 @@ public class Update {
 
   public Map<String, String> getWays() {
     return ways;
+  }
+
+  public String getPoster() {
+    return poster;
+  }
+
+  public void setPoster(String poster) {
+    this.poster = poster;
   }
 }

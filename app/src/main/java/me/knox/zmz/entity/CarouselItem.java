@@ -1,5 +1,6 @@
 package me.knox.zmz.entity;
 
+import android.support.v7.widget.LinearSnapHelper;
 import com.genius.groupie.Item;
 import me.knox.zmz.R;
 import me.knox.zmz.databinding.LayoutHorizontalRvBinding;
@@ -23,6 +24,6 @@ public class CarouselItem extends Item<LayoutHorizontalRvBinding> {
 
   @Override public void bind(LayoutHorizontalRvBinding viewBinding, int position) {
     viewBinding.rvHorizontal.setAdapter(mUpdatesAdapter);
-    viewBinding.executePendingBindings();
+    new LinearSnapHelper().attachToRecyclerView(viewBinding.rvHorizontal);
   }
 }

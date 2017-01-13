@@ -40,10 +40,10 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:paddingBottom="5dp"
-          android:paddingRight="15dp"
+          android:paddingStart="15dp"
           app:type="@{news.type}"
           tools:text="type"
-          android:gravity="right"
+          android:gravity="start"
           />
       <LinearLayout
           android:layout_width="match_parent"

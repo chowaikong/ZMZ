@@ -1,7 +1,6 @@
 package me.knox.zmz.model;
 
 import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import javax.inject.Inject;
 import me.knox.zmz.App;
 import me.knox.zmz.contract.ResourceInfoContract;
@@ -18,7 +17,7 @@ public class ResourceInfoModel implements ResourceInfoContract.Model {
   public ResourceInfoModel() {
   }
 
-  @Override public Flowable<JsonResponse<ResourceInfo>> getResourceInfo(int id) {
-    return App.getInstance().getApi().getResourceInfo(id).observeOn(AndroidSchedulers.mainThread(), true);
+  @Override public Flowable<JsonResponse<ResourceInfo>> getResourceInfo(int id, int isSharable) {
+    return App.getInstance().getApi().getResourceInfo(id, isSharable);
   }
 }

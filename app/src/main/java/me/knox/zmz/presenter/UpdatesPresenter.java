@@ -2,6 +2,7 @@ package me.knox.zmz.presenter;
 
 import javax.inject.Inject;
 import me.knox.zmz.contract.UpdatesContract;
+import me.knox.zmz.model.ResourceInfoModel;
 import me.knox.zmz.network.ApiErrorException;
 
 /**
@@ -11,16 +12,29 @@ import me.knox.zmz.network.ApiErrorException;
 public class UpdatesPresenter extends BasePresenter implements UpdatesContract.Presenter {
 
   private UpdatesContract.Model mModel;
+  private ResourceInfoModel mInfoModel;
   private UpdatesContract.View mView;
 
-  @Inject
-  public UpdatesPresenter(UpdatesContract.Model model, UpdatesContract.View view) {
+  @Inject public UpdatesPresenter(UpdatesContract.Model model, ResourceInfoModel infoModel,
+      UpdatesContract.View view) {
     mModel = model;
+    mInfoModel = infoModel;
     mView = view;
   }
 
   @Override public void getUpdates() {
-    addDisposable(mModel.getUpdates().subscribe(result -> {
+    addDisposable(mModel.getUpdates().map(listJsonResponse -> {
+      for (int i = 0; i < listJsonResponse.getData().size(); i++) {
+        int finalI = i;
+        mInfoModel.getResourceInfo(listJsonResponse.getData().get(i).getResourceId(), 0)
+            .subscribe(result -> {
+              if (result.isSuccess()) {
+                listJsonResponse.getData().get(finalI).setPoster(result.getData().getPoster());
+              }
+            });
+      }
+      return listJsonResponse;
+    }).subscribe(result -> {
       if (result.isSuccess()) {
         mView.obtainUpdatesSucceed(result.getData());
       } else {

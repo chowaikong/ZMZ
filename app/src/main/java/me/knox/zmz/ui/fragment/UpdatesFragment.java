@@ -79,9 +79,9 @@ public class UpdatesFragment extends BindingLazyFragment<FragmentUpdatesBinding>
   @Override public void obtainUpdatesSucceed(List<Update> updates) {
     if (isFragmentNotAvailable()) return;
     if (updates == null || updates.size() <= 0) return;
+    mUpdatesGroupAdapter.add(mSectionDownloads);
     mUpdatesAdapter.setData(updates);
     mSectionDownloads.add(mUpdatesItem);
-    mUpdatesGroupAdapter.add(mSectionDownloads);
   }
 
   @Override public void onDestroyView() {

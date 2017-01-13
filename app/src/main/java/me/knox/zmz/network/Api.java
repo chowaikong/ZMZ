@@ -32,5 +32,5 @@ public interface Api {
   Flowable<JsonResponse<List<News>>> getNews(@Query("page") int page);
 
   @GET("resource/getinfo")
-  Flowable<JsonResponse<ResourceInfo>> getResourceInfo(@Query("id") int id);
+  Flowable<JsonResponse<ResourceInfo>> getResourceInfo(@Query("id") int id, @Query("share") int isSharable);
 }

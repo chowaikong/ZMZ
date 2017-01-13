@@ -12,13 +12,13 @@ import me.knox.zmz.view.BaseView;
 public interface ResourceInfoContract {
 
   interface Model {
-    Flowable<JsonResponse<ResourceInfo>> getResourceInfo(int id);
+    Flowable<JsonResponse<ResourceInfo>> getResourceInfo(int id, int isSharable);
   }
 
   interface View extends BaseView {
     void obtainResourceInfoSucceed(ResourceInfo resourceInfo);
   }
   interface Presenter {
-    void getResourceInfo(int id);
+    void getResourceInfo(int id, int isSharable);
   }
 }

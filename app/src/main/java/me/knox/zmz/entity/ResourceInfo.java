@@ -10,14 +10,14 @@ public class ResourceInfo {
   @SerializedName("cnname") private String cnname;
   @SerializedName("enname") private String enname;
   @SerializedName("remark") private String remark;
-  @SerializedName("poster") private String poster;
+  @SerializedName("poster_a") private String poster; // poster, poster_a, poster_b, poster_m,poster_s
   @SerializedName("play_status") private String playStatus;
   @SerializedName("area") private String area;
   @SerializedName("category") private String category;
   @SerializedName("views") private int views;
   @SerializedName("score") private String score;
   @SerializedName("content") private String content;
-  @SerializedName("prevue") private String prevue;
+  @SerializedName("premiere") private String premiere;
   @SerializedName("shareTitle") private String shareTitle;
   @SerializedName("shareContent") private String shareContent;
   @SerializedName("shareImage") private String shareImage;
@@ -63,8 +63,8 @@ public class ResourceInfo {
     return content;
   }
 
-  public String getPrevue() {
-    return prevue;
+  public String getPremiere() {
+    return premiere;
   }
 
   public String getShareTitle() {

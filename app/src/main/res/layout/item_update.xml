@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     >
   <data>
     <import type="android.view.View"/>
@@ -17,45 +18,67 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp"
+        android:orientation="horizontal"
         >
-
-      <TextView
+      <ImageView
+          android:layout_width="120dp"
+          android:layout_height="match_parent"
+          android:scaleType="centerCrop"
+          app:img="@{update.poster}"
+          />
+      <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:ellipsize="end"
-          android:maxLines="1"
-          android:text="@{update.cnname}"
-          />
+          android:orientation="vertical"
+          android:padding="10dp"
+          >
 
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@{@string/size(update.size)}"
-          android:visibility='@{update.size.equals("0") ? View.GONE : View.VISIBLE}'
-          />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:text="@{update.cnname}"
+            tools:text="cnname"
+            />
 
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@{@string/update_to + @string/season(update.season) + @string/episode(update.episode)}"
-          />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@{@string/size(update.size)}"
+            android:visibility='@{update.size.equals("0") ? View.GONE : View.VISIBLE}'
+            tools:text="size"
+            />
 
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@{@string/format(update.format)}"
-          />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@{@string/update_to + @string/season(update.season) + @string/episode(update.episode)}"
+            tools:text="season"
+            />
 
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:ellipsize="end"
-          android:maxLines="3"
-          android:text="@{@string/file_name(update.name)}"
-          />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@{@string/format(update.format)}"
+            tools:text="format"
+            />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="3"
+            android:text="@{@string/file_name(update.name)}"
+            tools:text="file_name"
+            />
+
+      </LinearLayout>
     </LinearLayout>
   </android.support.v7.widget.CardView>
 </layout>
