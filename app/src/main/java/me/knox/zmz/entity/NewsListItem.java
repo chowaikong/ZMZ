@@ -25,7 +25,7 @@ public class NewsListItem extends Item<LayoutVerticalRvBinding> {
 
   @Override public void bind(LayoutVerticalRvBinding viewBinding, int position) {
     mRvBinding = viewBinding;
-    viewBinding.rvVertical.addItemDecoration(new VerticalSpaceItemDecoration(30));
+    viewBinding.rvVertical.addItemDecoration(new VerticalSpaceItemDecoration(20));
     viewBinding.rvVertical.setAdapter(mNewsListAdapter);
   }
 }

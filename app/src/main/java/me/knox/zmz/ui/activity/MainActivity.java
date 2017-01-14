@@ -3,14 +3,12 @@ package me.knox.zmz.ui.activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import com.genius.groupie.GroupAdapter;
 import com.genius.groupie.Section;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import me.knox.zmz.R;
 import me.knox.zmz.contract.HotListContract;
@@ -33,6 +31,7 @@ import me.knox.zmz.entity.NewsListItem;
 import me.knox.zmz.entity.Resource;
 import me.knox.zmz.entity.ResourcesItem;
 import me.knox.zmz.entity.ScheduleUpdate;
+import me.knox.zmz.entity.ScheduleUpdatesItem;
 import me.knox.zmz.entity.Update;
 import me.knox.zmz.entity.UpdatesItem;
 import me.knox.zmz.presenter.HotListPresenter;
@@ -46,6 +45,7 @@ import me.knox.zmz.ui.adapter.ResourcesAdapter;
 import me.knox.zmz.ui.adapter.ScheduleUpdateAdapter;
 import me.knox.zmz.ui.adapter.UpdatesAdapter;
 import me.knox.zmz.ui.util.Toaster;
+import me.knox.zmz.ui.util.ZLog;
 import org.joda.time.LocalDate;
 
 public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
@@ -53,6 +53,7 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
     UpdatesContract.View, ResourcesContract.View {
 
   private static final String TODAY = LocalDate.now().toString();
+
   private final Section mSectionDrama = new Section(new CategoryHeader("今日美剧更新"));
   private final Section mSectionDownloads = new Section(new CategoryHeader("今日下载更新"));
   private final Section mNewsSection = new Section(new CategoryHeader("新闻资讯"));
@@ -60,8 +61,8 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
 
   private final GroupAdapter mGroupAdapter = new GroupAdapter();
 
-  private List<Hot> mHotList = new ArrayList<>();
-  private HotAdapter mHotAdapter = new HotAdapter(mHotList);
+  private final List<Hot> mHotList = new ArrayList<>();
+  private final HotAdapter mHotAdapter = new HotAdapter(mHotList);
   private final List<News> mNewsList = new ArrayList<>();
   private final List<ScheduleUpdate> mScheduleUpdates = new ArrayList<>();
   private final List<Update> mUpdates = new ArrayList<>();
@@ -71,7 +72,8 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
   private final UpdatesAdapter mUpdatesAdapter = new UpdatesAdapter(mUpdates);
   private final ResourcesAdapter mResourcesAdapter = new ResourcesAdapter(mDataList);
 
-  private final CarouselItem mCarouselItem = new CarouselItem(mScheduleUpdateAdapter);
+  private final CarouselItem mCarouselItem = new CarouselItem(mHotAdapter);
+  private final ScheduleUpdatesItem mScheduleUpdatesItem = new ScheduleUpdatesItem(mScheduleUpdateAdapter);
   private final NewsListItem mNewsListItem = new NewsListItem(mNewsListAdapter);
   private final UpdatesItem mUpdatesItem = new UpdatesItem(mUpdatesAdapter);
   private final ResourcesItem mResourcesItem = new ResourcesItem(mResourcesAdapter);
@@ -90,8 +92,7 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
   }
 
   @Override protected void initView() {
-    mDataBinding.vp.setAdapter(mHotAdapter);
-    mDataBinding.rv.setAdapter(mGroupAdapter);
+    mDataBinding.rv.rvVertical.setAdapter(mGroupAdapter);
   }
 
   @Override protected void initData() {
@@ -110,26 +111,25 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
 
   @Override protected void initListener() {
 
-    // auto scroll hot list item
-    Observable.timer(5, TimeUnit.SECONDS)
-        .repeat()
-        .observeOn(AndroidSchedulers.mainThread())
-        .map(index -> mDataBinding.vp.getCurrentItem())
-        .filter(index -> mDataBinding.vp.getAdapter().getCount() > 0)
-        .map(index -> (index + 1) % mDataBinding.vp.getAdapter().getCount())
-        .subscribe(index -> mDataBinding.vp.setCurrentItem(index, true));
+
   }
 
   @Override public void obtainHotListSuccess(List<Hot> hotList) {
     if (isFinishing()) return;
+    if (hotList == null || hotList.size() <= 0) return;
+    mDataBinding.pb.setVisibility(View.GONE);
     mHotAdapter.setData(hotList);
-    mDataBinding.vp.setCurrentItem(0);
+    mGroupAdapter.add(mCarouselItem);
+    if (mCarouselItem.getBinding() != null) {
+      mCarouselItem.getBinding().vp.setCurrentItem(0);
+    }
 
     mScheduleUpdatesPresenter.getScheduleUpdates(TODAY, TODAY);
   }
 
   @Override public void error(String error, Object... objects) {
     if (isFinishing()) return;
+    ZLog.e(error);
     Toaster.show(error);
   }
 
@@ -139,7 +139,7 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
     List<ScheduleUpdate> scheduleUpdates = stringListMap.get(TODAY);
     if (scheduleUpdates.size() <= 0) return;
     mScheduleUpdateAdapter.setData(scheduleUpdates);
-    mSectionDrama.add(mCarouselItem);
+    mSectionDrama.add(mScheduleUpdatesItem);
     mGroupAdapter.add(mSectionDrama);
 
     mNewsListPresenter.getNewsList(mPage);
@@ -147,6 +147,8 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
   }
 
   @Override public void obtainNewsListSucceed(List<News> newsList) {
+    if (isFinishing()) return;
+    if (newsList == null || newsList.size() <= 0) return;
     mGroupAdapter.add(mNewsSection);
     mNewsListAdapter.setData(newsList);
     mGroupAdapter.add(mNewsListItem);
@@ -168,8 +170,10 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
 
   @Override public void obtainResourcesSucceed(List<Resource.Data> resources) {
     if (isFinishing()) return;
+    if (resources == null || resources.size() <= 0) return;
     mGroupAdapter.add(mResourcesSection);
     mResourcesAdapter.setData(resources);
+    mResourcesItem.setDataList(resources);
     mGroupAdapter.add(mResourcesItem);
   }
 }

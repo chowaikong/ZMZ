@@ -31,6 +31,7 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
   @Override protected void initView() {
     setupToolbar(mDataBinding.toolbar);
     Intent intent = getIntent();
+    if (intent == null) return;
     Resource.Data data = intent.getParcelableExtra(RESOURCE);
     String title = data.getCnname();
     mDataBinding.toolbar.setTitle(title);

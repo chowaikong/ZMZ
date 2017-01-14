@@ -1,9 +1,12 @@
 package me.knox.zmz.entity;
 
 import com.genius.groupie.Item;
+import java.util.List;
 import me.knox.zmz.R;
 import me.knox.zmz.databinding.LayoutVerticalRvBinding;
+import me.knox.zmz.ui.activity.ResourceInfoActivity;
 import me.knox.zmz.ui.adapter.ResourcesAdapter;
+import me.knox.zmz.ui.util.RecyclerItemClickListener;
 import me.knox.zmz.ui.widget.VerticalSpaceItemDecoration;
 
 /**
@@ -13,6 +16,7 @@ import me.knox.zmz.ui.widget.VerticalSpaceItemDecoration;
 public class ResourcesItem extends Item<LayoutVerticalRvBinding> {
 
   private ResourcesAdapter mResourcesAdapter;
+  private List<Resource.Data> mDataList;
 
   public ResourcesItem(ResourcesAdapter resourcesAdapter) {
     mResourcesAdapter = resourcesAdapter;
@@ -23,7 +27,17 @@ public class ResourcesItem extends Item<LayoutVerticalRvBinding> {
   }
 
   @Override public void bind(LayoutVerticalRvBinding viewBinding, int position) {
-    viewBinding.rvVertical.addItemDecoration(new VerticalSpaceItemDecoration(30));
+    viewBinding.rvVertical.addItemDecoration(new VerticalSpaceItemDecoration(20));
     viewBinding.rvVertical.setAdapter(mResourcesAdapter);
+
+    if (mDataList != null && mDataList.size() > 0) {
+      viewBinding.rvVertical.addOnItemTouchListener(new RecyclerItemClickListener(
+          viewBinding.getRoot().getContext(),
+          (view, index) -> ResourceInfoActivity.start(view.getContext(), mDataList.get(index))));
+    }
+  }
+
+  public void setDataList(List<Resource.Data> dataList) {
+    mDataList = dataList;
   }
 }
