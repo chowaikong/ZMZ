@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+    <import type="android.text.TextUtils"/>
+    <import type="android.view.View"/>
+    <variable
+        name="poster"
+        type="String"/>
+    <variable
+        name="intro"
+        type="String"/>
+    <variable
+        name="info"
+        type="me.knox.zmz.entity.NewsInfo"
+        />
+  </data>
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            >
+          <com.flaviofaria.kenburnsview.KenBurnsView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              app:img="@{poster}"
+              tools:background="@android:color/black"
+              />
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentBottom="true"
+              android:padding="15dp"
+              android:text="@{info.title}"
+              android:textColor="@android:color/white"
+              android:textSize="24sp"
+              tools:text="title"
+              />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@{intro}"
+            android:textSize="20sp"
+            tools:text="intro"
+            android:visibility="@{TextUtils.isEmpty(info.intro) ? View.GONE : View.VISIBLE}"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            app:htmlText="@{info.content}"
+            />
+
+      </LinearLayout>
+    </ScrollView>
+    <include
+        layout="@layout/layout_progress"
+        android:id="@+id/progress"
+        />
+  </FrameLayout>
+</layout>

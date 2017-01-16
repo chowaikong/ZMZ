@@ -1,8 +1,11 @@
 package me.knox.zmz.binding;
 
 import android.databinding.BindingAdapter;
+import android.os.Build;
+import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
+import me.knox.zmz.ui.util.GlideImageGetter;
 import me.knox.zmz.ui.util.ImageLoader;
 import me.knox.zmz.ui.util.TimeUtil;
 
@@ -51,5 +54,15 @@ public class DatabindingAttributeUtil {
   @BindingAdapter("minute")
   public static void displayMinute(TextView textView, long time) {
     textView.setText(TimeUtil.convert2Minute(time * 1000));
+  }
+
+  @BindingAdapter("htmlText")
+  public static void displayHtmlText(TextView textView, String html) {
+    if (html == null) return;
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+      textView.setText(Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY, new GlideImageGetter(textView.getContext(), textView), null));
+    } else {
+      textView.setText(Html.fromHtml(html));
+    }
   }
 }

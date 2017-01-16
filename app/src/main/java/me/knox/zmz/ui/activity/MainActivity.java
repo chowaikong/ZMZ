@@ -111,11 +111,13 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
 
   @Override protected void initListener() {
 
-
   }
 
   @Override public void obtainHotListSuccess(List<Hot> hotList) {
     if (isFinishing()) return;
+
+    mScheduleUpdatesPresenter.getScheduleUpdates(TODAY, TODAY);
+
     if (hotList == null || hotList.size() <= 0) return;
     mDataBinding.progress.bar.setVisibility(View.GONE);
     mHotAdapter.setData(hotList);
@@ -123,50 +125,43 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
     if (mCarouselItem.getBinding() != null) {
       mCarouselItem.getBinding().vp.setCurrentItem(0);
     }
-
-    mScheduleUpdatesPresenter.getScheduleUpdates(TODAY, TODAY);
-  }
-
-  @Override public void error(String error, Object... objects) {
-    if (isFinishing()) return;
-    ZLog.e(error);
-    Toaster.show(R.string.something_wrong_happened);
   }
 
   @Override
   public void obtainScheduleUpdatesSucceed(Map<String, List<ScheduleUpdate>> stringListMap) {
     if (isFinishing()) return;
+
+    mNewsListPresenter.getNewsList(mPage);
+
     List<ScheduleUpdate> scheduleUpdates = stringListMap.get(TODAY);
     if (scheduleUpdates.size() <= 0) return;
     mScheduleUpdatesItem.setScheduleUpdates(scheduleUpdates);
     mScheduleUpdateAdapter.setData(scheduleUpdates);
     mSectionDrama.add(mScheduleUpdatesItem);
     mGroupAdapter.add(mSectionDrama);
-
-    mNewsListPresenter.getNewsList(mPage);
-
   }
 
   @Override public void obtainNewsListSucceed(List<News> newsList) {
     if (isFinishing()) return;
-    if (newsList == null || newsList.size() <= 0) return;
-    mGroupAdapter.add(mNewsSection);
-    mNewsListAdapter.setData(newsList);
-    mGroupAdapter.add(mNewsListItem);
 
     mUpdatesPresenter.getUpdates();
 
+    if (newsList == null || newsList.size() <= 0) return;
+    mGroupAdapter.add(mNewsSection);
+    mNewsListAdapter.setData(newsList);
+    mNewsListItem.setNewses(newsList);
+    mGroupAdapter.add(mNewsListItem);
   }
 
   @Override public void obtainUpdatesSucceed(List<Update> updates) {
     if (isFinishing()) return;
+
+    mResourcesPresenter.getResources(mPage);
+
     if (updates == null || updates.size() <= 0) return;
     mGroupAdapter.add(mSectionDownloads);
     mUpdatesAdapter.setData(updates);
     mSectionDownloads.add(mUpdatesItem);
-
-    mResourcesPresenter.getResources(mPage);
-
   }
 
   @Override public void obtainResourcesSucceed(List<Resource.Data> resources) {
@@ -176,5 +171,11 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
     mResourcesAdapter.setData(resources);
     mResourcesItem.setDataList(resources);
     mGroupAdapter.add(mResourcesItem);
+  }
+
+  @Override public void error(String error, Object... objects) {
+    if (isFinishing()) return;
+    ZLog.e(error);
+    Toaster.show(R.string.something_wrong_happened);
   }
 }

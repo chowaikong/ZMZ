@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import me.knox.zmz.entity.Hot;
 import me.knox.zmz.entity.News;
+import me.knox.zmz.entity.NewsInfo;
 import me.knox.zmz.entity.Resource;
 import me.knox.zmz.entity.ResourceInfo;
 import me.knox.zmz.entity.ScheduleUpdate;
@@ -33,4 +34,7 @@ public interface Api {
 
   @GET("resource/getinfo")
   Flowable<JsonResponse<ResourceInfo>> getResourceInfo(@Query("id") int id, @Query("share") int isSharable);
+
+  @GET("article/getinfo")
+  Flowable<JsonResponse<NewsInfo>> getNewsInfo(@Query("id") int id);
 }
