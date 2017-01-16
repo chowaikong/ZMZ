@@ -17,7 +17,7 @@ public class ScheduleUpdatesItem extends Item<LayoutHorizontalRvBinding> {
   private ScheduleUpdateAdapter mUpdatesAdapter;
   private List<ScheduleUpdate> mScheduleUpdates;
 
-  public ScheduleUpdatesItem(me.knox.zmz.ui.adapter.ScheduleUpdateAdapter updatesAdapter) {
+  public ScheduleUpdatesItem(ScheduleUpdateAdapter updatesAdapter) {
     mUpdatesAdapter = updatesAdapter;
   }
 
@@ -33,7 +33,8 @@ public class ScheduleUpdatesItem extends Item<LayoutHorizontalRvBinding> {
           viewBinding.getRoot().getContext(),
           (view, index) -> {
             int id = mScheduleUpdates.get(index).getId();
-            ResourceInfoActivity.start(view.getContext(), id);
+            String poster = mScheduleUpdates.get(index).getPoster();
+            ResourceInfoActivity.start(view.getContext(), id, poster);
           }));
     }
   }

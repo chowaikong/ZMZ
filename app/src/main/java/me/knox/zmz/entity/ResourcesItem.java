@@ -35,7 +35,8 @@ public class ResourcesItem extends Item<LayoutVerticalRvBinding> {
           viewBinding.getRoot().getContext(),
           (view, index) -> {
             int id = mDataList.get(index).getId();
-            ResourceInfoActivity.start(view.getContext(), id);
+            String poster = mDataList.get(index).getPoster();
+            ResourceInfoActivity.start(view.getContext(), id, poster);
           }));
     }
   }

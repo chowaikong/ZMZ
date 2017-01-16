@@ -37,10 +37,10 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
 
   @Inject ResourceInfoPresenter mResourceInfoPresenter;
 
-  public static void start(Context context, int id) {
+  public static void start(Context context, int id, String poster) {
     Intent intent = new Intent(context, ResourceInfoActivity.class);
     intent.putExtra(ID, id);
-    //intent.putExtra(POSTER, poster);
+    intent.putExtra(POSTER, poster);
     context.startActivity(intent);
   }
 
@@ -73,7 +73,6 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
 
   @Override public void obtainResourceInfoSucceed(ResourceInfo resourceInfo) {
     if (isFinishing()) return;
-    mDataBinding.setPoster(resourceInfo.getPoster());
     ResourceInfoHeaderItem resourceInfoHeaderItem
         = new ResourceInfoHeaderItem(resourceInfo.getCnname(), resourceInfo.getEnname());
     ResourceInfoStatusItem resourceInfoStatusItem = new ResourceInfoStatusItem(resourceInfo);

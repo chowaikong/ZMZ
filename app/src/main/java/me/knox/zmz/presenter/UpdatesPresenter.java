@@ -29,7 +29,7 @@ public class UpdatesPresenter extends BasePresenter implements UpdatesContract.P
         mInfoModel.getResourceInfo(listJsonResponse.getData().get(i).getResourceId(), 0)
             .subscribe(result -> {
               if (result.isSuccess()) {
-                listJsonResponse.getData().get(finalI).setPoster(result.getData().getPoster());
+                listJsonResponse.getData().get(finalI).setPoster(result.getData().getPosterB());
               }
             });
       }

@@ -26,6 +26,7 @@ public class Resource {
     @SerializedName("format") private String format;
     @SerializedName("category") private String category;
     @SerializedName("poster") private String poster; // poster, poster_a, poster_b, poster_m,poster_s
+    @SerializedName("poster_b") private String posterB;
     @SerializedName("channel") private String channel;
     @SerializedName("lang") private String lang;
     @SerializedName("play_status") private String playStatus;
@@ -64,6 +65,10 @@ public class Resource {
 
     public String getPoster() {
       return poster;
+    }
+
+    public String getPosterB() {
+      return posterB;
     }
 
     public String getChannel() {
