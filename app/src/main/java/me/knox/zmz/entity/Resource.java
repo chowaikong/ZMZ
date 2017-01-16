@@ -18,7 +18,7 @@ public class Resource {
   }
 
   public static class Data implements Parcelable {
-    @SerializedName("id") private String id;
+    @SerializedName("id") private int id;
     @SerializedName("cnname") private String cnname;
     @SerializedName("enname") private String enname;
     @SerializedName("remark") private String remark;
@@ -34,7 +34,7 @@ public class Resource {
     @SerializedName("views") private String views;
     @SerializedName("itemupdate") private long itemUpdate;
 
-    public String getId() {
+    public int getId() {
       return id;
     }
 
@@ -99,7 +99,7 @@ public class Resource {
     }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
-      dest.writeString(this.id);
+      dest.writeInt(this.id);
       dest.writeString(this.cnname);
       dest.writeString(this.enname);
       dest.writeString(this.remark);
@@ -120,7 +120,7 @@ public class Resource {
     }
 
     protected Data(Parcel in) {
-      this.id = in.readString();
+      this.id = in.readInt();
       this.cnname = in.readString();
       this.enname = in.readString();
       this.remark = in.readString();

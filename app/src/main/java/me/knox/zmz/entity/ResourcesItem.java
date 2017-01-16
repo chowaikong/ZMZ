@@ -33,7 +33,10 @@ public class ResourcesItem extends Item<LayoutVerticalRvBinding> {
     if (mDataList != null && mDataList.size() > 0) {
       viewBinding.rvVertical.addOnItemTouchListener(new RecyclerItemClickListener(
           viewBinding.getRoot().getContext(),
-          (view, index) -> ResourceInfoActivity.start(view.getContext(), mDataList.get(index))));
+          (view, index) -> {
+            int id = mDataList.get(index).getId();
+            ResourceInfoActivity.start(view.getContext(), id);
+          }));
     }
   }
 

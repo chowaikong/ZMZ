@@ -8,14 +8,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class ScheduleUpdate {
 
-  @SerializedName("id") private String id;
+  @SerializedName("id") private int id;
   @SerializedName("cnname") private String cnname;
   @SerializedName("enname") private String enname;
   @SerializedName("poster_b") private String poster;  // poster, poster_a, poster_b, poster_m,poster_s
   @SerializedName("season") private String season;
   @SerializedName("episode") private String episode;
 
-  public String getId() {
+  public int getId() {
     return id;
   }
 

@@ -117,7 +117,7 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
   @Override public void obtainHotListSuccess(List<Hot> hotList) {
     if (isFinishing()) return;
     if (hotList == null || hotList.size() <= 0) return;
-    mDataBinding.pb.setVisibility(View.GONE);
+    mDataBinding.progress.bar.setVisibility(View.GONE);
     mHotAdapter.setData(hotList);
     mGroupAdapter.add(mCarouselItem);
     if (mCarouselItem.getBinding() != null) {
@@ -130,7 +130,7 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
   @Override public void error(String error, Object... objects) {
     if (isFinishing()) return;
     ZLog.e(error);
-    Toaster.show(error);
+    Toaster.show(R.string.something_wrong_happened);
   }
 
   @Override
@@ -138,6 +138,7 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
     if (isFinishing()) return;
     List<ScheduleUpdate> scheduleUpdates = stringListMap.get(TODAY);
     if (scheduleUpdates.size() <= 0) return;
+    mScheduleUpdatesItem.setScheduleUpdates(scheduleUpdates);
     mScheduleUpdateAdapter.setData(scheduleUpdates);
     mSectionDrama.add(mScheduleUpdatesItem);
     mGroupAdapter.add(mSectionDrama);

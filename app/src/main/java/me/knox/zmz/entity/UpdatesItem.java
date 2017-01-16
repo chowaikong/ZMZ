@@ -1,6 +1,7 @@
 package me.knox.zmz.entity;
 
 import com.genius.groupie.Item;
+import java.util.List;
 import me.knox.zmz.R;
 import me.knox.zmz.databinding.LayoutVerticalRvBinding;
 import me.knox.zmz.ui.adapter.UpdatesAdapter;
@@ -13,6 +14,7 @@ import me.knox.zmz.ui.widget.VerticalSpaceItemDecoration;
 public class UpdatesItem extends Item<LayoutVerticalRvBinding> {
 
   private UpdatesAdapter mUpdatesAdapter;
+  private List<Update> mUpdates;
 
   public UpdatesItem(UpdatesAdapter updatesAdapter) {
     mUpdatesAdapter = updatesAdapter;

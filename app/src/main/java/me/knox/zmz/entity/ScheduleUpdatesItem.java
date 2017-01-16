@@ -1,9 +1,12 @@
 package me.knox.zmz.entity;
 
 import com.genius.groupie.Item;
+import java.util.List;
 import me.knox.zmz.R;
 import me.knox.zmz.databinding.LayoutHorizontalRvBinding;
+import me.knox.zmz.ui.activity.ResourceInfoActivity;
 import me.knox.zmz.ui.adapter.ScheduleUpdateAdapter;
+import me.knox.zmz.ui.util.RecyclerItemClickListener;
 
 /**
  * Created by KNOX.
@@ -12,6 +15,7 @@ import me.knox.zmz.ui.adapter.ScheduleUpdateAdapter;
 public class ScheduleUpdatesItem extends Item<LayoutHorizontalRvBinding> {
 
   private ScheduleUpdateAdapter mUpdatesAdapter;
+  private List<ScheduleUpdate> mScheduleUpdates;
 
   public ScheduleUpdatesItem(me.knox.zmz.ui.adapter.ScheduleUpdateAdapter updatesAdapter) {
     mUpdatesAdapter = updatesAdapter;
@@ -23,5 +27,18 @@ public class ScheduleUpdatesItem extends Item<LayoutHorizontalRvBinding> {
 
   @Override public void bind(LayoutHorizontalRvBinding viewBinding, int position) {
     viewBinding.rvHorizontal.setAdapter(mUpdatesAdapter);
+
+    if (mScheduleUpdates != null) {
+      viewBinding.rvHorizontal.addOnItemTouchListener(new RecyclerItemClickListener(
+          viewBinding.getRoot().getContext(),
+          (view, index) -> {
+            int id = mScheduleUpdates.get(index).getId();
+            ResourceInfoActivity.start(view.getContext(), id);
+          }));
+    }
+  }
+
+  public void setScheduleUpdates(List<ScheduleUpdate> scheduleUpdates) {
+    mScheduleUpdates = scheduleUpdates;
   }
 }

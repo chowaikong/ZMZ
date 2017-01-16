@@ -16,6 +16,8 @@
       app:cardBackgroundColor="@android:color/white"
       app:cardElevation="3dp"
       app:cardUseCompatPadding="true"
+      android:clickable="true"
+      android:foreground="?attr/selectableItemBackground"
       >
     <RelativeLayout
         android:layout_width="match_parent"

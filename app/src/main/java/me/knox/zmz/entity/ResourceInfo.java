@@ -10,7 +10,7 @@ public class ResourceInfo {
   @SerializedName("cnname") private String cnname;
   @SerializedName("enname") private String enname;
   @SerializedName("remark") private String remark;
-  @SerializedName("poster_a") private String poster; // poster, poster_a, poster_b, poster_m,poster_s
+  @SerializedName("poster") private String poster; // poster, poster_a, poster_b, poster_m,poster_s
   @SerializedName("play_status") private String playStatus;
   @SerializedName("area") private String area;
   @SerializedName("category") private String category;
