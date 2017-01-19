@@ -4,12 +4,11 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import com.genius.groupie.GroupAdapter;
-import com.genius.groupie.Section;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
+import me.drakeet.multitype.Items;
+import me.drakeet.multitype.MultiTypeAdapter;
 import me.knox.zmz.R;
 import me.knox.zmz.contract.HotListContract;
 import me.knox.zmz.contract.NewsListContract;
@@ -23,27 +22,27 @@ import me.knox.zmz.di.module.NewsListModule;
 import me.knox.zmz.di.module.ResourcesModule;
 import me.knox.zmz.di.module.ScheduleUpdatesModule;
 import me.knox.zmz.di.module.UpdatesModule;
-import me.knox.zmz.entity.CarouselItem;
-import me.knox.zmz.entity.CategoryHeader;
+import me.knox.zmz.entity.Category;
 import me.knox.zmz.entity.Hot;
+import me.knox.zmz.entity.HotList;
 import me.knox.zmz.entity.News;
-import me.knox.zmz.entity.NewsListItem;
+import me.knox.zmz.entity.NewsList;
 import me.knox.zmz.entity.Resource;
-import me.knox.zmz.entity.ResourcesItem;
+import me.knox.zmz.entity.ResourceList;
 import me.knox.zmz.entity.ScheduleUpdate;
-import me.knox.zmz.entity.ScheduleUpdatesItem;
+import me.knox.zmz.entity.ScheduleUpdateList;
 import me.knox.zmz.entity.Update;
-import me.knox.zmz.entity.UpdatesItem;
+import me.knox.zmz.entity.UpdateList;
 import me.knox.zmz.presenter.HotListPresenter;
 import me.knox.zmz.presenter.NewsListPresenter;
 import me.knox.zmz.presenter.ResourcesPresenter;
 import me.knox.zmz.presenter.ScheduleUpdatesPresenter;
 import me.knox.zmz.presenter.UpdatesPresenter;
-import me.knox.zmz.ui.adapter.HotAdapter;
-import me.knox.zmz.ui.adapter.NewsListAdapter;
-import me.knox.zmz.ui.adapter.ResourcesAdapter;
-import me.knox.zmz.ui.adapter.ScheduleUpdateAdapter;
-import me.knox.zmz.ui.adapter.UpdatesAdapter;
+import me.knox.zmz.ui.item.CarouselItemProvider;
+import me.knox.zmz.ui.item.NewsItemProvider;
+import me.knox.zmz.ui.item.ResourcesItemProvider;
+import me.knox.zmz.ui.item.ScheduleUpdateItemProvider;
+import me.knox.zmz.ui.item.UpdatesItemProvider;
 import me.knox.zmz.ui.util.Toaster;
 import me.knox.zmz.ui.util.ZLog;
 import org.joda.time.LocalDate;
@@ -54,29 +53,9 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
 
   private static final String TODAY = LocalDate.now().toString();
 
-  private final Section mSectionDrama = new Section(new CategoryHeader("今日美剧更新"));
-  private final Section mSectionDownloads = new Section(new CategoryHeader("今日下载更新"));
-  private final Section mNewsSection = new Section(new CategoryHeader("新闻资讯"));
-  private final Section mResourcesSection = new Section(new CategoryHeader("资源更新"));
-
-  private final GroupAdapter mGroupAdapter = new GroupAdapter();
-
-  private final List<Hot> mHotList = new ArrayList<>();
-  private final HotAdapter mHotAdapter = new HotAdapter(mHotList);
-  private final List<News> mNewsList = new ArrayList<>();
-  private final List<ScheduleUpdate> mScheduleUpdates = new ArrayList<>();
-  private final List<Update> mUpdates = new ArrayList<>();
-  private final List<Resource.Data> mDataList = new ArrayList<>();
-  private final ScheduleUpdateAdapter mScheduleUpdateAdapter = new ScheduleUpdateAdapter(mScheduleUpdates);
-  private final NewsListAdapter mNewsListAdapter = new NewsListAdapter(mNewsList);
-  private final UpdatesAdapter mUpdatesAdapter = new UpdatesAdapter(mUpdates);
-  private final ResourcesAdapter mResourcesAdapter = new ResourcesAdapter(mDataList);
-
-  private final CarouselItem mCarouselItem = new CarouselItem(mHotAdapter);
-  private final ScheduleUpdatesItem mScheduleUpdatesItem = new ScheduleUpdatesItem(mScheduleUpdateAdapter);
-  private final NewsListItem mNewsListItem = new NewsListItem(mNewsListAdapter);
-  private final UpdatesItem mUpdatesItem = new UpdatesItem(mUpdatesAdapter);
-  private final ResourcesItem mResourcesItem = new ResourcesItem(mResourcesAdapter);
+  private final Items mItems = new Items();
+  private final MultiTypeAdapter mMultiTypeAdapter = new MultiTypeAdapter();
+  private int mPage = 0;
 
   @Inject HotListPresenter mHotListPresenter;
   @Inject ScheduleUpdatesPresenter mScheduleUpdatesPresenter;
@@ -84,7 +63,6 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
   @Inject NewsListPresenter mNewsListPresenter;
   @Inject ResourcesPresenter mResourcesPresenter;
 
-  private int mPage = 0;
 
   @Override
   protected ActivityMainBinding setDataBindingContentView(@Nullable Bundle savedInstanceState) {
@@ -92,7 +70,13 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
   }
 
   @Override protected void initView() {
-    mDataBinding.rv.rvVertical.setAdapter(mGroupAdapter);
+    mMultiTypeAdapter.applyGlobalMultiTypePool();
+    mMultiTypeAdapter.register(HotList.class, new CarouselItemProvider());
+    mMultiTypeAdapter.register(ScheduleUpdateList.class, new ScheduleUpdateItemProvider());
+    mMultiTypeAdapter.register(NewsList.class, new NewsItemProvider());
+    mMultiTypeAdapter.register(UpdateList.class, new UpdatesItemProvider());
+    mMultiTypeAdapter.register(ResourceList.class, new ResourcesItemProvider());
+    mDataBinding.rv.rvVertical.setAdapter(mMultiTypeAdapter);
   }
 
   @Override protected void initData() {
@@ -106,7 +90,6 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
         .inject(this);
 
     mHotListPresenter.getHot();
-
   }
 
   @Override protected void initListener() {
@@ -119,12 +102,9 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
     mScheduleUpdatesPresenter.getScheduleUpdates(TODAY, TODAY);
 
     if (hotList == null || hotList.size() <= 0) return;
-    mDataBinding.progress.bar.setVisibility(View.GONE);
-    mHotAdapter.setData(hotList);
-    mGroupAdapter.add(mCarouselItem);
-    if (mCarouselItem.getBinding() != null) {
-      mCarouselItem.getBinding().vp.setCurrentItem(0);
-    }
+
+    HotList list = new HotList(hotList);
+    mItems.add(list);
   }
 
   @Override
@@ -135,10 +115,10 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
 
     List<ScheduleUpdate> scheduleUpdates = stringListMap.get(TODAY);
     if (scheduleUpdates.size() <= 0) return;
-    mScheduleUpdatesItem.setScheduleUpdates(scheduleUpdates);
-    mScheduleUpdateAdapter.setData(scheduleUpdates);
-    mSectionDrama.add(mScheduleUpdatesItem);
-    mGroupAdapter.add(mSectionDrama);
+
+    mItems.add(new Category("今日美剧更新"));
+    ScheduleUpdateList list = new ScheduleUpdateList(scheduleUpdates);
+    mItems.add(list);
   }
 
   @Override public void obtainNewsListSucceed(List<News> newsList) {
@@ -147,10 +127,10 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
     mUpdatesPresenter.getUpdates();
 
     if (newsList == null || newsList.size() <= 0) return;
-    mGroupAdapter.add(mNewsSection);
-    mNewsListAdapter.setData(newsList);
-    mNewsListItem.setNewses(newsList);
-    mGroupAdapter.add(mNewsListItem);
+
+    mItems.add(new Category("新闻资讯"));
+    NewsList list = new NewsList(newsList);
+    mItems.add(list);
   }
 
   @Override public void obtainUpdatesSucceed(List<Update> updates) {
@@ -159,18 +139,21 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
     mResourcesPresenter.getResources(mPage);
 
     if (updates == null || updates.size() <= 0) return;
-    mGroupAdapter.add(mSectionDownloads);
-    mUpdatesAdapter.setData(updates);
-    mSectionDownloads.add(mUpdatesItem);
+
+    mItems.add(new Category("今日下载更新"));
+    UpdateList list = new UpdateList(updates);
+    mItems.add(list);
   }
 
   @Override public void obtainResourcesSucceed(List<Resource.Data> resources) {
     if (isFinishing()) return;
     if (resources == null || resources.size() <= 0) return;
-    mGroupAdapter.add(mResourcesSection);
-    mResourcesAdapter.setData(resources);
-    mResourcesItem.setDataList(resources);
-    mGroupAdapter.add(mResourcesItem);
+
+    mItems.add(new Category("资源更新"));
+    ResourceList list = new ResourceList(resources);
+    mItems.add(list);
+    mMultiTypeAdapter.setItems(mItems);
+    mDataBinding.progress.bar.setVisibility(View.GONE);
   }
 
   @Override public void error(String error, Object... objects) {

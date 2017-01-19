@@ -4,6 +4,7 @@ import android.app.Application;
 import javax.inject.Inject;
 import me.knox.zmz.di.component.DaggerAppComponent;
 import me.knox.zmz.di.module.AppModule;
+import me.knox.zmz.misc.MultiTypeInstaller;
 import me.knox.zmz.network.Api;
 import me.knox.zmz.ui.util.ZLog;
 import me.knox.zmz.ui.util.Toaster;
@@ -31,6 +32,7 @@ public class App extends Application {
 
     DaggerAppComponent.builder().appModule(new AppModule(this)).build().inject(this);
 
+    MultiTypeInstaller.install();
   }
 
   public static App getInstance() {

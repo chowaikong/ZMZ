@@ -6,19 +6,17 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import com.genius.groupie.GroupAdapter;
 import javax.inject.Inject;
+import me.drakeet.multitype.Items;
+import me.drakeet.multitype.MultiTypeAdapter;
 import me.knox.zmz.R;
 import me.knox.zmz.contract.ResourceInfoContract;
 import me.knox.zmz.databinding.ActivityResourceInfoBinding;
 import me.knox.zmz.di.component.DaggerResourceInfoComponent;
 import me.knox.zmz.di.module.ResourceInfoModule;
 import me.knox.zmz.entity.ResourceInfo;
-import me.knox.zmz.entity.ResourceInfoContentItem;
-import me.knox.zmz.entity.ResourceInfoHeaderItem;
-import me.knox.zmz.entity.ResourceInfoRemarkItem;
-import me.knox.zmz.entity.ResourceInfoStatusItem;
 import me.knox.zmz.presenter.ResourceInfoPresenter;
+import me.knox.zmz.ui.item.ResourceInfoHeaderItemProvider;
 import me.knox.zmz.ui.util.Toaster;
 import me.knox.zmz.ui.util.ZLog;
 
@@ -33,7 +31,8 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
   private static final String POSTER = "poster";
   private int mId;
 
-  private final GroupAdapter mGroupAdapter = new GroupAdapter();
+  private final Items mItems = new Items();
+  private final MultiTypeAdapter mMultiTypeAdapter = new MultiTypeAdapter();
 
   @Inject ResourceInfoPresenter mResourceInfoPresenter;
 
@@ -54,8 +53,11 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
     if (intent == null) return;
     mId = intent.getIntExtra(ID, 0);
     String poster = intent.getStringExtra(POSTER);
-    mDataBinding.setPoster(poster);
-    mDataBinding.rvVertical.setAdapter(mGroupAdapter);
+    if (poster != null && !poster.isEmpty()) {
+      mDataBinding.setPoster(poster);
+    }
+
+    mDataBinding.rvVertical.setAdapter(mMultiTypeAdapter);
   }
 
   @Override protected void initData() {
@@ -63,6 +65,9 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
         .resourceInfoModule(new ResourceInfoModule(this))
         .build()
         .inject(this);
+
+    mMultiTypeAdapter.applyGlobalMultiTypePool();
+    mMultiTypeAdapter.register(String[].class, new ResourceInfoHeaderItemProvider());
 
     mResourceInfoPresenter.getResourceInfo(mId, 1);
   }
@@ -73,17 +78,12 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
 
   @Override public void obtainResourceInfoSucceed(ResourceInfo resourceInfo) {
     if (isFinishing()) return;
-    ResourceInfoHeaderItem resourceInfoHeaderItem
-        = new ResourceInfoHeaderItem(resourceInfo.getCnname(), resourceInfo.getEnname());
-    ResourceInfoStatusItem resourceInfoStatusItem = new ResourceInfoStatusItem(resourceInfo);
-    ResourceInfoContentItem resourceInfoContentItem =
-        new ResourceInfoContentItem(resourceInfo.getContent());
-    ResourceInfoRemarkItem resourceInfoRemarkItem =
-        new ResourceInfoRemarkItem(resourceInfo.getRemark());
-    mGroupAdapter.add(resourceInfoHeaderItem);
-    mGroupAdapter.add(resourceInfoStatusItem);
-    mGroupAdapter.add(resourceInfoContentItem);
-    mGroupAdapter.add(resourceInfoRemarkItem);
+    String[] strings = {resourceInfo.getCnname(), resourceInfo.getEnname()};
+    mItems.add(strings);
+    mItems.add(resourceInfo.getPlayStatus());
+    mItems.add(resourceInfo.getContent());
+    mItems.add(resourceInfo.getRemark());
+    mMultiTypeAdapter.setItems(mItems);
     mDataBinding.progress.bar.setVisibility(View.GONE);
   }
 
