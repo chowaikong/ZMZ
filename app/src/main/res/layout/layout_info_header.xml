@@ -3,34 +3,39 @@
   <data>
     <variable
         name="cname"
-        type="String"/>
+        type="String"
+        />
     <variable
         name="ename"
-        type="String"/>
+        type="String"
+        />
   </data>
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
 
-  <TextView
-  android:id="@+id/tv_name"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:layout_marginLeft="20dp"
-  android:text="@{cname}"
-  android:textColor="@android:color/white"
-  android:textSize="22sp"
-  />
-  <TextView
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:layout_marginLeft="20dp"
-  android:layout_marginTop="10dp"
-  android:text="@{ename}"
-  android:textColor="@android:color/white"
-  android:textSize="22sp"
-  />
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@{cname}"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@{ename}"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        />
 
-</LinearLayout>
+  </LinearLayout>
 </layout>

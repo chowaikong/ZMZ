@@ -24,6 +24,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:overScrollMode="never"
         >
       <LinearLayout
           android:layout_width="match_parent"
@@ -54,18 +55,29 @@
               />
         </RelativeLayout>
 
-        <TextView
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="1dp"
+            app:cardElevation="3dp"
+            app:contentPadding="10dp"
+            android:visibility="@{TextUtils.isEmpty(info.intro) ? View.GONE : View.VISIBLE}"
+            >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@{intro}"
             android:textSize="20sp"
+            android:textColor="@android:color/black"
             tools:text="intro"
-            android:visibility="@{TextUtils.isEmpty(info.intro) ? View.GONE : View.VISIBLE}"
             />
+        </android.support.v7.widget.CardView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textIsSelectable="true"
             android:padding="15dp"
             app:htmlText="@{info.content}"
             />

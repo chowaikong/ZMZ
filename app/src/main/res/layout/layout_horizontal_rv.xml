@@ -6,5 +6,6 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-    android:overScrollMode="never"/>
+    android:overScrollMode="never"
+    android:focusableInTouchMode="true"/>
 </layout>
