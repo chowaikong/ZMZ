@@ -85,7 +85,7 @@
           android:layout_width="125dp"
           android:layout_height="match_parent"
           android:scaleType="centerCrop"
-          app:img="@{resource.posterB}"
+          app:img="@{resource.poster}"
           />
     </LinearLayout>
   </android.support.v7.widget.CardView>

@@ -23,18 +23,18 @@ public class UpdatesPresenter extends BasePresenter implements UpdatesContract.P
   }
 
   @Override public void getUpdates() {
-    addDisposable(mModel.getUpdates()/*.map(listJsonResponse -> {
+    addDisposable(mModel.getUpdates().map(listJsonResponse -> {
       for (int i = 0; i < listJsonResponse.getData().size(); i++) {
         int finalI = i;
         mInfoModel.getResourceInfo(listJsonResponse.getData().get(i).getResourceId(), 0)
             .subscribe(result -> {
               if (result.isSuccess()) {
-                listJsonResponse.getData().get(finalI).setPoster(result.getData().getPosterB());
+                listJsonResponse.getData().get(finalI).setPoster(result.getData().getPoster());
               }
             });
       }
       return listJsonResponse;
-    })*/.subscribe(result -> {
+    }).subscribe(result -> {
       if (result.isSuccess()) {
         mView.obtainUpdatesSucceed(result.getData());
       } else {
