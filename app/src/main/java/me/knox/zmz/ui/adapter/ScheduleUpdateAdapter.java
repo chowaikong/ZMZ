@@ -6,13 +6,13 @@ import java.util.List;
 import me.knox.zmz.binding.DataBindingViewHolder;
 import me.knox.zmz.databinding.ItemScheduleUpdateBinding;
 import me.knox.zmz.entity.ScheduleUpdate;
+import me.knox.zmz.ui.activity.ResourceInfoActivity;
 
 /**
  * Created by KNOX.
  */
 
-public class ScheduleUpdateAdapter
-    extends BaseRVAdapter<ItemScheduleUpdateBinding, ScheduleUpdate> {
+public class ScheduleUpdateAdapter extends BaseRVAdapter<ItemScheduleUpdateBinding, ScheduleUpdate> {
 
   public ScheduleUpdateAdapter(List<ScheduleUpdate> mDataList) {
     super(mDataList);
@@ -28,6 +28,11 @@ public class ScheduleUpdateAdapter
   @Override public void onBindViewHolder(DataBindingViewHolder<ItemScheduleUpdateBinding> holder,
       int position) {
     holder.getBinding().setUpdate(mDataList.get(holder.getAdapterPosition()));
+    holder.getBinding().getRoot().setOnClickListener(v -> {
+      int id = mDataList.get(position).getId();
+      String poster = mDataList.get(holder.getAdapterPosition()).getPoster();
+      ResourceInfoActivity.start(v.getContext(), id, poster);
+    });
     holder.getBinding().executePendingBindings();
   }
 }

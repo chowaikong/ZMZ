@@ -2,9 +2,10 @@ package me.knox.zmz.network;
 
 import io.reactivex.functions.Consumer;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import me.knox.zmz.R;
-import me.knox.zmz.ui.util.ZLog;
 import me.knox.zmz.ui.util.Toaster;
+import me.knox.zmz.ui.util.ZLog;
 import me.knox.zmz.view.BaseView;
 
 /**
@@ -24,6 +25,10 @@ public class ApiErrorException implements Consumer<Throwable>{
 
     if (mBaseView != null) {
       mBaseView.error(throwable.toString());
+    }
+
+    if (throwable instanceof SocketTimeoutException) {
+      Toaster.show(R.string.server_error);
     }
 
     if (throwable instanceof IOException) {

@@ -1,8 +1,7 @@
-package me.knox.zmz.ui.widget;
+package me.knox.zmz.ui.util;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import me.knox.zmz.ui.util.ZLog;
 
 /**
  * Created by KNOX.

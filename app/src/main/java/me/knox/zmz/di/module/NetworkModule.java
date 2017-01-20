@@ -9,7 +9,6 @@ import dagger.Module;
 import dagger.Provides;
 import io.reactivex.schedulers.Schedulers;
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 import javax.inject.Named;
 import me.knox.zmz.BuildConfig;
 import me.knox.zmz.misc.Constants;
@@ -60,8 +59,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
     File cacheDir = new File(app.getCacheDir(), "http");
     Cache cache = new Cache(cacheDir, 1024 * 1024 * 50);
     return new OkHttpClient.Builder().cache(cache)
-        .connectTimeout(20, TimeUnit.SECONDS)
-        .readTimeout(20, TimeUnit.SECONDS)
+        //.connectTimeout(20, TimeUnit.SECONDS)
+        //.readTimeout(20, TimeUnit.SECONDS)
         .addInterceptor(interceptor)
         .addInterceptor(httpLoggingInterceptor)
         .build();

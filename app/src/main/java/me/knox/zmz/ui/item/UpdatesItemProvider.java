@@ -1,33 +1,53 @@
 package me.knox.zmz.ui.item;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import java.util.ArrayList;
 import me.drakeet.multitype.ItemViewProvider;
-import me.knox.zmz.binding.DataBindingViewHolder;
-import me.knox.zmz.databinding.LayoutVerticalRvBinding;
-import me.knox.zmz.entity.UpdateList;
-import me.knox.zmz.ui.adapter.UpdatesAdapter;
-import me.knox.zmz.ui.widget.VerticalSpaceItemDecoration;
+import me.knox.zmz.databinding.ItemUpdateBinding;
+import me.knox.zmz.entity.Update;
 
 /**
  * Created by KNOX.
  */
 
-public class UpdatesItemProvider extends ItemViewProvider<UpdateList, DataBindingViewHolder<LayoutVerticalRvBinding>> {
-  @NonNull @Override protected DataBindingViewHolder<LayoutVerticalRvBinding> onCreateViewHolder(
-      @NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-    return new DataBindingViewHolder<>(LayoutVerticalRvBinding.inflate(inflater, parent, false));
+public class UpdatesItemProvider extends ItemViewProvider<Update, UpdatesItemProvider.ViewHolder> {
+
+  @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
+      @NonNull ViewGroup parent) {
+    return new ViewHolder(ItemUpdateBinding.inflate(inflater, parent, false));
   }
+  //
+  //@NonNull @Override protected DataBindingViewHolder<LayoutVerticalRvBinding> onCreateViewHolder(
+  //    @NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
+  //  return new DataBindingViewHolder<>(LayoutVerticalRvBinding.inflate(inflater, parent, false));
+  //}
 
   @Override
-  protected void onBindViewHolder(@NonNull DataBindingViewHolder<LayoutVerticalRvBinding> holder,
-      @NonNull UpdateList updateList) {
-    holder.getBinding().rvVertical.addItemDecoration(new VerticalSpaceItemDecoration(20));
-    UpdatesAdapter adapter = new UpdatesAdapter(new ArrayList<>());
-    adapter.setData(updateList.getList());
-    holder.getBinding().rvVertical.setAdapter(adapter);
-    holder.getBinding().executePendingBindings();
+  protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull Update update) {
+    holder.mBinding.setUpdate(update);
+  }
+
+  //@Override
+  //protected void onBindViewHolder(@NonNull DataBindingViewHolder<LayoutVerticalRvBinding> holder,
+  //    @NonNull UpdateList updateList) {
+  //
+  //  holder.getBinding().rvVertical.removeItemDecoration(mDecoration);
+  //  holder.getBinding().rvVertical.addItemDecoration(mDecoration);
+  //
+  //  mAdapter.setData(updateList.getList());
+  //  holder.getBinding().rvVertical.setAdapter(mAdapter);
+  //  holder.getBinding().executePendingBindings();
+  //}
+
+  static class ViewHolder extends RecyclerView.ViewHolder {
+
+    private ItemUpdateBinding mBinding;
+
+    ViewHolder(ItemUpdateBinding binding) {
+      super(binding.getRoot());
+      mBinding = binding;
+    }
   }
 }

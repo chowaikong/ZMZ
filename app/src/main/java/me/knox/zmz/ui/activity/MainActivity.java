@@ -26,13 +26,10 @@ import me.knox.zmz.entity.Category;
 import me.knox.zmz.entity.Hot;
 import me.knox.zmz.entity.HotList;
 import me.knox.zmz.entity.News;
-import me.knox.zmz.entity.NewsList;
 import me.knox.zmz.entity.Resource;
-import me.knox.zmz.entity.ResourceList;
 import me.knox.zmz.entity.ScheduleUpdate;
 import me.knox.zmz.entity.ScheduleUpdateList;
 import me.knox.zmz.entity.Update;
-import me.knox.zmz.entity.UpdateList;
 import me.knox.zmz.presenter.HotListPresenter;
 import me.knox.zmz.presenter.NewsListPresenter;
 import me.knox.zmz.presenter.ResourcesPresenter;
@@ -45,6 +42,7 @@ import me.knox.zmz.ui.item.ScheduleUpdateItemProvider;
 import me.knox.zmz.ui.item.UpdatesItemProvider;
 import me.knox.zmz.ui.util.Toaster;
 import me.knox.zmz.ui.util.ZLog;
+import me.knox.zmz.ui.widget.VerticalSpaceItemDecoration;
 import org.joda.time.LocalDate;
 
 public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
@@ -63,20 +61,20 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
   @Inject NewsListPresenter mNewsListPresenter;
   @Inject ResourcesPresenter mResourcesPresenter;
 
-
   @Override
   protected ActivityMainBinding setDataBindingContentView(@Nullable Bundle savedInstanceState) {
     return DataBindingUtil.setContentView(this, R.layout.activity_main);
   }
 
   @Override protected void initView() {
+    mDataBinding.list.rvVertical.addItemDecoration(new VerticalSpaceItemDecoration(20));
     mMultiTypeAdapter.applyGlobalMultiTypePool();
     mMultiTypeAdapter.register(HotList.class, new CarouselItemProvider());
     mMultiTypeAdapter.register(ScheduleUpdateList.class, new ScheduleUpdateItemProvider());
-    mMultiTypeAdapter.register(NewsList.class, new NewsItemProvider());
-    mMultiTypeAdapter.register(UpdateList.class, new UpdatesItemProvider());
-    mMultiTypeAdapter.register(ResourceList.class, new ResourcesItemProvider());
-    mDataBinding.rv.rvVertical.setAdapter(mMultiTypeAdapter);
+    mMultiTypeAdapter.register(News.class, new NewsItemProvider());
+    mMultiTypeAdapter.register(Update.class, new UpdatesItemProvider());
+    mMultiTypeAdapter.register(Resource.Data.class, new ResourcesItemProvider());
+    mDataBinding.list.rvVertical.setAdapter(mMultiTypeAdapter);
   }
 
   @Override protected void initData() {
@@ -129,8 +127,9 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
     if (newsList == null || newsList.size() <= 0) return;
 
     mItems.add(new Category("新闻资讯"));
-    NewsList list = new NewsList(newsList);
-    mItems.add(list);
+    for (int i = 0; i < newsList.size(); i++) {
+      mItems.add(newsList.get(i));
+    }
   }
 
   @Override public void obtainUpdatesSucceed(List<Update> updates) {
@@ -141,8 +140,9 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
     if (updates == null || updates.size() <= 0) return;
 
     mItems.add(new Category("今日下载更新"));
-    UpdateList list = new UpdateList(updates);
-    mItems.add(list);
+    for (int i = 0; i < updates.size(); i++) {
+      mItems.add(updates.get(i));
+    }
   }
 
   @Override public void obtainResourcesSucceed(List<Resource.Data> resources) {
@@ -150,8 +150,9 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
     if (resources == null || resources.size() <= 0) return;
 
     mItems.add(new Category("资源更新"));
-    ResourceList list = new ResourceList(resources);
-    mItems.add(list);
+    for (int i = 0; i < resources.size(); i++) {
+      mItems.add(resources.get(i));
+    }
     mMultiTypeAdapter.setItems(mItems);
     mDataBinding.progress.bar.setVisibility(View.GONE);
   }

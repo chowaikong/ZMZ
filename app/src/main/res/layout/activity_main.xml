@@ -8,7 +8,7 @@
       >
 
     <include layout="@layout/layout_vertical_rv"
-        android:id="@+id/rv"/>
+        android:id="@+id/list"/>
 
     <include layout="@layout/layout_progress"
       android:id="@+id/progress"/>
