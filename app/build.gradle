@@ -88,4 +88,5 @@ dependencies {
   compile('me.drakeet.multitype:multitype:2.4.0', {
     exclude group: 'com.android.support'
   })
+  compile 'jp.wasabeef:recyclerview-animators:2.2.5'
 }

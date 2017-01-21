@@ -40,6 +40,7 @@ import me.knox.zmz.ui.item.NewsItemProvider;
 import me.knox.zmz.ui.item.ResourcesItemProvider;
 import me.knox.zmz.ui.item.ScheduleUpdateItemProvider;
 import me.knox.zmz.ui.item.UpdatesItemProvider;
+import me.knox.zmz.ui.util.OnLoadMoreListener;
 import me.knox.zmz.ui.util.Toaster;
 import me.knox.zmz.ui.util.ZLog;
 import me.knox.zmz.ui.widget.VerticalSpaceItemDecoration;
@@ -52,7 +53,7 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
   private static final String TODAY = LocalDate.now().toString();
 
   private final Items mItems = new Items();
-  private final MultiTypeAdapter mMultiTypeAdapter = new MultiTypeAdapter();
+  private final MultiTypeAdapter mMultiTypeAdapter = new MultiTypeAdapter(mItems);
   private int mPage = 0;
 
   @Inject HotListPresenter mHotListPresenter;
@@ -68,6 +69,7 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
 
   @Override protected void initView() {
     mDataBinding.list.rvVertical.addItemDecoration(new VerticalSpaceItemDecoration(20));
+    mDataBinding.list.rvVertical.getLayoutManager().setItemPrefetchEnabled(true);
     mMultiTypeAdapter.applyGlobalMultiTypePool();
     mMultiTypeAdapter.register(HotList.class, new CarouselItemProvider());
     mMultiTypeAdapter.register(ScheduleUpdateList.class, new ScheduleUpdateItemProvider());
@@ -91,7 +93,12 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
   }
 
   @Override protected void initListener() {
-
+    mDataBinding.list.rvVertical.addOnScrollListener(new OnLoadMoreListener() {
+      @Override public void loadMore() {
+        mPage++;
+        mResourcesPresenter.getResources(mPage);
+      }
+    });
   }
 
   @Override public void obtainHotListSuccess(List<Hot> hotList) {
@@ -149,12 +156,20 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
     if (isFinishing()) return;
     if (resources == null || resources.size() <= 0) return;
 
-    mItems.add(new Category("资源更新"));
-    for (int i = 0; i < resources.size(); i++) {
-      mItems.add(resources.get(i));
+    if (mPage == 0) {
+      mItems.add(new Category("资源更新"));
+      for (int i = 0; i < resources.size(); i++) {
+        mItems.add(resources.get(i));
+      }
+      mMultiTypeAdapter.notifyItemRangeInserted(0, mItems.size());
+      mDataBinding.progress.bar.setVisibility(View.GONE);
+    } else {
+      int size = mItems.size();
+      for (int i = 0; i < resources.size(); i++) {
+        mItems.add(resources.get(i));
+      }
+      mMultiTypeAdapter.notifyItemRangeInserted(size, mItems.size());
     }
-    mMultiTypeAdapter.setItems(mItems);
-    mDataBinding.progress.bar.setVisibility(View.GONE);
   }
 
   @Override public void error(String error, Object... objects) {

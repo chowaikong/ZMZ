@@ -1,6 +1,7 @@
 package me.knox.zmz.ui.item;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -33,6 +34,8 @@ public class ScheduleUpdateItemProvider extends ItemViewProvider<ScheduleUpdateL
     ViewHolder(LayoutHorizontalRvBinding binding) {
       super(binding.getRoot());
       mAdapter = new ScheduleUpdateAdapter(new ArrayList<>());
+      LinearSnapHelper snapHelper = new LinearSnapHelper();
+      snapHelper.attachToRecyclerView(binding.rvHorizontal);
       binding.rvHorizontal.setAdapter(mAdapter);
     }
   }

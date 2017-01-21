@@ -25,6 +25,7 @@
           android:layout_height="match_parent"
           android:scaleType="centerCrop"
           app:img="@{update.poster}"
+          tools:src="@drawable/shield"
           />
       <LinearLayout
           android:layout_width="match_parent"

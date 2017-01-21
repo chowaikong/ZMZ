@@ -32,7 +32,7 @@ public class CarouselItemProvider extends ItemViewProvider<HotList, DataBindingV
     holder.getBinding().vp.setAdapter(hotAdapter);
     holder.getBinding().vp.setCurrentItem(0);
     // auto scroll list item
-    Observable.timer(6, TimeUnit.SECONDS)
+    Observable.timer(10, TimeUnit.SECONDS)
         .repeat()
         .observeOn(AndroidSchedulers.mainThread())
         .map(index -> holder.getBinding().vp.getCurrentItem())
