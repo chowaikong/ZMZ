@@ -89,16 +89,31 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
         .build()
         .inject(this);
 
-    mHotListPresenter.getHot();
+    loadData(true);
   }
 
   @Override protected void initListener() {
     mDataBinding.list.rvVertical.addOnScrollListener(new OnLoadMoreListener() {
       @Override public void loadMore() {
-        mPage++;
-        mResourcesPresenter.getResources(mPage);
+        loadData(false);
       }
     });
+  }
+
+  private void loadData(boolean isRefresh) {
+    if (isRefresh) {
+      mPage = 0;
+      mHotListPresenter.getHot();
+    } else {
+      mPage++;
+      mResourcesPresenter.getResources(mPage);
+    }
+  }
+
+  private void addListToItems(List<?> list) {
+    for (int i = 0; i < list.size(); i++) {
+      mItems.add(list.get(i));
+    }
   }
 
   @Override public void obtainHotListSuccess(List<Hot> hotList) {
@@ -134,9 +149,7 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
     if (newsList == null || newsList.size() <= 0) return;
 
     mItems.add(new Category("新闻资讯"));
-    for (int i = 0; i < newsList.size(); i++) {
-      mItems.add(newsList.get(i));
-    }
+    addListToItems(newsList);
   }
 
   @Override public void obtainUpdatesSucceed(List<Update> updates) {
@@ -147,34 +160,54 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
     if (updates == null || updates.size() <= 0) return;
 
     mItems.add(new Category("今日下载更新"));
-    for (int i = 0; i < updates.size(); i++) {
-      mItems.add(updates.get(i));
-    }
+    addListToItems(updates);
   }
 
   @Override public void obtainResourcesSucceed(List<Resource.Data> resources) {
     if (isFinishing()) return;
-    if (resources == null || resources.size() <= 0) return;
 
     if (mPage == 0) {
       mItems.add(new Category("资源更新"));
-      for (int i = 0; i < resources.size(); i++) {
-        mItems.add(resources.get(i));
-      }
-      mMultiTypeAdapter.notifyItemRangeInserted(0, mItems.size());
+      addListToItems(resources);
+      mMultiTypeAdapter.notifyItemRangeInserted(0, resources.size());
       mDataBinding.progress.bar.setVisibility(View.GONE);
     } else {
       int size = mItems.size();
-      for (int i = 0; i < resources.size(); i++) {
-        mItems.add(resources.get(i));
-      }
+      addListToItems(resources);
       mMultiTypeAdapter.notifyItemRangeInserted(size, mItems.size());
     }
   }
 
   @Override public void error(String error, Object... objects) {
     if (isFinishing()) return;
+
     ZLog.e(error);
     Toaster.show(R.string.something_wrong_happened);
+  }
+
+  @Override protected void onDestroy() {
+    super.onDestroy();
+
+    // Once onDestroy invoked, dispose all subscribers
+
+    if (mHotListPresenter != null) {
+      mHotListPresenter.dispose();
+    }
+
+    if (mScheduleUpdatesPresenter != null) {
+      mScheduleUpdatesPresenter.dispose();
+    }
+
+    if (mNewsListPresenter != null) {
+      mNewsListPresenter.dispose();
+    }
+
+    if (mUpdatesPresenter != null) {
+      mUpdatesPresenter.dispose();
+    }
+
+    if (mResourcesPresenter != null) {
+      mResourcesPresenter.dispose();
+    }
   }
 }

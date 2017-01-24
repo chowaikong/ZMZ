@@ -73,7 +73,6 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
   }
 
   @Override protected void initListener() {
-
   }
 
   @Override public void obtainResourceInfoSucceed(ResourceInfo resourceInfo) {

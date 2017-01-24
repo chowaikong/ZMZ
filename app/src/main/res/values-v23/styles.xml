@@ -8,5 +8,6 @@
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:windowTranslucentStatus">true</item>
     <item name="android:windowLightStatusBar">true</item>
+    <item name="android:actionBarSize">45dp</item>
   </style>
 </resources>

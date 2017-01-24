@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import me.knox.zmz.R;
 
 /**
  * Created by KNOX.
@@ -38,6 +39,7 @@ public abstract class BaseBindingActivity<T extends ViewDataBinding> extends App
     }
     getSupportActionBar().setDisplayShowTitleEnabled(false);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    toolbar.setNavigationIcon(R.drawable.ic_action_close);
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {

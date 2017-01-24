@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <data>
+    <import type="android.view.View"/>
+    <import type="android.text.TextUtils"/>
+    <variable
+        name="update"
+        type="me.knox.zmz.entity.Update"
+        />
+  </data>
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="10dp"
+      >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@{@string/file_name(update.name)}"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/download"
+        />
+    <TextView
+        android:id="@+id/tv_first"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/shape_text_border"
+        android:clickable="true"
+        android:padding="5dp"
+        android:text="@{update.ways.first}"
+        android:textColor="@color/selector_text"
+        android:visibility="@{TextUtils.isEmpty(update.ways.first) ? View.GONE : View.VISIBLE}"
+        />
+    <TextView
+        android:id="@+id/tv_second"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_text_border"
+        android:clickable="true"
+        android:padding="5dp"
+        android:text="@{update.ways.second}"
+        android:textColor="@color/selector_text"
+        android:visibility="@{TextUtils.isEmpty(update.ways.second) ? View.GONE : View.VISIBLE}"
+        />
+  </LinearLayout>
+</layout>

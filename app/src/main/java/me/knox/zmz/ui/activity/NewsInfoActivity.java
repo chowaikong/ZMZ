@@ -41,7 +41,7 @@ public class NewsInfoActivity extends BaseBindingActivity<ActivityNewsInfoBindin
   }
 
   @Override protected void initView() {
-
+    setupToolbar(mDataBinding.toolbar);
   }
 
   @Override protected void initData() {
@@ -56,7 +56,6 @@ public class NewsInfoActivity extends BaseBindingActivity<ActivityNewsInfoBindin
   }
 
   @Override protected void initListener() {
-
   }
 
   @Override public void obtainNewsInfoSucceed(NewsInfo newsInfo) {

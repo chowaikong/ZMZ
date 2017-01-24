@@ -12,74 +12,101 @@
   </data>
   <android.support.v7.widget.CardView
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="120dp"
       app:cardCornerRadius="0dp"
       >
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
+
       <ImageView
-          android:layout_width="120dp"
-          android:layout_height="match_parent"
+          android:id="@+id/iv_poster"
+          android:layout_width="125dp"
+          android:layout_height="wrap_content"
           android:scaleType="centerCrop"
           app:img="@{update.poster}"
           tools:src="@drawable/shield"
           />
-      <LinearLayout
+
+      <ImageView
+          android:id="@+id/iv_more"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentBottom="true"
+          android:layout_margin="7dp"
+          android:src="@drawable/ic_action_more_vert"
+          android:foreground="?attr/selectableItemBackgroundBorderless"
+          />
+
+      <TextView
+          android:id="@+id/tv_name"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:padding="10dp"
-          >
+          android:layout_marginLeft="10dp"
+          android:layout_toEndOf="@id/iv_poster"
+          android:ellipsize="end"
+          android:gravity="start"
+          android:layout_marginTop="5dp"
+          android:maxLines="1"
+          android:text="@{update.cnname}"
+          android:textSize="16sp"
+          tools:text="cnname"
+          />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="start"
-            android:maxLines="1"
-            android:text="@{update.cnname}"
-            tools:text="cnname"
-            />
+      <TextView
+          android:id="@+id/tv_size"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/tv_name"
+          android:layout_marginLeft="10dp"
+          android:layout_toEndOf="@id/iv_poster"
+          android:gravity="start"
+          android:text="@{@string/size(update.size)}"
+          android:visibility='@{update.size.equals("0") ? View.GONE : View.VISIBLE}'
+          tools:text="size"
+          />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="@{@string/size(update.size)}"
-            android:visibility='@{update.size.equals("0") ? View.GONE : View.VISIBLE}'
-            tools:text="size"
-            />
+      <TextView
+          android:id="@+id/tv_season"
+          android:layout_width="120dp"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:padding="3dp"
+          android:layout_alignParentBottom="true"
+          android:text="@{@string/update_to + @string/season(update.season) + @string/episode(update.episode)}"
+          android:textColor="@android:color/white"
+          android:background="#66000000"
+          android:textSize="12sp"
+          tools:text="season"
+          />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="@{@string/update_to + @string/season(update.season) + @string/episode(update.episode)}"
-            tools:text="season"
-            />
+      <TextView
+          android:id="@+id/tv_format"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/tv_size"
+          android:layout_marginLeft="10dp"
+          android:layout_toEndOf="@id/iv_poster"
+          android:gravity="start"
+          android:text="@{@string/format(update.format)}"
+          tools:text="format"
+          />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="@{@string/format(update.format)}"
-            tools:text="format"
-            />
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/tv_format"
+          android:layout_marginLeft="10dp"
+          android:layout_toEndOf="@id/iv_poster"
+          android:layout_marginBottom="5dp"
+          android:gravity="start"
+          android:text="@{update.channel}"
+          tools:text="channel"
+          />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="start"
-            android:maxLines="3"
-            android:text="@{@string/file_name(update.name)}"
-            tools:text="file_name"
-            />
-
-      </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
   </android.support.v7.widget.CardView>
 </layout>

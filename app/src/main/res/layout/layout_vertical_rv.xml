@@ -8,6 +8,5 @@
       android:orientation="vertical"
       app:layoutManager="android.support.v7.widget.LinearLayoutManager"
       android:overScrollMode="never"
-      android:focusableInTouchMode="true"
       />
 </layout>

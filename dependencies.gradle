@@ -9,7 +9,7 @@ ext {
   retrofitLibVersion = "2.1.0"
   okhttpLibVersion = "3.4.1"
   daggerLibVersion = "2.7"
-  rxjavaLibVersion = "2.0.3"
+  rxjavaLibVersion = "2.0.4"
   rxAndroidVersion = "2.0.0"
   glideLibVersion = "3.7.0"
   gsonLibVersion = "2.6.2"

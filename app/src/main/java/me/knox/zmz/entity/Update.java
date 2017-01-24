@@ -1,7 +1,6 @@
 package me.knox.zmz.entity;
 
 import com.google.gson.annotations.SerializedName;
-import java.util.Map;
 
 /**
  * Created by KNOX.
@@ -18,7 +17,7 @@ public class Update {
   @SerializedName("size") private String size;
   @SerializedName("cnname") private String cnname;
   @SerializedName("channel") private String channel;
-  @SerializedName("ways") private Map<String, String> ways;
+  @SerializedName("ways") private Ways ways;
   private String poster;
 
   public int getId() {
@@ -63,7 +62,7 @@ public class Update {
     return channel;
   }
 
-  public Map<String, String> getWays() {
+  public Ways getWays() {
     return ways;
   }
 
@@ -73,5 +72,18 @@ public class Update {
 
   public void setPoster(String poster) {
     this.poster = poster;
+  }
+
+  public static class Ways {
+    @SerializedName("1") private String first;
+    @SerializedName("2") private String second;
+
+    public String getFirst() {
+      return first;
+    }
+
+    public String getSecond() {
+      return second;
+    }
   }
 }
