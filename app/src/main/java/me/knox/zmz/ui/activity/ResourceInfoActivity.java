@@ -1,11 +1,15 @@
 package me.knox.zmz.ui.activity;
 
-import android.content.Context;
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Pair;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import javax.inject.Inject;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -19,6 +23,9 @@ import me.knox.zmz.presenter.ResourceInfoPresenter;
 import me.knox.zmz.ui.item.ResourceInfoHeaderItemProvider;
 import me.knox.zmz.ui.util.Toaster;
 import me.knox.zmz.ui.util.ZLog;
+
+import static me.knox.zmz.misc.Constants.TRANSITION_POSTER;
+import static me.knox.zmz.misc.Constants.TRANSITION_TITLE;
 
 /**
  * Created by KNOX.
@@ -36,11 +43,26 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
 
   @Inject ResourceInfoPresenter mResourceInfoPresenter;
 
-  public static void start(Context context, int id, String poster) {
-    Intent intent = new Intent(context, ResourceInfoActivity.class);
+  public static void start(Activity activity, int id, String poster, View shareElement,
+      String transitionName) {
+    Intent intent = new Intent(activity, ResourceInfoActivity.class);
     intent.putExtra(ID, id);
     intent.putExtra(POSTER, poster);
-    context.startActivity(intent);
+    ActivityOptions options =
+        ActivityOptions.makeSceneTransitionAnimation(activity, shareElement, transitionName);
+    activity.startActivity(intent, options.toBundle());
+  }
+
+  public static void startWithPairTransition(Activity activity, int id, String poster,
+      ImageView image, TextView title) {
+    Intent intent = new Intent(activity, ResourceInfoActivity.class);
+    intent.putExtra(ID, id);
+    intent.putExtra(POSTER, poster);
+    Pair posterPair = Pair.create(image, TRANSITION_POSTER);
+    Pair titlePair = Pair.create(title, TRANSITION_TITLE);
+    ActivityOptions options =
+        ActivityOptions.makeSceneTransitionAnimation(activity, posterPair, titlePair);
+    activity.startActivity(intent, options.toBundle());
   }
 
   @Override protected ActivityResourceInfoBinding setDataBindingContentView(
@@ -77,7 +99,7 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
 
   @Override public void obtainResourceInfoSucceed(ResourceInfo resourceInfo) {
     if (isFinishing()) return;
-    String[] strings = {resourceInfo.getCnname(), resourceInfo.getEnname()};
+    String[] strings = { resourceInfo.getCnname(), resourceInfo.getEnname() };
     mItems.add(strings);
     mItems.add(resourceInfo.getPlayStatus());
     mItems.add(resourceInfo.getContent());

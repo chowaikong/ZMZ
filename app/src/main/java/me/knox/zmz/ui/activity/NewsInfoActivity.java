@@ -1,11 +1,15 @@
 package me.knox.zmz.ui.activity;
 
-import android.content.Context;
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Pair;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import javax.inject.Inject;
 import me.knox.zmz.R;
 import me.knox.zmz.contract.NewsInfoContract;
@@ -18,6 +22,9 @@ import me.knox.zmz.presenter.NewsInfoPresenter;
 import me.knox.zmz.ui.util.Toaster;
 import me.knox.zmz.ui.util.ZLog;
 
+import static me.knox.zmz.misc.Constants.TRANSITION_POSTER;
+import static me.knox.zmz.misc.Constants.TRANSITION_TITLE;
+
 /**
  * Created by KNOX.
  */
@@ -29,10 +36,14 @@ public class NewsInfoActivity extends BaseBindingActivity<ActivityNewsInfoBindin
 
   @Inject NewsInfoPresenter mNewsInfoPresenter;
 
-  public static void start(Context context, News news) {
-    Intent intent = new Intent(context, NewsInfoActivity.class);
+  public static void startWithTransition(Activity activity, News news, ImageView poster, TextView title) {
+    Intent intent = new Intent(activity, NewsInfoActivity.class);
     intent.putExtra(NEWS, news);
-    context.startActivity(intent);
+    Pair posterPair = Pair.create(poster, TRANSITION_POSTER);
+    Pair titlePair = Pair.create(title, TRANSITION_TITLE);
+    ActivityOptions
+        options = ActivityOptions.makeSceneTransitionAnimation(activity, posterPair, titlePair);
+    activity.startActivity(intent, options.toBundle());
   }
 
   @Override

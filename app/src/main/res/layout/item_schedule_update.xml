@@ -24,13 +24,17 @@
         android:layout_height="match_parent"
         >
       <ImageView
+          android:id="@+id/poster"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:scaleType="fitXY"
+          android:scaleType="centerCrop"
           app:img="@{update.poster}"
           tools:src="@drawable/shield"
+          android:transitionName="@string/transition_poster"
           />
       <TextView
+          android:id="@+id/title"
+          android:transitionName="@string/transition_title"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_above="@+id/tv_update_desc"

@@ -31,6 +31,8 @@
           >
 
         <TextView
+            android:id="@+id/title"
+            android:transitionName="title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{resource.cnname}"
@@ -82,11 +84,13 @@
             />
       </LinearLayout>
       <ImageView
+          android:id="@+id/poster"
           android:layout_width="125dp"
           android:layout_height="match_parent"
           android:scaleType="centerCrop"
           app:img="@{resource.poster}"
           tools:src="@drawable/shield"
+          android:transitionName="poster"
           />
     </LinearLayout>
   </android.support.v7.widget.CardView>

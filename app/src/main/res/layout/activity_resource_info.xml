@@ -15,12 +15,13 @@
       android:orientation="vertical"
       >
 
-    <com.flaviofaria.kenburnsview.KenBurnsView
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         app:img="@{poster}"
         tools:src="@drawable/sherlock"
+        android:transitionName="@string/transition_poster"
         />
 
     <android.support.v7.widget.RecyclerView

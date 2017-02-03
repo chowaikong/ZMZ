@@ -1,5 +1,6 @@
 package me.knox.zmz.ui.adapter;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import java.util.List;
@@ -29,9 +30,11 @@ public class ScheduleUpdateAdapter extends BaseRVAdapter<ItemScheduleUpdateBindi
       int position) {
     holder.getBinding().setUpdate(mDataList.get(holder.getAdapterPosition()));
     holder.getBinding().getRoot().setOnClickListener(v -> {
+      Activity activity = (Activity) v.getContext();
       int id = mDataList.get(position).getId();
       String poster = mDataList.get(holder.getAdapterPosition()).getPoster();
-      ResourceInfoActivity.start(v.getContext(), id, poster);
+      ResourceInfoActivity.startWithPairTransition(activity, id, poster, holder.getBinding().poster,
+          holder.getBinding().title);
     });
     holder.getBinding().executePendingBindings();
   }
