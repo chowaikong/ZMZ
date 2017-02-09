@@ -32,7 +32,7 @@ public class ResourcesItemProvider
       Activity activity = (Activity) v.getContext();
       int id = holder.getBinding().getResource().getId();
       String poster = holder.getBinding().getResource().getPoster();
-      ResourceInfoActivity.start(activity, id, poster, holder.getBinding().poster, TRANSITION_POSTER);
+      ResourceInfoActivity.startWithTransition(activity, id, poster, holder.getBinding().poster, TRANSITION_POSTER);
     });
     holder.getBinding().executePendingBindings();
   }

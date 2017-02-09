@@ -1,8 +1,10 @@
 package me.knox.zmz.ui.activity;
 
+import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +47,8 @@ import me.knox.zmz.ui.util.Toaster;
 import me.knox.zmz.ui.util.ZLog;
 import me.knox.zmz.ui.widget.VerticalSpaceItemDecoration;
 import org.joda.time.LocalDate;
+
+import static me.knox.zmz.misc.Constants.TRANSITION_SEARCH;
 
 public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
     implements HotListContract.View, ScheduleUpdatesContract.View, NewsListContract.View,
@@ -97,7 +101,20 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
       @Override public void loadMore() {
         loadData(false);
       }
+
+      @Override public void stateChanged(int state) {
+        if (state == RecyclerView.SCROLL_STATE_DRAGGING
+            || state == RecyclerView.SCROLL_STATE_SETTLING) {
+          mDataBinding.setIsScrolling(true);
+        } else {
+          mDataBinding.setIsScrolling(false);
+        }
+      }
     });
+
+    mDataBinding.searchCard.setOnClickListener(
+        v -> SearchActivity.startWithTransition((Activity) getContext(), mDataBinding.searchCard,
+            TRANSITION_SEARCH));
   }
 
   private void loadData(boolean isRefresh) {

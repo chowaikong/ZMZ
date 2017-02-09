@@ -12,4 +12,5 @@ public class Constants {
   public static final String CLIENT = "client";
   public static final String TRANSITION_POSTER = "poster";
   public static final String TRANSITION_TITLE = "title";
+  public static final String TRANSITION_SEARCH = "search";
 }

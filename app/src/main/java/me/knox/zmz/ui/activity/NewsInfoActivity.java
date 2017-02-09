@@ -33,6 +33,7 @@ public class NewsInfoActivity extends BaseBindingActivity<ActivityNewsInfoBindin
     implements NewsInfoContract.View {
 
   private static final String NEWS = "news";
+  private static final String ID = "id";
 
   @Inject NewsInfoPresenter mNewsInfoPresenter;
 
@@ -44,6 +45,11 @@ public class NewsInfoActivity extends BaseBindingActivity<ActivityNewsInfoBindin
     ActivityOptions
         options = ActivityOptions.makeSceneTransitionAnimation(activity, posterPair, titlePair);
     activity.startActivity(intent, options.toBundle());
+  }
+  public static void startWithoutTransition(Activity activity, int id) {
+    Intent intent = new Intent(activity, NewsInfoActivity.class);
+    intent.putExtra(ID, id);
+    activity.startActivity(intent);
   }
 
   @Override
@@ -60,10 +66,15 @@ public class NewsInfoActivity extends BaseBindingActivity<ActivityNewsInfoBindin
 
     if (getIntent() == null) return;
     News news = getIntent().getParcelableExtra(NEWS);
-    if (news == null) return;
-    mDataBinding.setPoster(news.getPoster());
-    mDataBinding.setIntro(news.getIntro());
-    mNewsInfoPresenter.getNewsInfo(news.getId());
+    int id = getIntent().getIntExtra(ID, 0);
+    if (news == null) {
+      if (id < 0) return;
+      mNewsInfoPresenter.getNewsInfo(id);
+    } else {
+      mDataBinding.setPoster(news.getPoster());
+      mDataBinding.setIntro(news.getIntro());
+      mNewsInfoPresenter.getNewsInfo(news.getId());
+    }
   }
 
   @Override protected void initListener() {
@@ -71,6 +82,7 @@ public class NewsInfoActivity extends BaseBindingActivity<ActivityNewsInfoBindin
 
   @Override public void obtainNewsInfoSucceed(NewsInfo newsInfo) {
     if (isFinishing()) return;
+    mDataBinding.setPoster(newsInfo.getPoster());
     mDataBinding.setInfo(newsInfo);
     mDataBinding.progress.bar.setVisibility(View.GONE);
   }

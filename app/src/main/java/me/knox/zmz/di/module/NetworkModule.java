@@ -61,6 +61,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
     return new OkHttpClient.Builder().cache(cache)
         //.connectTimeout(20, TimeUnit.SECONDS)
         //.readTimeout(20, TimeUnit.SECONDS)
+        .retryOnConnectionFailure(true)
         .addInterceptor(interceptor)
         .addInterceptor(httpLoggingInterceptor)
         .build();

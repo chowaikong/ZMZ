@@ -2,10 +2,12 @@ package me.knox.zmz.ui.activity;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
@@ -42,8 +44,9 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
   private final MultiTypeAdapter mMultiTypeAdapter = new MultiTypeAdapter();
 
   @Inject ResourceInfoPresenter mResourceInfoPresenter;
+  private String mPoster = "";
 
-  public static void start(Activity activity, int id, String poster, View shareElement,
+  public static void startWithTransition(Activity activity, int id, String poster, View shareElement,
       String transitionName) {
     Intent intent = new Intent(activity, ResourceInfoActivity.class);
     intent.putExtra(ID, id);
@@ -51,6 +54,12 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
     ActivityOptions options =
         ActivityOptions.makeSceneTransitionAnimation(activity, shareElement, transitionName);
     activity.startActivity(intent, options.toBundle());
+  }
+
+  public static void startWithoutTransition(Context context, int id) {
+    Intent intent = new Intent(context, ResourceInfoActivity.class);
+    intent.putExtra(ID, id);
+    context.startActivity(intent);
   }
 
   public static void startWithPairTransition(Activity activity, int id, String poster,
@@ -74,10 +83,10 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
     Intent intent = getIntent();
     if (intent == null) return;
     mId = intent.getIntExtra(ID, 0);
-    String poster = intent.getStringExtra(POSTER);
-    if (poster != null && !poster.isEmpty()) {
-      mDataBinding.setPoster(poster);
-    }
+    mPoster = intent.getStringExtra(POSTER);
+    //if (mPoster != null && !mPoster.isEmpty()) {
+    //  mDataBinding.setPoster(mPoster);
+    //}
 
     mDataBinding.rvVertical.setAdapter(mMultiTypeAdapter);
   }
@@ -99,11 +108,17 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
 
   @Override public void obtainResourceInfoSucceed(ResourceInfo resourceInfo) {
     if (isFinishing()) return;
+    if (mPoster == null) {
+      mPoster = resourceInfo.getPoster();
+    }
+    mDataBinding.setPoster(mPoster);
     String[] strings = { resourceInfo.getCnname(), resourceInfo.getEnname() };
     mItems.add(strings);
     mItems.add(resourceInfo.getPlayStatus());
     mItems.add(resourceInfo.getContent());
-    mItems.add(resourceInfo.getRemark());
+    if(!TextUtils.isEmpty(resourceInfo.getRemark())) {
+      mItems.add(resourceInfo.getRemark());
+    }
     mMultiTypeAdapter.setItems(mItems);
     mDataBinding.progress.bar.setVisibility(View.GONE);
   }

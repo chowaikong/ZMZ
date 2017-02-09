@@ -13,6 +13,8 @@ public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
 
   public abstract void loadMore();
 
+  public abstract void stateChanged(int state);
+
   @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
     int itemCount, lastPosition;
     if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
@@ -29,5 +31,10 @@ public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
       mLastItemCount = itemCount;
       this.loadMore();
     }
+  }
+
+  @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+    super.onScrollStateChanged(recyclerView, newState);
+    this.stateChanged(newState);
   }
 }

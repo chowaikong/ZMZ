@@ -89,4 +89,6 @@ dependencies {
     exclude group: 'com.android.support'
   })
   compile 'jp.wasabeef:recyclerview-animators:2.2.5'
+  compile 'com.evernote:android-state:1.0.1'
+  annotationProcessor 'com.evernote:android-state-processor:1.0.1'
 }

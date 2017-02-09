@@ -9,6 +9,7 @@ import me.knox.zmz.entity.NewsInfo;
 import me.knox.zmz.entity.Resource;
 import me.knox.zmz.entity.ResourceInfo;
 import me.knox.zmz.entity.ScheduleUpdate;
+import me.knox.zmz.entity.SearchResult;
 import me.knox.zmz.entity.Update;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -37,4 +38,7 @@ public interface Api {
 
   @GET("article/getinfo")
   Flowable<JsonResponse<NewsInfo>> getNewsInfo(@Query("id") int id);
+
+  @GET("search")
+  Flowable<JsonResponse<SearchResult>> search(@Query("k") String keyword);
 }

@@ -65,4 +65,21 @@ public class DatabindingAttributeUtil {
       textView.setText(Html.fromHtml(html));
     }
   }
+
+  @BindingAdapter("type")
+  public static void transformChannel(TextView textView, String type) {
+    switch (type) {
+      case "resource":
+        textView.setText("影视资源");
+        break;
+      case "subtitle":
+        textView.setText("字幕");
+        break;
+      case "article":
+        textView.setText("资讯");
+        break;
+      default:
+        break;
+    }
+  }
 }

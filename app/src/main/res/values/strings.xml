@@ -14,4 +14,6 @@
   <string name="download">复制下载链接：</string>
   <string name="transition_poster">poster</string>
   <string name="transition_title">title</string>
+  <string name="transition_search">search</string>
+  <string name="hint_search">搜索资源、资讯或字幕</string>
 </resources>
