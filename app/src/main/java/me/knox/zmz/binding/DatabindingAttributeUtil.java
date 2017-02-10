@@ -67,7 +67,7 @@ public class DatabindingAttributeUtil {
   }
 
   @BindingAdapter("type")
-  public static void transformChannel(TextView textView, String type) {
+  public static void transformType(TextView textView, String type) {
     switch (type) {
       case "resource":
         textView.setText("影视资源");
@@ -77,6 +77,20 @@ public class DatabindingAttributeUtil {
         break;
       case "article":
         textView.setText("资讯");
+        break;
+      default:
+        break;
+    }
+  }
+
+  @BindingAdapter("channel")
+  public static void transfromChannel(TextView textView, String channel) {
+    switch (channel) {
+      case "tv" :
+        textView.setText("电视剧");
+        break;
+      case "movie" :
+        textView.setText("电影");
         break;
       default:
         break;

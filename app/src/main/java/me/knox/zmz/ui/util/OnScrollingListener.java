@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
  * Created by KNOX.
  */
 
-public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
+public abstract class OnScrollingListener extends RecyclerView.OnScrollListener {
 
   private int mLastItemCount;
 
@@ -23,7 +23,7 @@ public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
       itemCount = linearLayoutManager.getItemCount();
       lastPosition = linearLayoutManager.findLastCompletelyVisibleItemPosition();
     } else {
-      ZLog.e("The OnLoadMoreListener only support LinearLayoutManager");
+      ZLog.e("The OnScrollingListener only support LinearLayoutManager");
       return;
     }
 

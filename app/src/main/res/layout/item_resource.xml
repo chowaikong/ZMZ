@@ -36,30 +36,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{resource.cnname}"
+            android:textColor="@android:color/black"
             tools:text="name"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{resource.playStatus}"
+            android:text="@{@string/status(resource.playStatus)}"
             tools:text="playStatus"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{resource.area}"
+            android:text="@{@string/area(resource.area)}"
             tools:text="area"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{resource.category}"
+            android:text="@{@string/category(resource.category)}"
             tools:text="category"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{resource.score}"
+            android:text="@{@string/score(resource.score)}"
             tools:text="score"
             />
         <TextView
@@ -71,7 +72,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{resource.remark}"
+            android:text="@{@string/remark(resource.remark)}"
             android:maxLines="2"
             android:ellipsize="end"
             tools:text="remark"

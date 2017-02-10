@@ -42,7 +42,7 @@ import me.knox.zmz.ui.item.NewsItemProvider;
 import me.knox.zmz.ui.item.ResourcesItemProvider;
 import me.knox.zmz.ui.item.ScheduleUpdateItemProvider;
 import me.knox.zmz.ui.item.UpdatesItemProvider;
-import me.knox.zmz.ui.util.OnLoadMoreListener;
+import me.knox.zmz.ui.util.OnScrollingListener;
 import me.knox.zmz.ui.util.Toaster;
 import me.knox.zmz.ui.util.ZLog;
 import me.knox.zmz.ui.widget.VerticalSpaceItemDecoration;
@@ -97,7 +97,7 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
   }
 
   @Override protected void initListener() {
-    mDataBinding.list.rvVertical.addOnScrollListener(new OnLoadMoreListener() {
+    mDataBinding.list.rvVertical.addOnScrollListener(new OnScrollingListener() {
       @Override public void loadMore() {
         loadData(false);
       }

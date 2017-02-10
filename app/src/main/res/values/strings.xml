@@ -16,4 +16,9 @@
   <string name="transition_title">title</string>
   <string name="transition_search">search</string>
   <string name="hint_search">搜索资源、资讯或字幕</string>
+  <string name="status">播放状态:%s</string>
+  <string name="area">地区:%s</string>
+  <string name="category">类型:%s</string>
+  <string name="score">评分:%s</string>
+  <string name="remark">注:%s</string>
 </resources>
