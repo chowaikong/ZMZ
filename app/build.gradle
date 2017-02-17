@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
@@ -71,7 +70,6 @@ dependencies {
   compile dependencies.supportCardView
   compile dependencies.supportDesign
   compile dependencies.rxAndroid
-  compile dependencies.rxJava
   compile dependencies.retrofit
   compile dependencies.retrofitGsonConverter
   compile dependencies.retrofitRxJavaAdapter
@@ -80,15 +78,20 @@ dependencies {
   compile dependencies.gson
   compile dependencies.glide
   compile dependencies.dagger
-  apt dependencies.daggerCompiler
+  annotationProcessor dependencies.daggerCompiler
   compile dependencies.timber
   compile dependencies.jodaTime
   compile dependencies.KLog
+  compile dependencies.RecyclerViewAnimators
   compile 'com.flaviofaria:kenburnsview:1.0.7'
   compile('me.drakeet.multitype:multitype:2.4.0', {
     exclude group: 'com.android.support'
   })
-  compile 'jp.wasabeef:recyclerview-animators:2.2.5'
-  compile 'com.evernote:android-state:1.0.1'
-  annotationProcessor 'com.evernote:android-state-processor:1.0.1'
+}
+
+// https://github.com/google/dagger/issues/306
+gradle.projectsEvaluated {
+  tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xmaxerrs" << "500"
+  }
 }
