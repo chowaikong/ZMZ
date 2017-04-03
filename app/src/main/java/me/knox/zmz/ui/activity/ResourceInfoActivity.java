@@ -8,6 +8,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,15 +17,14 @@ import javax.inject.Inject;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.knox.zmz.R;
-import me.knox.zmz.contract.ResourceInfoContract;
 import me.knox.zmz.databinding.ActivityResourceInfoBinding;
 import me.knox.zmz.di.component.DaggerResourceInfoComponent;
 import me.knox.zmz.di.module.ResourceInfoModule;
 import me.knox.zmz.entity.ResourceInfo;
-import me.knox.zmz.presenter.ResourceInfoPresenter;
+import me.knox.zmz.mvp.contract.ResourceInfoContract;
+import me.knox.zmz.mvp.presenter.ResourceInfoPresenter;
 import me.knox.zmz.ui.item.ResourceInfoHeaderItemProvider;
 import me.knox.zmz.ui.util.Toaster;
-import me.knox.zmz.ui.util.ZLog;
 
 import static me.knox.zmz.misc.Constants.TRANSITION_POSTER;
 import static me.knox.zmz.misc.Constants.TRANSITION_TITLE;
@@ -36,15 +36,15 @@ import static me.knox.zmz.misc.Constants.TRANSITION_TITLE;
 public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceInfoBinding>
     implements ResourceInfoContract.View {
 
+  private static final String TAG = "ResourceInfoActivity";
   private static final String ID = "id";
   private static final String POSTER = "poster";
   private int mId;
 
   private final Items mItems = new Items();
-  private final MultiTypeAdapter mMultiTypeAdapter = new MultiTypeAdapter();
+  private final MultiTypeAdapter mMultiTypeAdapter = new MultiTypeAdapter(mItems);
 
   @Inject ResourceInfoPresenter mResourceInfoPresenter;
-  private String mPoster = "";
 
   public static void startWithTransition(Activity activity, int id, String poster, View shareElement,
       String transitionName) {
@@ -81,12 +81,14 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
 
   @Override protected void initView() {
     Intent intent = getIntent();
-    if (intent == null) return;
+    if (intent == null) {
+      return;
+    }
     mId = intent.getIntExtra(ID, 0);
-    mPoster = intent.getStringExtra(POSTER);
-    //if (mPoster != null && !mPoster.isEmpty()) {
-    //  mDataBinding.setPoster(mPoster);
-    //}
+    String poster = intent.getStringExtra(POSTER);
+    if (poster != null && !poster.isEmpty()) {
+      mDataBinding.setPoster(poster);
+    }
 
     mDataBinding.rvVertical.setAdapter(mMultiTypeAdapter);
   }
@@ -107,11 +109,13 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
   }
 
   @Override public void obtainResourceInfoSucceed(ResourceInfo resourceInfo) {
-    if (isFinishing()) return;
-    if (mPoster == null) {
-      mPoster = resourceInfo.getPoster();
+    if (isFinishing()) {
+      return;
     }
-    mDataBinding.setPoster(mPoster);
+    //if (mPoster == null) {
+    //  mPoster = resourceInfo.getPoster();
+    //}
+    //mDataBinding.setPoster(mPoster);
     String[] strings = { resourceInfo.getCnname(), resourceInfo.getEnname() };
     mItems.add(strings);
     mItems.add(resourceInfo.getPlayStatus());
@@ -119,13 +123,15 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
     if(!TextUtils.isEmpty(resourceInfo.getRemark())) {
       mItems.add(resourceInfo.getRemark());
     }
-    mMultiTypeAdapter.setItems(mItems);
+    mMultiTypeAdapter.notifyItemRangeInserted(0, mItems.size());
     mDataBinding.progress.bar.setVisibility(View.GONE);
   }
 
   @Override public void error(String error, Object... objects) {
-    if (isFinishing()) return;
-    ZLog.e(error);
+    if (isFinishing()) {
+      return;
+    }
+    Log.e(TAG, error);
     Toaster.show(R.string.something_wrong_happened);
   }
 }

@@ -10,6 +10,8 @@ import me.knox.zmz.entity.Resource;
 import me.knox.zmz.entity.ResourceInfo;
 import me.knox.zmz.entity.ScheduleUpdate;
 import me.knox.zmz.entity.SearchResult;
+import me.knox.zmz.entity.Subtitle;
+import me.knox.zmz.entity.SubtitleList;
 import me.knox.zmz.entity.Update;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -28,10 +30,10 @@ public interface Api {
       @Query("start") String start, @Query("end") String end);
 
   @GET("resource/fetchlist")
-  Flowable<JsonResponse<Resource>> getResources(@Query("page") int page);
+  Flowable<JsonResponse<Resource>> getResources(/*@Query("page") int page*/);
 
   @GET("article/fetchlist")
-  Flowable<JsonResponse<List<News>>> getNews(@Query("page") int page);
+  Flowable<JsonResponse<List<News>>> getNews(/*@Query("page") int page*/);
 
   @GET("resource/getinfo")
   Flowable<JsonResponse<ResourceInfo>> getResourceInfo(@Query("id") int id, @Query("share") int isSharable);
@@ -40,5 +42,11 @@ public interface Api {
   Flowable<JsonResponse<NewsInfo>> getNewsInfo(@Query("id") int id);
 
   @GET("search")
-  Flowable<JsonResponse<SearchResult>> search(@Query("k") String keyword);
+  Flowable<JsonResponse<SearchResult>> search(@Query("k") String keyword, @Query("limit") int limit, @Query("page") int page);
+
+  @GET("subtitle/getinfo_web")
+  Flowable<JsonResponse<Subtitle>> getSubtitleInfo(@Query("id") int id);
+
+  @GET("subtitle/fetchlist")
+  Flowable<JsonResponse<SubtitleList>> getSubtitleList(/*@Query("limit") int limit, @Query("page") int page*/);
 }

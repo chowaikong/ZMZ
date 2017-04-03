@@ -3,8 +3,8 @@ package me.knox.zmz.di.module;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
-import me.knox.zmz.contract.UpdatesContract;
-import me.knox.zmz.model.UpdatesModel;
+import me.knox.zmz.mvp.contract.UpdatesContract;
+import me.knox.zmz.mvp.model.UpdatesModel;
 
 /**
  * Created by KNOX.

@@ -6,21 +6,21 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import javax.inject.Inject;
 import me.knox.zmz.R;
-import me.knox.zmz.contract.NewsInfoContract;
 import me.knox.zmz.databinding.ActivityNewsInfoBinding;
 import me.knox.zmz.di.component.DaggerNewsInfoComponent;
 import me.knox.zmz.di.module.NewsInfoModule;
 import me.knox.zmz.entity.News;
 import me.knox.zmz.entity.NewsInfo;
-import me.knox.zmz.presenter.NewsInfoPresenter;
+import me.knox.zmz.mvp.contract.NewsInfoContract;
+import me.knox.zmz.mvp.presenter.NewsInfoPresenter;
 import me.knox.zmz.ui.util.Toaster;
-import me.knox.zmz.ui.util.ZLog;
 
 import static me.knox.zmz.misc.Constants.TRANSITION_POSTER;
 import static me.knox.zmz.misc.Constants.TRANSITION_TITLE;
@@ -32,6 +32,7 @@ import static me.knox.zmz.misc.Constants.TRANSITION_TITLE;
 public class NewsInfoActivity extends BaseBindingActivity<ActivityNewsInfoBinding>
     implements NewsInfoContract.View {
 
+  private static final String TAG = "NewsInfoActivity";
   private static final String NEWS = "news";
   private static final String ID = "id";
 
@@ -81,15 +82,19 @@ public class NewsInfoActivity extends BaseBindingActivity<ActivityNewsInfoBindin
   }
 
   @Override public void obtainNewsInfoSucceed(NewsInfo newsInfo) {
-    if (isFinishing()) return;
+    if (isFinishing()) {
+      return;
+    }
     mDataBinding.setPoster(newsInfo.getPoster());
     mDataBinding.setInfo(newsInfo);
     mDataBinding.progress.bar.setVisibility(View.GONE);
   }
 
   @Override public void error(String error, Object... objects) {
-    if (isFinishing()) return;
-    ZLog.e(error);
+    if (isFinishing()) {
+      return;
+    }
+    Log.e(TAG, error);
     Toaster.show(getString(R.string.something_wrong_happened));
   }
 }

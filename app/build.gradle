@@ -66,7 +66,6 @@ dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   testCompile 'junit:junit:4.12'
   compile dependencies.supportAppCompat
-  compile dependencies.supportRecyclerView
   compile dependencies.supportCardView
   compile dependencies.supportDesign
   compile dependencies.rxAndroid
@@ -74,19 +73,17 @@ dependencies {
   compile dependencies.retrofitGsonConverter
   compile dependencies.retrofitRxJavaAdapter
   compile dependencies.okhttp
-  compile dependencies.okhttpLoggingInterceptor
+  compile dependencies.httpLoggingInterceptor
   compile dependencies.gson
   compile dependencies.glide
   compile dependencies.dagger
   annotationProcessor dependencies.daggerCompiler
   compile dependencies.timber
   compile dependencies.jodaTime
-  compile dependencies.KLog
-  compile dependencies.RecyclerViewAnimators
+  compile dependencies.rvMultiTypeAdapter
+  compile dependencies.rvItemAnimators
+  compile dependencies.rvLoadMoreWrapper
   compile 'com.flaviofaria:kenburnsview:1.0.7'
-  compile('me.drakeet.multitype:multitype:2.4.0', {
-    exclude group: 'com.android.support'
-  })
 }
 
 // https://github.com/google/dagger/issues/306

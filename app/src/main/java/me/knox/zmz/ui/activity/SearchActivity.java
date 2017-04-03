@@ -10,21 +10,21 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
-import java.util.ArrayList;
-import java.util.List;
+import com.github.nukc.LoadMoreWrapper.LoadMoreWrapper;
 import javax.inject.Inject;
+import me.drakeet.multitype.Items;
+import me.drakeet.multitype.MultiTypeAdapter;
 import me.knox.zmz.R;
-import me.knox.zmz.contract.SearchContract;
 import me.knox.zmz.databinding.ActivitySearchBinding;
 import me.knox.zmz.di.component.DaggerSearchComponent;
 import me.knox.zmz.di.module.SearchModule;
 import me.knox.zmz.entity.Search;
 import me.knox.zmz.entity.SearchResult;
-import me.knox.zmz.presenter.SearchPresenter;
-import me.knox.zmz.ui.adapter.SearchResultAdapter;
-import me.knox.zmz.ui.util.RecyclerItemClickListener;
-import me.knox.zmz.ui.util.ZLog;
+import me.knox.zmz.mvp.contract.SearchContract;
+import me.knox.zmz.mvp.presenter.SearchPresenter;
+import me.knox.zmz.ui.item.SearchItemProvider;
 
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
@@ -35,14 +35,24 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class SearchActivity extends BaseBindingActivity<ActivitySearchBinding>
     implements SearchContract.View {
 
+  private static final String TAG = "SearchActivity";
+
   @Inject SearchPresenter mSearchPresenter;
 
-  private final List<Search> mSearches = new ArrayList<>();
-  private final SearchResultAdapter mSearchResultAdapter = new SearchResultAdapter(mSearches);
+  private final Items mItems = new Items();
+  private final MultiTypeAdapter mAdapter = new MultiTypeAdapter(mItems);
+  private final LoadMoreWrapper mLoadMoreWrapper = LoadMoreWrapper.with(mAdapter);
 
-  public static void startWithTransition(Activity activity, View shareElement, String transitionName) {
+  private int mPage = 0;
+  private int mLimit = 10;
+  private int mPreviousPosition = 0;
+  private String mKeyword;
+
+  public static void startWithTransition(Activity activity, View shareElement,
+      String transitionName) {
     Intent intent = new Intent(activity, SearchActivity.class);
-    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(activity, shareElement, transitionName);
+    ActivityOptions options =
+        ActivityOptions.makeSceneTransitionAnimation(activity, shareElement, transitionName);
     activity.startActivity(intent, options.toBundle());
   }
 
@@ -52,9 +62,10 @@ public class SearchActivity extends BaseBindingActivity<ActivitySearchBinding>
   }
 
   @Override protected void initView() {
+    mAdapter.register(Search.class, new SearchItemProvider());
     mDataBinding.list.rvVertical.addItemDecoration(new DividerItemDecoration(this, VERTICAL));
-    mDataBinding.list.rvVertical.setAdapter(mSearchResultAdapter);
-    mDataBinding.setIsEmpty(true);
+    mDataBinding.list.rvVertical.setAdapter(mAdapter);
+    mDataBinding.setIsKeyWordEmpty(true);
   }
 
   @Override protected void initData() {
@@ -68,47 +79,76 @@ public class SearchActivity extends BaseBindingActivity<ActivitySearchBinding>
       }
 
       @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-        mDataBinding.setIsEmpty(false);
+        mDataBinding.setIsKeyWordEmpty(false);
       }
 
       @Override public void afterTextChanged(Editable s) {
-        String keyword = s.toString();
-        if (TextUtils.isEmpty(keyword)) return;
+        mKeyword = s.toString().trim();
+        if (TextUtils.isEmpty(mKeyword)) {
+          return;
+        }
         if (mSearchPresenter != null) {
-          mSearchPresenter.search(keyword);
+          mSearchPresenter.search(mKeyword, mLimit, mPage);
           mDataBinding.progress.setVisibility(View.VISIBLE);
         }
+
+        mItems.clear();
+        mAdapter.notifyDataSetChanged();
+        mDataBinding.progress.setVisibility(View.VISIBLE);
+        mPage = 0;
       }
     });
-    mDataBinding.list.rvVertical.addOnItemTouchListener(
-        new RecyclerItemClickListener(getContext(), (view, position) -> {
-          String type = mSearches.get(position).getType();
-          int id = mSearches.get(position).getId();
-          switch (type) {
-            case "resource":
-              ResourceInfoActivity.startWithoutTransition(view.getContext(), id);
-              break;
-            case "article":
-              NewsInfoActivity.startWithoutTransition(this, id);
-              break;
-          }
-        }));
 
     mDataBinding.ivClear.setOnClickListener(v -> {
       mDataBinding.edtSearch.setText("");
-      mDataBinding.setIsEmpty(true);
+      mDataBinding.setIsKeyWordEmpty(true);
+      mItems.clear();
+      mPreviousPosition = 0;
+      mAdapter.notifyDataSetChanged();
     });
+
+    // load more data settings
+    mLoadMoreWrapper
+        .setLoadMoreEnabled(true)
+        .setListener(enabled -> {
+          mPage++;
+          mSearchPresenter.search(mKeyword, mLimit, mPage);
+        })
+        .into(mDataBinding.list.rvVertical);
   }
 
   @Override public void obtainSearchResultSuccess(SearchResult searchResult) {
-    if (isFinishing()) return;
-    mSearches.addAll(searchResult.getSearches());
-    mSearchResultAdapter.setData(searchResult.getSearches());
+    if (isFinishing()) {
+      return;
+    }
+
+    if (searchResult == null) {
+      return;
+    }
+
+    if (searchResult.getCount() != 0) {
+      mLoadMoreWrapper.setLoadMoreEnabled(true);
+      mItems.addAll(searchResult.getSearches());
+      mAdapter.notifyItemRangeInserted(mPreviousPosition, searchResult.getSearches().size());
+      mPreviousPosition = mItems.size();
+
+      // server may return false but not list as result, so have to prevent it before the gson error show up
+      if (mItems.size() == searchResult.getCount() || searchResult.getSearches().size() < mLimit) {
+        mLoadMoreWrapper.setLoadMoreEnabled(false);
+        mAdapter.notifyDataSetChanged();
+      }
+    } else {
+      mLoadMoreWrapper.setLoadMoreEnabled(false);
+      mAdapter.notifyDataSetChanged();
+    }
+
     mDataBinding.progress.setVisibility(View.GONE);
   }
 
   @Override public void error(String error, Object... objects) {
-    if (isFinishing()) return;
-    ZLog.e(error);
+    if (isFinishing()) {
+      return;
+    }
+    Log.e(TAG, error);
   }
 }

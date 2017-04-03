@@ -3,8 +3,8 @@ package me.knox.zmz.di.module;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
-import me.knox.zmz.contract.HotListContract;
-import me.knox.zmz.model.HotListModel;
+import me.knox.zmz.mvp.contract.HotListContract;
+import me.knox.zmz.mvp.model.HotListModel;
 
 /**
  * Created by KNOX on 2016-11-27.

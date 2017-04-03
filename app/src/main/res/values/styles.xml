@@ -24,4 +24,9 @@
     <item name="android:clickable">true</item>
     <item name="android:foreground">?attr/selectableItemBackground</item>
   </style>
+
+  <style name="ResourceInfoTheme" parent="AppTheme">
+    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+  </style>
 </resources>

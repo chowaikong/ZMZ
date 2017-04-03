@@ -21,4 +21,6 @@
   <string name="category">类型:%s</string>
   <string name="score">评分:%s</string>
   <string name="remark">注:%s</string>
+  <string name="lang">语言:%s</string>
+  <string name="source">来源:%s</string>
 </resources>
