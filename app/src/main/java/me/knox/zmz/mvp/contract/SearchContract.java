@@ -11,6 +11,7 @@ import me.knox.zmz.view.BaseView;
 
 public interface SearchContract {
 
+  @FunctionalInterface
   interface Model {
     Flowable<JsonResponse<SearchResult>> search(String keyword, int limit, int page);
   }
@@ -19,6 +20,7 @@ public interface SearchContract {
     void obtainSearchResultSuccess(SearchResult result);
   }
 
+  @FunctionalInterface
   interface Presenter {
     void search(String keyword, int limit, int page);
   }

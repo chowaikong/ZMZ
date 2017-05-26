@@ -8,7 +8,7 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class BasePresenter {
-  private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+  private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
   public Disposable getCompositeDisposable() {
     return mCompositeDisposable;
@@ -18,16 +18,14 @@ public class BasePresenter {
    * add disposable to CompositeDisposable
    */
   public void addDisposable(Disposable disposable) {
-    if (mCompositeDisposable != null) {
-      mCompositeDisposable.add(disposable);
-    }
+    mCompositeDisposable.add(disposable);
   }
 
   /**
    * clear all disposables that added to CompositeDisposable
    */
   public void dispose() {
-    if (mCompositeDisposable != null && mCompositeDisposable.isDisposed()) {
+    if (mCompositeDisposable.isDisposed()) {
       mCompositeDisposable.clear();
     }
   }

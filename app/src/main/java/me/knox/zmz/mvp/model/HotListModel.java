@@ -17,6 +17,7 @@ public class HotListModel implements HotListContract.Model {
 
   @Inject
   public HotListModel() {
+    // empty constructor for injection
   }
 
   @Override public Flowable<JsonResponse<List<Hot>>> getHot() {

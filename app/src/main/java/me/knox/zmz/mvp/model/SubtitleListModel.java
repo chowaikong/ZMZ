@@ -16,6 +16,7 @@ public class SubtitleListModel implements SubtitleListContract.Model {
 
   @Inject
   public SubtitleListModel() {
+    // empty constructor for injection
   }
 
   @Override public Flowable<JsonResponse<SubtitleList>> getSubtitleList() {

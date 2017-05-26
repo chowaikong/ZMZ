@@ -26,27 +26,29 @@ public interface Api {
 
   @GET("resource/top") Flowable<JsonResponse<List<Hot>>> getHotList();
 
-  @GET("tv/schedule") Flowable<JsonResponse<Map<String, List<ScheduleUpdate>>>> getScheduleUpdates(
-      @Query("start") String start, @Query("end") String end);
+  @GET("tv/schedule") Flowable<JsonResponse<Map<String, List<ScheduleUpdate>>>>
+  getScheduleUpdates(@Query("start") String start, @Query("end") String end);
 
   @GET("resource/fetchlist")
-  Flowable<JsonResponse<Resource>> getResources(/*@Query("page") int page*/);
+  Flowable<JsonResponse<Resource>> getResources();
 
   @GET("article/fetchlist")
-  Flowable<JsonResponse<List<News>>> getNews(/*@Query("page") int page*/);
+  Flowable<JsonResponse<List<News>>> getNews();
 
   @GET("resource/getinfo")
-  Flowable<JsonResponse<ResourceInfo>> getResourceInfo(@Query("id") int id, @Query("share") int isSharable);
+  Flowable<JsonResponse<ResourceInfo>> getResourceInfo
+      (@Query("id") int id, @Query("share") int isSharable);
 
   @GET("article/getinfo")
   Flowable<JsonResponse<NewsInfo>> getNewsInfo(@Query("id") int id);
 
   @GET("search")
-  Flowable<JsonResponse<SearchResult>> search(@Query("k") String keyword, @Query("limit") int limit, @Query("page") int page);
+  Flowable<JsonResponse<SearchResult>> search
+      (@Query("k") String keyword, @Query("limit") int limit, @Query("page") int page);
 
   @GET("subtitle/getinfo_web")
   Flowable<JsonResponse<Subtitle>> getSubtitleInfo(@Query("id") int id);
 
   @GET("subtitle/fetchlist")
-  Flowable<JsonResponse<SubtitleList>> getSubtitleList(/*@Query("limit") int limit, @Query("page") int page*/);
+  Flowable<JsonResponse<SubtitleList>> getSubtitleList();
 }

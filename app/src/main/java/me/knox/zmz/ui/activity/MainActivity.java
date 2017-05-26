@@ -10,7 +10,6 @@ import android.view.View;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
-import me.drakeet.multitype.GlobalMultiTypePool;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.knox.zmz.R;
@@ -75,11 +74,10 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
   }
 
   @Override protected void initView() {
-    mDataBinding.list.rvVertical.addItemDecoration(new VerticalSpaceItemDecoration(20));
+    mDataBinding.list.rvVertical.addItemDecoration(new VerticalSpaceItemDecoration(25));
     mDataBinding.list.rvVertical.getLayoutManager().setItemPrefetchEnabled(true);
-    GlobalMultiTypePool.register(Category.class, new CategoryItemProvider());
-    GlobalMultiTypePool.register(String.class, new SingleTextItemProvider());
-    mMultiTypeAdapter.applyGlobalMultiTypePool();
+    mMultiTypeAdapter.register(Category.class, new CategoryItemProvider());
+    mMultiTypeAdapter.register(String.class, new SingleTextItemProvider());
     mMultiTypeAdapter.register(HotList.class, new CarouselItemProvider());
     mMultiTypeAdapter.register(ScheduleUpdateList.class, new ScheduleUpdateItemProvider());
     mMultiTypeAdapter.register(News.class, new NewsItemProvider());
@@ -191,7 +189,7 @@ public class MainActivity extends BaseBindingActivity<ActivityMainBinding>
 
     mItems.add(new Category("最新字幕"));
     mItems.addAll(subtitleList.getSubtitleList());
-    mMultiTypeAdapter.notifyItemRangeChanged(0, mItems.size());
+    mMultiTypeAdapter.notifyItemRangeInserted(0, mItems.size());
     mDataBinding.progress.bar.setVisibility(View.GONE);
   }
 

@@ -15,6 +15,7 @@ public class ResourceInfoModel implements ResourceInfoContract.Model {
 
   @Inject
   public ResourceInfoModel() {
+    // empty constructor for injection
   }
 
   @Override public Flowable<JsonResponse<ResourceInfo>> getResourceInfo(int id, int isSharable) {

@@ -15,6 +15,7 @@ import me.knox.zmz.network.JsonResponse;
 public class SearchModel implements SearchContract.Model {
 
   @Inject public SearchModel() {
+    // empty constructor for injection
   }
 
   @Override

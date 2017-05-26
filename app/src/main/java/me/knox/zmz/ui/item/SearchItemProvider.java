@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import me.drakeet.multitype.ItemViewProvider;
+import me.drakeet.multitype.ItemViewBinder;
 import me.knox.zmz.binding.DataBindingViewHolder;
 import me.knox.zmz.databinding.ItemSearchResultBinding;
 import me.knox.zmz.entity.Search;
@@ -17,7 +17,8 @@ import me.knox.zmz.ui.activity.ResourceInfoActivity;
  * Created by KNOX.
  */
 
-public class SearchItemProvider extends ItemViewProvider<Search, DataBindingViewHolder<ItemSearchResultBinding>> {
+public class SearchItemProvider extends
+    ItemViewBinder<Search, DataBindingViewHolder<ItemSearchResultBinding>> {
   @NonNull @Override protected DataBindingViewHolder<ItemSearchResultBinding> onCreateViewHolder(
       @NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
     return new DataBindingViewHolder<>(ItemSearchResultBinding.inflate(inflater, parent, false));

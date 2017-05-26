@@ -9,13 +9,15 @@ import me.knox.zmz.network.ApiErrorException;
  * Created by KNOX.
  */
 
-public class UpdatesPresenter extends BasePresenter implements UpdatesContract.Presenter {
+public class UpdatesPresenter
+    extends BasePresenter
+    implements UpdatesContract.Presenter {
 
-  private UpdatesContract.Model mModel;
-  private ResourceInfoModel mInfoModel;
-  private UpdatesContract.View mView;
+  private final UpdatesContract.Model mModel;
+  private final ResourceInfoModel mInfoModel;
+  private final UpdatesContract.View mView;
 
-  @Inject public UpdatesPresenter(UpdatesContract.Model model, ResourceInfoModel infoModel,
+  @Inject UpdatesPresenter(UpdatesContract.Model model, ResourceInfoModel infoModel,
       UpdatesContract.View view) {
     mModel = model;
     mInfoModel = infoModel;

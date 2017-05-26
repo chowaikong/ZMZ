@@ -18,7 +18,8 @@
       >
     <activity
         android:name=".ui.activity.MainActivity"
-        android:configChanges="keyboardHidden|orientation|screenSize">
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:theme="@style/TranslucentStatusBarTheme">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
@@ -28,10 +29,11 @@
     <activity
         android:name=".ui.activity.ResourceInfoActivity"
         android:configChanges="keyboardHidden|orientation|screenSize"
-        android:theme="@style/ResourceInfoTheme"/>
+        android:theme="@style/TransparentStatusBarTheme"/>
     <activity
         android:name=".ui.activity.NewsInfoActivity"
-        android:configChanges="keyboardHidden|orientation|screenSize"/>
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:theme="@style/TransparentStatusBarTheme"/>
     <activity
         android:name=".ui.activity.SearchActivity"
         android:configChanges="keyboardHidden|orientation|screenSize"/>

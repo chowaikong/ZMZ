@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import java.util.ArrayList;
-import me.drakeet.multitype.ItemViewProvider;
+import me.drakeet.multitype.ItemViewBinder;
 import me.knox.zmz.databinding.LayoutHorizontalRvBinding;
 import me.knox.zmz.entity.ScheduleUpdateList;
 import me.knox.zmz.ui.adapter.ScheduleUpdateAdapter;
@@ -15,7 +15,8 @@ import me.knox.zmz.ui.adapter.ScheduleUpdateAdapter;
  * Created by KNOX.
  */
 
-public class ScheduleUpdateItemProvider extends ItemViewProvider<ScheduleUpdateList, ScheduleUpdateItemProvider.ViewHolder> {
+public class ScheduleUpdateItemProvider extends
+    ItemViewBinder<ScheduleUpdateList, ScheduleUpdateItemProvider.ViewHolder> {
 
   @NonNull @Override protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater,
       @NonNull ViewGroup parent) {

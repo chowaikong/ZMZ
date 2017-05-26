@@ -6,6 +6,10 @@ package me.knox.zmz.misc;
 
 public class Constants {
 
+  private Constants() {
+    throw new IllegalAccessError("Constants should not be instantiated");
+  }
+
   public static final String CID = "cid";
   public static final String ACCESS_KEY = "accesskey";
   public static final String TIME_STAMP = "timestamp";

@@ -2,7 +2,9 @@ package me.knox.zmz.ui.util;
 
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 
 /**
@@ -14,7 +16,7 @@ final class UrlDrawable extends Drawable implements Drawable.Callback {
   private GlideDrawable mDrawable;
 
   @Override
-  public void draw(Canvas canvas) {
+  public void draw(@NonNull Canvas canvas) {
     if (mDrawable != null) {
       mDrawable.draw(canvas);
     }
@@ -39,7 +41,7 @@ final class UrlDrawable extends Drawable implements Drawable.Callback {
     if (mDrawable != null) {
       return mDrawable.getOpacity();
     }
-    return 0;
+    return PixelFormat.UNKNOWN;
   }
 
   public void setDrawable(GlideDrawable drawable) {
@@ -51,21 +53,21 @@ final class UrlDrawable extends Drawable implements Drawable.Callback {
   }
 
   @Override
-  public void invalidateDrawable(Drawable who) {
+  public void invalidateDrawable(@NonNull Drawable who) {
     if (getCallback() != null) {
       getCallback().invalidateDrawable(who);
     }
   }
 
   @Override
-  public void scheduleDrawable(Drawable who, Runnable what, long when) {
+  public void scheduleDrawable(@NonNull Drawable who, @NonNull Runnable what, long when) {
     if (getCallback() != null) {
       getCallback().scheduleDrawable(who, what, when);
     }
   }
 
   @Override
-  public void unscheduleDrawable(Drawable who, Runnable what) {
+  public void unscheduleDrawable(@NonNull Drawable who, @NonNull Runnable what) {
     if (getCallback() != null) {
       getCallback().unscheduleDrawable(who, what);
     }

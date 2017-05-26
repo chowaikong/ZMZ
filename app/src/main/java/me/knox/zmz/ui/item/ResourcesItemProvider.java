@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import me.drakeet.multitype.ItemViewProvider;
+import me.drakeet.multitype.ItemViewBinder;
 import me.knox.zmz.binding.DataBindingViewHolder;
 import me.knox.zmz.databinding.ItemResourceBinding;
 import me.knox.zmz.entity.Resource;
@@ -17,7 +17,7 @@ import static me.knox.zmz.misc.Constants.TRANSITION_POSTER;
  */
 
 public class ResourcesItemProvider
-    extends ItemViewProvider<Resource.Data, DataBindingViewHolder<ItemResourceBinding>> {
+    extends ItemViewBinder<Resource.Data, DataBindingViewHolder<ItemResourceBinding>> {
 
   @NonNull @Override protected DataBindingViewHolder<ItemResourceBinding> onCreateViewHolder(
       @NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import me.drakeet.multitype.ItemViewProvider;
+import me.drakeet.multitype.ItemViewBinder;
 import me.knox.zmz.binding.DataBindingViewHolder;
 import me.knox.zmz.databinding.ItemNewsBinding;
 import me.knox.zmz.entity.News;
@@ -15,7 +15,7 @@ import me.knox.zmz.ui.activity.NewsInfoActivity;
  */
 
 public class NewsItemProvider
-    extends ItemViewProvider<News, DataBindingViewHolder<ItemNewsBinding>> {
+    extends ItemViewBinder<News, DataBindingViewHolder<ItemNewsBinding>> {
 
   @NonNull @Override protected DataBindingViewHolder<ItemNewsBinding> onCreateViewHolder(
       @NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {

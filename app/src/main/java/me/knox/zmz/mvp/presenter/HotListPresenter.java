@@ -10,12 +10,14 @@ import me.knox.zmz.network.ApiErrorException;
  * Created by KNOX.
  */
 
-public class HotListPresenter extends BasePresenter implements HotListContract.Presenter {
+public class HotListPresenter
+    extends BasePresenter
+    implements HotListContract.Presenter {
 
   private HotListModel mHotListModel;
   private HotListContract.View mView;
 
-  @Inject public HotListPresenter(HotListModel hotListModel, HotListContract.View view) {
+  @Inject HotListPresenter(HotListModel hotListModel, HotListContract.View view) {
     mHotListModel = hotListModel;
     mView = view;
   }

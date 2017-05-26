@@ -4,6 +4,7 @@ package me.knox.zmz.view;
  * Created by KNOX.
  */
 
+@FunctionalInterface
 public interface BaseView {
 
   /**

@@ -8,13 +8,14 @@ import me.knox.zmz.network.ApiErrorException;
  * Created by KNOX.
  */
 
-public class SubtitleListPresenter extends BasePresenter implements SubtitleListContract.Presenter {
+public class SubtitleListPresenter
+    extends BasePresenter
+    implements SubtitleListContract.Presenter {
 
-  private SubtitleListContract.Model mModel;
-  private SubtitleListContract.View mView;
+  private final SubtitleListContract.Model mModel;
+  private final SubtitleListContract.View mView;
 
-  @Inject
-  public SubtitleListPresenter(SubtitleListContract.Model model, SubtitleListContract.View view) {
+  @Inject SubtitleListPresenter(SubtitleListContract.Model model, SubtitleListContract.View view) {
     mModel = model;
     mView = view;
   }

@@ -23,4 +23,5 @@
   <string name="remark">注:%s</string>
   <string name="lang">语言:%s</string>
   <string name="source">来源:%s</string>
+  <string name="no_results">无搜索结果～</string>
 </resources>

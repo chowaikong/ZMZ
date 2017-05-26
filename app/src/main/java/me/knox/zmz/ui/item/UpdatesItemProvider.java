@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import me.drakeet.multitype.ItemViewProvider;
+import me.drakeet.multitype.ItemViewBinder;
 import me.knox.zmz.binding.DataBindingViewHolder;
 import me.knox.zmz.databinding.ItemUpdateBinding;
 import me.knox.zmz.databinding.LayoutDownloadUpdateBinding;
@@ -23,7 +23,8 @@ import static android.content.Context.CLIPBOARD_SERVICE;
  * Created by KNOX.
  */
 
-public class UpdatesItemProvider extends ItemViewProvider<Update, DataBindingViewHolder<ItemUpdateBinding>> {
+public class UpdatesItemProvider extends
+    ItemViewBinder<Update, DataBindingViewHolder<ItemUpdateBinding>> {
 
   @NonNull @Override protected DataBindingViewHolder<ItemUpdateBinding> onCreateViewHolder(@NonNull LayoutInflater inflater,
       @NonNull ViewGroup parent) {

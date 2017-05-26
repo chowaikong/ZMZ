@@ -8,13 +8,14 @@ import me.knox.zmz.network.ApiErrorException;
  * Created by KNOX.
  */
 
-public class NewsInfoPresenter extends BasePresenter implements NewsInfoContract.Presenter {
+public class NewsInfoPresenter
+    extends BasePresenter
+    implements NewsInfoContract.Presenter {
 
-  private NewsInfoContract.Model mModel;
-  private NewsInfoContract.View mView;
+  private final NewsInfoContract.Model mModel;
+  private final NewsInfoContract.View mView;
 
-  @Inject
-  public NewsInfoPresenter(NewsInfoContract.Model model, NewsInfoContract.View view) {
+  @Inject NewsInfoPresenter(NewsInfoContract.Model model, NewsInfoContract.View view) {
     mModel = model;
     mView = view;
   }

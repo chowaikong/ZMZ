@@ -85,6 +85,7 @@ public class SearchActivity extends BaseBindingActivity<ActivitySearchBinding>
       @Override public void afterTextChanged(Editable s) {
         mKeyword = s.toString().trim();
         if (TextUtils.isEmpty(mKeyword)) {
+          mDataBinding.progress.setVisibility(View.GONE);
           return;
         }
         if (mSearchPresenter != null) {
@@ -108,13 +109,15 @@ public class SearchActivity extends BaseBindingActivity<ActivitySearchBinding>
     });
 
     // load more data settings
-    mLoadMoreWrapper
-        .setLoadMoreEnabled(true)
-        .setListener(enabled -> {
-          mPage++;
-          mSearchPresenter.search(mKeyword, mLimit, mPage);
-        })
-        .into(mDataBinding.list.rvVertical);
+    //mLoadMoreWrapper
+    //    .setLoadMoreEnabled(false)
+    //    .setListener(enabled -> {
+    //      if (enabled.getLoadMoreEnabled()) {
+    //        mPage++;
+    //        mSearchPresenter.search(mKeyword, mLimit, mPage);
+    //      }
+    //    })
+    //    .into(mDataBinding.list.rvVertical);
   }
 
   @Override public void obtainSearchResultSuccess(SearchResult searchResult) {
@@ -125,6 +128,9 @@ public class SearchActivity extends BaseBindingActivity<ActivitySearchBinding>
     if (searchResult == null) {
       return;
     }
+
+    mDataBinding.progress.setVisibility(View.GONE);
+
 
     if (searchResult.getCount() != 0) {
       mLoadMoreWrapper.setLoadMoreEnabled(true);
@@ -142,7 +148,6 @@ public class SearchActivity extends BaseBindingActivity<ActivitySearchBinding>
       mAdapter.notifyDataSetChanged();
     }
 
-    mDataBinding.progress.setVisibility(View.GONE);
   }
 
   @Override public void error(String error, Object... objects) {

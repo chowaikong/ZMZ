@@ -11,6 +11,7 @@ import me.knox.zmz.view.BaseView;
 
 public interface SubtitleListContract {
 
+  @FunctionalInterface
   interface Model {
     Flowable<JsonResponse<SubtitleList>> getSubtitleList();
   }
@@ -19,6 +20,7 @@ public interface SubtitleListContract {
     void obtainSubtitleListSuccess(SubtitleList subtitleList);
   }
 
+  @FunctionalInterface
   interface Presenter {
     void getSubtitleList();
   }

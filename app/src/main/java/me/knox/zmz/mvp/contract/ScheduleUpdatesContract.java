@@ -13,6 +13,7 @@ import me.knox.zmz.view.BaseView;
 
 public interface ScheduleUpdatesContract {
 
+  @FunctionalInterface
   interface Model {
     Flowable<JsonResponse<Map<String, List<ScheduleUpdate>>>> getScheduleUpdates(String start,
         String end);
@@ -22,6 +23,7 @@ public interface ScheduleUpdatesContract {
     void obtainScheduleUpdatesSucceed(Map<String, List<ScheduleUpdate>> stringListMap);
   }
 
+  @FunctionalInterface
   interface Presenter {
     void getScheduleUpdates(String start, String end);
   }

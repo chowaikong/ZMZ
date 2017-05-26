@@ -8,13 +8,14 @@ import me.knox.zmz.network.ApiErrorException;
  * Created by KNOX.
  */
 
-public class SearchPresenter extends BasePresenter implements SearchContract.Presenter {
+public class SearchPresenter
+    extends BasePresenter
+    implements SearchContract.Presenter {
 
-  private SearchContract.Model mModel;
-  private SearchContract.View mView;
+  private final SearchContract.Model mModel;
+  private final SearchContract.View mView;
 
-  @Inject
-  public SearchPresenter(SearchContract.Model model, SearchContract.View view) {
+  @Inject SearchPresenter(SearchContract.Model model, SearchContract.View view) {
     mModel = model;
     mView = view;
   }

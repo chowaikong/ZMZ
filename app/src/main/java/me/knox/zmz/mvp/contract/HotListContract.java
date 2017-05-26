@@ -12,16 +12,16 @@ import me.knox.zmz.view.BaseView;
 
 public interface HotListContract {
 
-
+  @FunctionalInterface
   interface Model {
     Flowable<JsonResponse<List<Hot>>> getHot();
   }
 
   interface View extends BaseView{
     void obtainHotListSuccess(List<Hot> hotList);
-
   }
 
+  @FunctionalInterface
   interface Presenter {
     void getHot();
   }

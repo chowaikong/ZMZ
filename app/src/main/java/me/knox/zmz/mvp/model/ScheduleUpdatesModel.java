@@ -17,6 +17,7 @@ import me.knox.zmz.network.JsonResponse;
 public class ScheduleUpdatesModel implements ScheduleUpdatesContract.Model {
 
   @Inject public ScheduleUpdatesModel() {
+    // empty constructor for injection
   }
 
   @Override

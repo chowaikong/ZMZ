@@ -24,6 +24,7 @@ import me.knox.zmz.entity.ResourceInfo;
 import me.knox.zmz.mvp.contract.ResourceInfoContract;
 import me.knox.zmz.mvp.presenter.ResourceInfoPresenter;
 import me.knox.zmz.ui.item.ResourceInfoHeaderItemProvider;
+import me.knox.zmz.ui.item.SingleTextItemProvider;
 import me.knox.zmz.ui.util.Toaster;
 
 import static me.knox.zmz.misc.Constants.TRANSITION_POSTER;
@@ -99,7 +100,7 @@ public class ResourceInfoActivity extends BaseBindingActivity<ActivityResourceIn
         .build()
         .inject(this);
 
-    mMultiTypeAdapter.applyGlobalMultiTypePool();
+    mMultiTypeAdapter.register(String.class, new SingleTextItemProvider());
     mMultiTypeAdapter.register(String[].class, new ResourceInfoHeaderItemProvider());
 
     mResourceInfoPresenter.getResourceInfo(mId, 1);

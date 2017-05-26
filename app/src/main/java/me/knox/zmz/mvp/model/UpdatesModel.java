@@ -17,6 +17,7 @@ public class UpdatesModel implements UpdatesContract.Model {
 
   @Inject
   public UpdatesModel() {
+    // empty constructor for injection
   }
 
   @Override public Flowable<JsonResponse<List<Update>>> getUpdates() {

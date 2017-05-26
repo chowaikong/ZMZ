@@ -9,12 +9,14 @@ import me.knox.zmz.network.ApiErrorException;
  * Created by KNOX.
  */
 
-public class ResourcesPresenter extends BasePresenter implements ResourcesContract.Presenter {
+public class ResourcesPresenter
+    extends BasePresenter
+    implements ResourcesContract.Presenter {
 
-  private ResourcesContract.Model mModel;
-  private ResourcesContract.View mView;
+  private final ResourcesContract.Model mModel;
+  private final ResourcesContract.View mView;
 
-  @Inject public ResourcesPresenter(ResourcesContract.Model model, ResourcesContract.View view) {
+  @Inject ResourcesPresenter(ResourcesContract.Model model, ResourcesContract.View view) {
     mModel = model;
     mView = view;
   }

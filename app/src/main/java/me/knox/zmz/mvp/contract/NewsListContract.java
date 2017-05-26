@@ -12,6 +12,7 @@ import me.knox.zmz.view.BaseView;
 
 public interface NewsListContract {
 
+  @FunctionalInterface
   interface Model {
     Flowable<JsonResponse<List<News>>> getNewsList();
   }
@@ -20,6 +21,7 @@ public interface NewsListContract {
     void obtainNewsListSucceed(List<News> newsList);
   }
 
+  @FunctionalInterface
   interface Presenter {
     void getNewsList();
   }

@@ -16,6 +16,7 @@ import me.knox.zmz.network.JsonResponse;
 public class NewsListModel implements NewsListContract.Model {
 
   @Inject public NewsListModel() {
+    // empty constructor for injection
   }
 
   @Override public Flowable<JsonResponse<List<News>>> getNewsList() {

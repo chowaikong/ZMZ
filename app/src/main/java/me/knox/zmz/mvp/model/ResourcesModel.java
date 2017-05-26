@@ -15,6 +15,7 @@ import me.knox.zmz.network.JsonResponse;
 public class ResourcesModel implements ResourcesContract.Model {
 
   @Inject public ResourcesModel() {
+    // empty constructor for injection
   }
 
   @Override public Flowable<JsonResponse<Resource>> getResources() {

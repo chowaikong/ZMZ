@@ -20,11 +20,10 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         app:img="@{poster}"
-        tools:src="@drawable/sherlock"
         android:transitionName="@string/transition_poster"
         />
 
-    <android.support.v7.widget.RecyclerView
+    <me.knox.zmz.ui.widget.AnimatedRecyclerView
         android:id="@+id/rv_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

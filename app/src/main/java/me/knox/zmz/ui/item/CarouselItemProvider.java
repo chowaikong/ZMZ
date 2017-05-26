@@ -7,7 +7,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-import me.drakeet.multitype.ItemViewProvider;
+import me.drakeet.multitype.ItemViewBinder;
 import me.knox.zmz.binding.DataBindingViewHolder;
 import me.knox.zmz.databinding.LayoutViewPagerBinding;
 import me.knox.zmz.entity.HotList;
@@ -17,7 +17,8 @@ import me.knox.zmz.ui.adapter.HotAdapter;
  * Created by KNOX.
  */
 
-public class CarouselItemProvider extends ItemViewProvider<HotList, DataBindingViewHolder<LayoutViewPagerBinding>> {
+public class CarouselItemProvider extends
+    ItemViewBinder<HotList, DataBindingViewHolder<LayoutViewPagerBinding>> {
 
   @NonNull @Override protected DataBindingViewHolder<LayoutViewPagerBinding> onCreateViewHolder(
       @NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {

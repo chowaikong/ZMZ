@@ -8,12 +8,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.Pair;
-import android.view.View;
+import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
 import javax.inject.Inject;
 import me.knox.zmz.R;
-import me.knox.zmz.databinding.ActivityNewsInfoBinding;
+import me.knox.zmz.databinding.ActivityNewsBinding;
 import me.knox.zmz.di.component.DaggerNewsInfoComponent;
 import me.knox.zmz.di.module.NewsInfoModule;
 import me.knox.zmz.entity.News;
@@ -29,7 +29,7 @@ import static me.knox.zmz.misc.Constants.TRANSITION_TITLE;
  * Created by KNOX.
  */
 
-public class NewsInfoActivity extends BaseBindingActivity<ActivityNewsInfoBinding>
+public class NewsInfoActivity extends BaseBindingActivity<ActivityNewsBinding>
     implements NewsInfoContract.View {
 
   private static final String TAG = "NewsInfoActivity";
@@ -54,24 +54,29 @@ public class NewsInfoActivity extends BaseBindingActivity<ActivityNewsInfoBindin
   }
 
   @Override
-  protected ActivityNewsInfoBinding setDataBindingContentView(@Nullable Bundle savedInstanceState) {
-    return DataBindingUtil.setContentView(this, R.layout.activity_news_info);
+  protected ActivityNewsBinding setDataBindingContentView(@Nullable Bundle savedInstanceState) {
+    return DataBindingUtil.setContentView(this, R.layout.activity_news);
   }
 
   @Override protected void initView() {
-    setupToolbar(mDataBinding.toolbar);
+    setupToolbar(mDataBinding.toolbarNews);
   }
 
   @Override protected void initData() {
     DaggerNewsInfoComponent.builder().newsInfoModule(new NewsInfoModule(this)).build().inject(this);
 
-    if (getIntent() == null) return;
+    if (getIntent() == null) {
+      return;
+    }
     News news = getIntent().getParcelableExtra(NEWS);
     int id = getIntent().getIntExtra(ID, 0);
     if (news == null) {
-      if (id < 0) return;
+      if (id < 0) {
+        return;
+      }
       mNewsInfoPresenter.getNewsInfo(id);
     } else {
+      mDataBinding.toolbarNews.setTitle(news.getTitle());
       mDataBinding.setPoster(news.getPoster());
       mDataBinding.setIntro(news.getIntro());
       mNewsInfoPresenter.getNewsInfo(news.getId());
@@ -87,7 +92,7 @@ public class NewsInfoActivity extends BaseBindingActivity<ActivityNewsInfoBindin
     }
     mDataBinding.setPoster(newsInfo.getPoster());
     mDataBinding.setInfo(newsInfo);
-    mDataBinding.progress.bar.setVisibility(View.GONE);
+    //mDataBinding.progress.bar.setVisibility(View.GONE);
   }
 
   @Override public void error(String error, Object... objects) {
@@ -96,5 +101,12 @@ public class NewsInfoActivity extends BaseBindingActivity<ActivityNewsInfoBindin
     }
     Log.e(TAG, error);
     Toaster.show(getString(R.string.something_wrong_happened));
+  }
+
+  @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+    if (keyCode == KeyEvent.KEYCODE_BACK) {
+      finish();
+    }
+    return super.onKeyDown(keyCode, event);
   }
 }

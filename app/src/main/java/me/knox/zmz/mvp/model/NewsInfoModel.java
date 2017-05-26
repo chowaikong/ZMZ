@@ -16,6 +16,7 @@ public class NewsInfoModel implements NewsInfoContract.Model {
 
   @Inject
   public NewsInfoModel() {
+    // empty constructor for injection
   }
 
   @Override public Flowable<JsonResponse<NewsInfo>> getNewsInfo(int id) {
