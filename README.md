@@ -1,5 +1,6 @@
 # ZMZ
-An unofficial android client for ZiMuZu.tv.  
+<img src="https://github.com/chowaikong/ZMZ/blob/master/app/src/main/res/mipmap-xxhdpi/ic_launcher.png">  
+An unofficial android client for ZiMuZu.tv
 
 ### GIF
 <img src="art/zmz.gif" width="250">
